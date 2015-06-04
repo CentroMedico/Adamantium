@@ -1,6 +1,7 @@
 package dom.Recepcionista;
 
 import java.util.List;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
@@ -8,6 +9,8 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+
+import dom.Estado.EstadoEnum;
 
 @DomainService(repositoryFor = Recepcionista.class)
 @DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "4")
@@ -21,7 +24,8 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Legajo") final int legajo) {
+			@ParameterLayout(named = "Legajo") final int legajo,
+			@ParameterLayout(named = "Estado") final EstadoEnum estado) {
 
 		final Recepcionista recepcionista = newTransientInstance(Recepcionista.class);
 		recepcionista.setApellido(apellido.toUpperCase());
@@ -30,6 +34,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		recepcionista.setDireccion(direccion.toUpperCase());
 		recepcionista.setCorreo(correo);
 		recepcionista.setTelefono(telefono);
+		recepcionista.setLegajo(legajo);
 		recepcionista.setLegajo(legajo);
 		persist(recepcionista);
 		return recepcionista;

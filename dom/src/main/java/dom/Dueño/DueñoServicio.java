@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 
+import dom.Estado.EstadoEnum;
+
 
 
 @DomainService(repositoryFor = Dueño.class)
@@ -24,7 +26,8 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Iniciales") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.INICIALES) final String iniciales) {
+			@ParameterLayout(named = "Iniciales") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.INICIALES) final String iniciales,
+			@ParameterLayout(named = "Estado") final EstadoEnum estado) {
 
 		final Dueño dueño = newTransientInstance(Dueño.class);
 		dueño.setApellido(apellido.toUpperCase());
@@ -34,7 +37,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		dueño.setCorreo(correo);
 		dueño.setTelefono(telefono);
 		dueño.setIniciales(iniciales.toUpperCase());
-	
+		dueño.setEstado(estado);
 		persist(dueño);
 		return dueño;
 	}

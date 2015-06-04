@@ -1,6 +1,7 @@
 package dom.Paciente;
 
 import java.util.List;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
@@ -8,6 +9,9 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+
+import dom.Estado.EstadoEnum;
+import dom.GrupoSanguineo.GrupoSanguineoEnum;
 
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
@@ -20,7 +24,12 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Legajo") final int legajo) {
+			@ParameterLayout(named = "Legajo") final int legajo,
+			@ParameterLayout(named = "Estado") final EstadoEnum estado,
+			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
+			@ParameterLayout(named = "Obra Social") final String obraSocial,
+			@ParameterLayout(named = "Numero de Carnet") final String numCarnet,
+			@ParameterLayout(named = "Cobertura Medica") final String coberturaMedica) {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
 		paciente.setApellido(apellido.toUpperCase());
@@ -30,6 +39,11 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setCorreo(correo);
 		paciente.setTelefono(telefono);
 		paciente.setLegajo(legajo);
+		paciente.setEstado(estado);
+		paciente.setGrupoSanguineo(grupoSanguineo);
+		paciente.setObraSocial(obraSocial);
+		paciente.setNumCarnet(numCarnet);
+		paciente.setCoberturaMedica(coberturaMedica);
 		persist(paciente);
 		return paciente;
 	}
