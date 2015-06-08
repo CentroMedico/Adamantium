@@ -1,10 +1,28 @@
+/*
+ Copyright 2015 Adamantium
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package dom.Doctor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
+
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
 import dom.Persona.Persona;
@@ -14,7 +32,12 @@ import dom.Persona.Persona;
 //@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
+// @Named("Un doctor")
 public class Doctor extends Persona {
+
+	public String setTitle() {
+		return "DOCTOR";
+	}
 
 	// {{ Matricula (property)
 	private String matricula;
@@ -28,6 +51,16 @@ public class Doctor extends Persona {
 	public void setMatricula(final String matricula) {
 		this.matricula = matricula;
 	}
+
+	// public String validateMatricula(String matr) {
+	// if (matr != " ") {
+	// return "La concha de tu madre, escribi algo";
+	// } else {
+	// return matr;
+	// }
+
+	// return matr != "erick" ? "La concha de tu madre" : null;
+	// }
 
 	// {{ Especialidad (property)
 	private EspecialidadEnum especialidad;
