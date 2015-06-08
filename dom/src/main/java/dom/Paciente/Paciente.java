@@ -1,6 +1,5 @@
 package dom.Paciente;
 
-
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
@@ -11,7 +10,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import dom.Estado.EstadoEnum;
 import dom.GrupoSanguineo.GrupoSanguineoEnum;
 import dom.Persona.Persona;
-
 
 //Primera Estrategia: Una tabla por cada clase
 //@PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -28,11 +26,12 @@ public class Paciente extends Persona {
 	public int getLegajo() {
 		return legajo;
 	}
+
 	public void setLegajo(final int legajo) {
 		this.legajo = legajo;
 	}
-	// }}
 
+	// }}
 
 	// {{ Estado (property)
 	private EstadoEnum estado;
@@ -47,8 +46,6 @@ public class Paciente extends Persona {
 		this.estado = estado;
 	}
 
-	
-	
 	// }}
 
 	// {{ GrupoSanguineo (property)
@@ -109,7 +106,7 @@ public class Paciente extends Persona {
 	}
 
 	// }}
-	
+
 	@Inject
 	private PacienteServicio pacienteServicio;
 	@Inject

@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 
+import com.google.common.base.Predicate;
+
 import dom.Estado.EstadoEnum;
 import dom.GrupoSanguineo.GrupoSanguineoEnum;
 
@@ -51,6 +53,35 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Paciente", sequence = "5.2")
 	public List<Paciente> listarPacientes() {
 		return container.allInstances(Paciente.class);
+	}
+
+	@MemberOrder(name = "Paciente", sequence = "5.3")
+	public List<Paciente> listarPacientesActivos() {
+		return allMatches(Paciente.class, new Predicate<Paciente>() {
+
+			@Override
+			public boolean apply(Paciente input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Activo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Paciente", sequence = "5.3")
+	public List<Paciente> listarPacientesInactivos() {
+		return allMatches(Paciente.class, new Predicate<Paciente>() {
+
+			@Override
+			public boolean apply(Paciente input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Inactivo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Paciente", sequence = "5.4")
+	public void buscarPaciente() {
+
 	}
 
 	@javax.inject.Inject

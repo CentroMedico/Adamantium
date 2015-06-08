@@ -1,6 +1,5 @@
 package dom.Doctor;
 
-
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
@@ -15,7 +14,6 @@ import dom.Persona.Persona;
 //@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
-
 public class Doctor extends Persona {
 
 	// {{ Matricula (property)
@@ -30,31 +28,34 @@ public class Doctor extends Persona {
 	public void setMatricula(final String matricula) {
 		this.matricula = matricula;
 	}
+
 	// {{ Especialidad (property)
-		private EspecialidadEnum especialidad;
-		@MemberOrder(sequence = "2")
-		@Column(allowsNull = "false")
-		public EspecialidadEnum getEspecialidad() {
-			return especialidad;
-		}
-		public void setEspecialidad(final EspecialidadEnum especialidad) {
-			this.especialidad = especialidad;
-		}
+	private EspecialidadEnum especialidad;
 
-		// {{ Estado (property)
-		private EstadoEnum estado;
+	@MemberOrder(sequence = "2")
+	@Column(allowsNull = "false")
+	public EspecialidadEnum getEspecialidad() {
+		return especialidad;
+	}
 
-		@MemberOrder(sequence = "3")
-		@Column(allowsNull = "false")
-		public EstadoEnum getEstado() {
-			return estado;
-		}
+	public void setEspecialidad(final EspecialidadEnum especialidad) {
+		this.especialidad = especialidad;
+	}
 
-		public void setEstado(final EstadoEnum estado) {
-			this.estado = estado;
-		}
+	// {{ Estado (property)
+	private EstadoEnum estado;
 
-		// }}
+	@MemberOrder(sequence = "3")
+	@Column(allowsNull = "false")
+	public EstadoEnum getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final EstadoEnum estado) {
+		this.estado = estado;
+	}
+
+	// }}
 	@Inject
 	private DoctorServicio doctorServicio;
 	@Inject

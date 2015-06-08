@@ -11,6 +11,9 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
+
+import com.google.common.base.Predicate;
 
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
@@ -47,14 +50,38 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		return doctor;
 	}
 
-	// @Programmatic
-	// public List<EspecialidadEnum> listarEspecialidad() {
-	// return especialidadServicio.listarEspecialidades();
-	// }
-
 	@MemberOrder(name = "Doctor", sequence = "3.2")
 	public List<Doctor> listarDoctores() {
 		return container.allInstances(Doctor.class);
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "3.3")
+	public List<Doctor> listarDoctoresActivos() {
+		return allMatches(Doctor.class, new Predicate<Doctor>() {
+
+			@Override
+			public boolean apply(Doctor input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Activo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "3.4")
+	public List<Doctor> listarDoctoresInactivos() {
+		return allMatches(Doctor.class, new Predicate<Doctor>() {
+
+			@Override
+			public boolean apply(Doctor input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Inactivo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "3.5")
+	public void buscarDoctor() {
+
 	}
 
 	@javax.inject.Inject

@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 
+import com.google.common.base.Predicate;
+
 import dom.Estado.EstadoEnum;
 
 @DomainService(repositoryFor = Recepcionista.class)
@@ -43,6 +45,35 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Recepcionista", sequence = "4.2")
 	public List<Recepcionista> listarRecepcionista() {
 		return container.allInstances(Recepcionista.class);
+	}
+
+	@MemberOrder(name = "Recepcionista", sequence = "4.3")
+	public List<Recepcionista> listarRecepcionistasActivos() {
+		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {
+
+			@Override
+			public boolean apply(Recepcionista input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Activo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Recepcionista", sequence = "4.3")
+	public List<Recepcionista> listarRecepcionistasInactivos() {
+		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {
+
+			@Override
+			public boolean apply(Recepcionista input) {
+				// TODO Auto-generated method stub
+				return input.getEstado() == EstadoEnum.Inactivo ? true : false;
+			}
+		});
+	}
+
+	@MemberOrder(name = "Recepcionista", sequence = "4.4")
+	public void buscarRecepcionista() {
+
 	}
 
 	@javax.inject.Inject
