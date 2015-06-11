@@ -24,21 +24,32 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.RegEx;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import com.google.common.base.Predicate;
 
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
+import dom.Regex.RegexValidation;
 
 @DomainService(repositoryFor = Doctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "3")
 @Named("Doctor")
 public class DoctorServicio extends AbstractFactoryAndRepository {
-	Doctor doc = new Doctor();
-
+	
+	
+	public String iconName()
+	{
+		return "doctor";	
+	}
+	
+	
 	@MemberOrder(name = "Doctor", sequence = "3.1")
 	public Doctor crearDoctor(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
@@ -57,13 +68,16 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		doctor.setDireccion(direccion.toUpperCase());
 		doctor.setCorreo(correo);
 		doctor.setTelefono(telefono);
-		doctor.setMatricula(matricula.toUpperCase());
+		if(matricula!=null)
+		{
+			doctor.setMatricula(matricula.toUpperCase());
+		}
 		doctor.setEspecialidad(especialidad);
 		doctor.setEstado(EstadoEnum.Activo);
 		persist(doctor);
 		return doctor;
 	}
-
+	
 	@MemberOrder(name = "Doctor", sequence = "3.2")
 	public List<Doctor> listarDoctores() {
 		return container.allInstances(Doctor.class);
@@ -97,7 +111,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	public void buscarDoctor() {
 
 	}
-
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 

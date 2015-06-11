@@ -32,6 +32,10 @@ import dom.Estado.EstadoEnum;
 @DomainService(repositoryFor = Recepcionista.class)
 @DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "4")
 public class RecepcionistaServicio extends AbstractFactoryAndRepository {
+	public String iconName()
+	{
+		return "recepcionista";	
+	}
 
 	@MemberOrder(name = "Recepcionista", sequence = "4.1")
 	public Recepcionista crearRecepcionista(

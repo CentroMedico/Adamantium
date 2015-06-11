@@ -21,6 +21,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.Estado.EstadoEnum;
 import dom.GrupoSanguineo.GrupoSanguineoEnum;
@@ -32,6 +33,15 @@ import dom.Persona.Persona;
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Paciente extends Persona {
+	
+	public TranslatableString title() {
+        return TranslatableString.tr("{nombre}", "nombre", "Paciente");
+    }
+	
+	public String iconName()
+	{
+		return "paciente";	
+	}
 
 	// {{ Legajo (property)
 	private int legajo;

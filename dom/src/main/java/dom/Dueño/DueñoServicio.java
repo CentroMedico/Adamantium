@@ -37,6 +37,11 @@ import dom.Estado.EstadoEnum;
 @DomainService(repositoryFor = Dueño.class)
 @DomainServiceLayout(named = "Dueño", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "1")
 public class DueñoServicio extends AbstractFactoryAndRepository {
+	
+	public String iconName()
+	{
+		return "dueño";	
+	}
 
 	@MemberOrder(name = "Dueño", sequence = "1.1")
 	public Dueño crearDueño(

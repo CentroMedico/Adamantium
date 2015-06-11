@@ -33,6 +33,11 @@ import dom.GrupoSanguineo.GrupoSanguineoEnum;
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
 public class PacienteServicio extends AbstractFactoryAndRepository {
+	public String iconName()
+	{
+		return "paciente";	
+	}
+	
 	@MemberOrder(name = "Paciente", sequence = "5.1")
 	public Paciente crearPaciente(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,

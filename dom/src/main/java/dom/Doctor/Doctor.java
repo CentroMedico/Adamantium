@@ -16,12 +16,12 @@
 package dom.Doctor;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
@@ -34,16 +34,24 @@ import dom.Persona.Persona;
 @PersistenceCapable
 // @Named("Un doctor")
 public class Doctor extends Persona {
-
-	public String setTitle() {
-		return "DOCTOR";
+	
+	public TranslatableString title() {
+        return TranslatableString.tr("{nombre}", "nombre", "Doctor");
+    }
+	
+	public String iconName()
+	{
+		return "doctor";	
 	}
 
 	// {{ Matricula (property)
 	private String matricula;
-
+	
+	
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
+	
+	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -52,15 +60,22 @@ public class Doctor extends Persona {
 		this.matricula = matricula;
 	}
 
-	// public String validateMatricula(String matr) {
-	// if (matr != " ") {
-	// return "La concha de tu madre, escribi algo";
-	// } else {
-	// return matr;
-	// }
-
-	// return matr != "erick" ? "La concha de tu madre" : null;
-	// }
+	public String validateMatricula(String matr) {
+		if (matr==null)
+        {
+        	return "no puede ser nulo";
+        }
+        else if(matr.matches("[a-z,A-Z,0-9,ñ,Ñ]+")==false)
+        {
+        	return "Error Al Cargar";
+        }
+        else
+        {
+        	return null;
+        }
+	}
+	 
+	 
 
 	// {{ Especialidad (property)
 	private EspecialidadEnum especialidad;
