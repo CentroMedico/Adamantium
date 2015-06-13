@@ -32,26 +32,21 @@ import dom.Persona.Persona;
 //@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
-// @Named("Un doctor")
 public class Doctor extends Persona {
-	
+
 	public TranslatableString title() {
-        return TranslatableString.tr("{nombre}", "nombre", "Doctor");
-    }
-	
-	public String iconName()
-	{
-		return "doctor";	
+		return TranslatableString.tr("{nombre}", "nombre", "Doctor");
+	}
+
+	public String iconName() {
+		return "doctor";
 	}
 
 	// {{ Matricula (property)
 	private String matricula;
-	
-	
+
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
-	
-	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -61,21 +56,13 @@ public class Doctor extends Persona {
 	}
 
 	public String validateMatricula(String matr) {
-		if (matr==null)
-        {
-        	return "no puede ser nulo";
-        }
-        else if(matr.matches("[a-z,A-Z,0-9,ñ,Ñ]+")==false)
-        {
-        	return "Error Al Cargar";
-        }
-        else
-        {
-        	return null;
-        }
+
+		if (matr.matches("[a-z,A-Z,0-9,ñ,Ñ]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
 	}
-	 
-	 
 
 	// {{ Especialidad (property)
 	private EspecialidadEnum especialidad;
@@ -104,6 +91,7 @@ public class Doctor extends Persona {
 	}
 
 	// }}
+
 	@Inject
 	private DoctorServicio doctorServicio;
 	@Inject

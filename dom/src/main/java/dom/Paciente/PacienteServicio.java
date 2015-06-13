@@ -33,33 +33,32 @@ import dom.GrupoSanguineo.GrupoSanguineoEnum;
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
 public class PacienteServicio extends AbstractFactoryAndRepository {
-	public String iconName()
-	{
-		return "paciente";	
+	public String iconName() {
+		return "paciente";
 	}
-	
+
 	@MemberOrder(name = "Paciente", sequence = "5.1")
 	public Paciente crearPaciente(
+			@ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
-			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final long documento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
-			@ParameterLayout(named = "Obra Social") final String obraSocial,
-			@ParameterLayout(named = "Numero de Carnet") final String numCarnet,
-			@ParameterLayout(named = "Cobertura Medica") final String coberturaMedica) {
+			@ParameterLayout(named = "Obra Social") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String obraSocial,
+			@ParameterLayout(named = "Numero de Carnet") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNumCarnet.NUMCARNET) final String numCarnet,
+			@ParameterLayout(named = "Cobertura Medica") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaCobertura.COBERTURA) final String coberturaMedica) {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
+		paciente.setLegajo(legajo);
 		paciente.setApellido(apellido.toUpperCase());
 		paciente.setNombre(nombre.toUpperCase());
 		paciente.setDocumento(documento);
 		paciente.setDireccion(direccion.toUpperCase());
 		paciente.setCorreo(correo);
 		paciente.setTelefono(telefono);
-		paciente.setLegajo(legajo);
 		paciente.setEstado(EstadoEnum.Activo);
 		paciente.setGrupoSanguineo(grupoSanguineo);
 		paciente.setObraSocial(obraSocial);
@@ -98,10 +97,10 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	@MemberOrder(name = "Paciente", sequence = "5.4")
-	public void buscarPaciente() {
-
-	}
+	// @MemberOrder(name = "Paciente", sequence = "5.4")
+	// public void buscarPaciente() {
+	//
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

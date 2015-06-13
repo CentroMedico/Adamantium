@@ -26,21 +26,19 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.Estado.EstadoEnum;
 import dom.Persona.Persona;
 
-
 //Primera Estrategia: Una tabla por cada clase con la superclase
 //@PersistenceCapable(identityType = IdentityType.DATASTORE)
 //@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Dueño extends Persona {
-	
+
 	public TranslatableString title() {
-        return TranslatableString.tr("{nombre}", "nombre", "Dueño");
-    }
-	
-	public String iconName()
-	{
-		return "dueño";	
+		return TranslatableString.tr("{nombre}", "nombre", "Dueño");
+	}
+
+	public String iconName() {
+		return "dueño";
 	}
 
 	// {{ Iniciales (property)
@@ -51,11 +49,21 @@ public class Dueño extends Persona {
 	public String getIniciales() {
 		return iniciales;
 	}
+
 	public void setIniciales(final String iniciales) {
 		this.iniciales = iniciales;
 	}
 
 	// }}
+
+	public String validateIniciales(String ini) {
+
+		if (ini.matches("[a-z,A-Z,ñ,Ñ]{2}$+") == false) {
+			return "Las iniciales deben tener sólo 2 caracteres";
+		} else {
+			return null;
+		}
+	}
 
 	// {{ Estado (property)
 	private EstadoEnum estado;
@@ -71,7 +79,7 @@ public class Dueño extends Persona {
 	}
 
 	// }}
-	
+
 	@Inject
 	private DueñoServicio dueñoServicio;
 	@Inject

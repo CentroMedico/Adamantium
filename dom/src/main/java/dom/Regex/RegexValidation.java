@@ -39,7 +39,6 @@ public final class RegexValidation {
 
 		}
 
-		// public static final String EMAIL = "[^@ ]*@[^@ ]*[.]+[^@ {2,20}]*";
 		public static final String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	}
@@ -59,7 +58,22 @@ public final class RegexValidation {
 		}
 
 		public static final String MATRICULA = "[a-z,A-Z,0-9,ñ,Ñ]+";
-		
-		
+
 	}
+
+	public static final class ValidaNumCarnet {
+		private ValidaNumCarnet() {
+
+		}
+
+		public static final String NUMCARNET = "[0-9,-]+";
 	}
+
+	public static final class ValidaCobertura {
+		private ValidaCobertura() {
+
+		}
+
+		public static final String COBERTURA = "[a-z, A-Z,0-9,-]+";
+	}
+}

@@ -17,7 +17,9 @@ package dom.Paciente;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -33,14 +35,13 @@ import dom.Persona.Persona;
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Paciente extends Persona {
-	
+
 	public TranslatableString title() {
-        return TranslatableString.tr("{nombre}", "nombre", "Paciente");
-    }
-	
-	public String iconName()
-	{
-		return "paciente";	
+		return TranslatableString.tr("{nombre}", "nombre", "Paciente");
+	}
+
+	public String iconName() {
+		return "paciente";
 	}
 
 	// {{ Legajo (property)
@@ -48,6 +49,8 @@ public class Paciente extends Persona {
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
+	// @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence =
+	// "LegajoPaciente")
 	public int getLegajo() {
 		return legajo;
 	}
@@ -102,6 +105,16 @@ public class Paciente extends Persona {
 	}
 
 	// }}
+
+	public String validateObraSocial(String obr) {
+
+		if (obr.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
+			return "Datos incorrectos, por favor vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	// {{ NumCarnet (property)
 	private String numCarnet;
 
@@ -117,6 +130,15 @@ public class Paciente extends Persona {
 
 	// }}
 
+	public String validateNumCarnet(String car) {
+
+		if (car.matches("[0-9,-]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	// {{ CoberturaMedica (property)
 	private String cobertura;
 
@@ -131,6 +153,15 @@ public class Paciente extends Persona {
 	}
 
 	// }}
+
+	public String validateCoberturaMedica(String cob) {
+
+		if (cob.matches("[a-z, A-Z,0-9,-]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
 
 	@Inject
 	private PacienteServicio pacienteServicio;

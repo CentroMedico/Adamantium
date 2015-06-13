@@ -37,17 +37,16 @@ import dom.Estado.EstadoEnum;
 @DomainService(repositoryFor = Dueño.class)
 @DomainServiceLayout(named = "Dueño", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "1")
 public class DueñoServicio extends AbstractFactoryAndRepository {
-	
-	public String iconName()
-	{
-		return "dueño";	
+
+	public String iconName() {
+		return "dueño";
 	}
 
 	@MemberOrder(name = "Dueño", sequence = "1.1")
 	public Dueño crearDueño(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
-			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final long documento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -95,10 +94,10 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	@MemberOrder(name = "Dueño", sequence = "1.4")
-	public void buscarDueño() {
-
-	}
+	// @MemberOrder(name = "Dueño", sequence = "1.4")
+	// public void buscarDueño() {
+	//
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

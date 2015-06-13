@@ -32,16 +32,15 @@ import dom.Estado.EstadoEnum;
 @DomainService(repositoryFor = Recepcionista.class)
 @DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "4")
 public class RecepcionistaServicio extends AbstractFactoryAndRepository {
-	public String iconName()
-	{
-		return "recepcionista";	
+	public String iconName() {
+		return "recepcionista";
 	}
 
 	@MemberOrder(name = "Recepcionista", sequence = "4.1")
 	public Recepcionista crearRecepcionista(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
-			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final long documento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -89,10 +88,10 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	@MemberOrder(name = "Recepcionista", sequence = "4.4")
-	public void buscarRecepcionista() {
-
-	}
+	// @MemberOrder(name = "Recepcionista", sequence = "4.4")
+	// public void buscarRecepcionista() {
+	//
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

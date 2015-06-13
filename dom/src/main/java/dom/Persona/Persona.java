@@ -19,8 +19,10 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Unique;
 
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Programmatic;
 
 //Primera Estrategia: Una tabla por cada clase
 //@PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -43,6 +45,15 @@ public abstract class Persona {
 		this.apellido = apellido;
 	}
 
+	public String validateApellido(String ape) {
+
+		if (ape.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	private String nombre;
 
 	@MemberOrder(sequence = "2")
@@ -55,16 +66,35 @@ public abstract class Persona {
 		this.nombre = nombre;
 	}
 
-	private long documento;
+	public String validateNombre(String nom) {
+
+		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
+	private String documento;
 
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
-	public long getDocumento() {
+	// @Unique
+	public String getDocumento() {
 		return documento;
 	}
 
-	public void setDocumento(final long documento) {
+	public void setDocumento(final String documento) {
 		this.documento = documento;
+	}
+
+	public String validateDocumento(String doc) {
+
+		if (doc.matches("[0-9]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
 	}
 
 	private String direccion;
@@ -79,6 +109,15 @@ public abstract class Persona {
 		this.direccion = direccion;
 	}
 
+	public String validateDireccion(String dir) {
+
+		if (dir.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	private String correo;
 
 	@MemberOrder(sequence = "5")
@@ -91,6 +130,16 @@ public abstract class Persona {
 		this.correo = correo;
 	}
 
+	public String validateCorreo(String cor) {
+
+		if (cor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	private String telefono;
 
 	@MemberOrder(sequence = "6")
@@ -101,5 +150,14 @@ public abstract class Persona {
 
 	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String validateTelefono(String tel) {
+
+		if (tel.matches("[+]?[0-9 -]*") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
 	}
 }

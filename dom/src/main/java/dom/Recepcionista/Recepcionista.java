@@ -33,14 +33,13 @@ import dom.Persona.Persona;
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Recepcionista extends Persona {
-	
+
 	public TranslatableString title() {
-        return TranslatableString.tr("{nombre}", "nombre", "Recepcionista");
-    }
-	
-	public String iconName()
-	{
-		return "recepcionista";	
+		return TranslatableString.tr("{nombre}", "nombre", "Recepcionista");
+	}
+
+	public String iconName() {
+		return "recepcionista";
 	}
 
 	// {{ Legajo (property)

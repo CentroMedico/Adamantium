@@ -24,37 +24,32 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.PropertyLayout;
-import org.apache.isis.applib.annotation.RegEx;
-import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.value.Password;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
-import dom.Regex.RegexValidation;
+import dom.Paciente.Paciente;
 
 @DomainService(repositoryFor = Doctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "3")
 @Named("Doctor")
 public class DoctorServicio extends AbstractFactoryAndRepository {
-	
-	
-	public String iconName()
-	{
-		return "doctor";	
+
+	public String iconName() {
+		return "doctor";
 	}
-	
-	
+
 	@MemberOrder(name = "Doctor", sequence = "3.1")
 	public Doctor crearDoctor(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
-			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final long documento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -68,20 +63,26 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		doctor.setDireccion(direccion.toUpperCase());
 		doctor.setCorreo(correo);
 		doctor.setTelefono(telefono);
-		if(matricula!=null)
-		{
-			doctor.setMatricula(matricula.toUpperCase());
-		}
+		doctor.setMatricula(matricula);
 		doctor.setEspecialidad(especialidad);
 		doctor.setEstado(EstadoEnum.Activo);
 		persist(doctor);
 		return doctor;
 	}
-	
+
 	@MemberOrder(name = "Doctor", sequence = "3.2")
 	public List<Doctor> listarDoctores() {
 		return container.allInstances(Doctor.class);
 	}
+
+	// @Programmatic
+	// public String ExistenciaDocumento(final String dni) {
+	// for (Doctor doctor : listarDoctores())
+	// return dni == doctor.getDocumento() ?
+	// "Ya existe el número de documento ingresado."
+	// : null;
+	// return null;
+	// }
 
 	@MemberOrder(name = "Doctor", sequence = "3.3")
 	public List<Doctor> listarDoctoresActivos() {
@@ -107,11 +108,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	@MemberOrder(name = "Doctor", sequence = "3.5")
-	public void buscarDoctor() {
+	// @MemberOrder(name = "Doctor", sequence = "3.5")
+	// public void buscarDoctor() {
+	//
+	// }
 
-	}
-	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 
