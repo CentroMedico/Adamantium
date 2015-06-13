@@ -18,7 +18,13 @@ package dom.Estado;
 import javax.inject.Inject;
 
 import org.apache.isis.applib.DomainObjectContainer;
-
+/**
+ * Clase enumerada, de la cual agrega el estado de un doctor,Paciente o Recepcionista.
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 public enum EstadoEnum {
 	Activo("Activo"), Inactivo("Inactivo");
 

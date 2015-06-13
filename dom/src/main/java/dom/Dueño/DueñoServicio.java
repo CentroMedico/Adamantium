@@ -33,15 +33,44 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import com.google.common.base.Predicate;
 
 import dom.Estado.EstadoEnum;
-
+/**
+ * Contiene la funcionalidad para Cargar/Listar un nuevo Dueño
+ * 
+ * @author Adamantiums
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 @DomainService(repositoryFor = Dueño.class)
 @DomainServiceLayout(named = "Dueño", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "1")
 public class DueñoServicio extends AbstractFactoryAndRepository {
-
+	/**
+	 * Retorna el nombre del icono para el Dueño
+	 * 
+	 * @return String
+	 */
 	public String iconName() {
 		return "dueño";
 	}
-
+	/**
+	 * Obtiene los datos validados del Cliente
+	 * 
+	 * @param apellido
+	 *            String
+	 * @param nombre
+	 *            String
+	 * @param documento
+	 *            long
+	 * @param direccion
+	 *            String
+	 * @param correo
+	 *            String
+	 * @param telefono
+	 *            String
+	 * @param iniciales
+	 *            String
+	 *
+	 * @return dueño
+	 */
 	@MemberOrder(name = "Dueño", sequence = "1.1")
 	public Dueño crearDueño(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
@@ -64,12 +93,20 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		persist(dueño);
 		return dueño;
 	}
-
+	/**
+	 * Obtiene una lista de todos los dueños
+	 * 
+	 * @return listaDeDueños List<Dueño>
+	 */
 	@MemberOrder(name = "Dueño", sequence = "1.2")
 	public List<Dueño> listarDueños() {
 		return container.allInstances(Dueño.class);
 	}
-
+	/**
+	 * Obtiene una lista de Dueños Activos
+	 * 
+	 * @return List<Dueño>
+	 */
 	@MemberOrder(name = "Dueño", sequence = "1.3")
 	public List<Dueño> listarDueñosActivos() {
 		return allMatches(Dueño.class, new Predicate<Dueño>() {
@@ -81,7 +118,11 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
+	/**
+	 * Obtiene una lista de Dueños Inactivos
+	 * 
+	 * @return List<Dueño>
+	 */
 	@MemberOrder(name = "Dueño", sequence = "1.3")
 	public List<Dueño> listarDueñosInactivos() {
 		return allMatches(Dueño.class, new Predicate<Dueño>() {

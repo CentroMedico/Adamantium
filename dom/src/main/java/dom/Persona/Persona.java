@@ -19,32 +19,55 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Unique;
-
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Programmatic;
 
-//Primera Estrategia: Una tabla por cada clase
-//@PersistenceCapable(identityType = IdentityType.DATASTORE)
+
+/**
+ * Clase abstracta que representa a una persona, de la cual extenderan todos los
+ * Doctores, Pacientes, Dueño y Recepcionista
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
+// Primera Estrategia: Una tabla por cada clase
+// @PersistenceCapable(identityType = IdentityType.DATASTORE)
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-//----------------------------------------------------------------
-//Segunda Estrategia: Una tabla por cada clase, solo las subclases
+// ----------------------------------------------------------------
+// Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Persona {
 
 	private String apellido;
 
+	/**
+	 * Pemite obtener un apellido a la Persona
+	 * 
+	 * @return apellido String
+	 */
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	public String getApellido() {
 		return apellido;
 	}
 
+	/**
+	 * Setea el apellido de la Persona
+	 * 
+	 * @param apellido
+	 *            String
+	 */
 	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param ape
+	 * @return String
+	 */
 	public String validateApellido(String ape) {
 
 		if (ape.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
@@ -56,16 +79,33 @@ public abstract class Persona {
 
 	private String nombre;
 
+	/**
+	 * Pemite obtener un nombre a la Persona
+	 * 
+	 * @return nombre String
+	 */
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "false")
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Setea el nombre de la Persona
+	 * 
+	 * @param nombre
+	 *            String
+	 */
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param nom
+	 * @return String
+	 */
 	public String validateNombre(String nom) {
 
 		if (nom.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
@@ -77,6 +117,11 @@ public abstract class Persona {
 
 	private String documento;
 
+	/**
+	 * Pemite obtener un numero de documento a la Persona
+	 * 
+	 * @return documento long
+	 */
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
 	// @Unique
@@ -84,10 +129,22 @@ public abstract class Persona {
 		return documento;
 	}
 
+	/**
+	 * Setea el numero de documento de la Persona
+	 * 
+	 * @param documento
+	 *            long
+	 */
 	public void setDocumento(final String documento) {
 		this.documento = documento;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param doc
+	 * @return String
+	 */
 	public String validateDocumento(String doc) {
 
 		if (doc.matches("[0-9]+") == false) {
@@ -99,16 +156,33 @@ public abstract class Persona {
 
 	private String direccion;
 
+	/**
+	 * Pemite obtener una direccion de la Persona
+	 * 
+	 * @return direccion String
+	 */
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
 	public String getDireccion() {
 		return direccion;
 	}
 
+	/**
+	 * Setea la direccion de la Persona
+	 * 
+	 * @param correo
+	 *            String
+	 */
 	public void setDireccion(final String direccion) {
 		this.direccion = direccion;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param dir
+	 * @return String
+	 */
 	public String validateDireccion(String dir) {
 
 		if (dir.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
@@ -120,16 +194,33 @@ public abstract class Persona {
 
 	private String correo;
 
+	/**
+	 * Pemite obtener un correo electronico a la Persona
+	 * 
+	 * @return correo String
+	 */
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "false")
 	public String getCorreo() {
 		return correo;
 	}
 
+	/**
+	 * Setea el correo electronico de la Persona
+	 * 
+	 * @param correo
+	 *            String
+	 */
 	public void setCorreo(final String correo) {
 		this.correo = correo;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param cor
+	 * @return String
+	 */
 	public String validateCorreo(String cor) {
 
 		if (cor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -142,16 +233,33 @@ public abstract class Persona {
 
 	private String telefono;
 
+	/**
+	 * Pemite obtener un numero de telefono celular a la Persona
+	 * 
+	 * @return telefono String
+	 */
 	@MemberOrder(sequence = "6")
 	@Column(allowsNull = "false")
 	public String getTelefono() {
 		return telefono;
 	}
 
+	/**
+	 * Setea el numero de telefono celular de la Persona
+	 * 
+	 * @param telefono
+	 *            String
+	 */
 	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
 	}
 
+	/**
+	 * Valida que no se introduscan datos erroneos
+	 * 
+	 * @param tel
+	 * @return String
+	 */
 	public String validateTelefono(String tel) {
 
 		if (tel.matches("[+]?[0-9 -]*") == false) {

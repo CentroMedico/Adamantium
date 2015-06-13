@@ -26,18 +26,34 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.Estado.EstadoEnum;
 import dom.Persona.Persona;
 
-//Primera Estrategia: Una tabla por cada clase
-//@PersistenceCapable(identityType = IdentityType.DATASTORE)
-//@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+/**
+ * Entidad Recepcionista la cual representa a cualquier persona que trabaje en
+ * el centro medico. Extiende de la clase Persona.
+ * 
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
+// Primera Estrategia: Una tabla por cada clase
+// @PersistenceCapable(identityType = IdentityType.DATASTORE)
+// @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 
-//Segunda Estrategia: Una tabla por cada clase, solo las subclases
+// Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Recepcionista extends Persona {
-
+	/**
+	 * Representa en UI el nombre "Doctor" en carga/modificacion.
+	 */
+	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", "Recepcionista");
 	}
 
+	/**
+	 * Obtiene el nombre del icono.
+	 */
+	/*----------------------------------------------------*/
 	public String iconName() {
 		return "recepcionista";
 	}
@@ -45,12 +61,23 @@ public class Recepcionista extends Persona {
 	// {{ Legajo (property)
 	private int legajo;
 
+	/**
+	 * Pemite obtener el legajo de un Paciente
+	 * 
+	 * @return legajo int
+	 */
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	public int getLegajo() {
 		return legajo;
 	}
 
+	/**
+	 * Setea el legajo que se va a crear.
+	 * 
+	 * @param legajo
+	 *            legajo
+	 */
 	public void setLegajo(final int legajo) {
 		this.legajo = legajo;
 	}
@@ -60,12 +87,23 @@ public class Recepcionista extends Persona {
 	// {{ Estado (property)
 	private EstadoEnum estado;
 
+	/**
+	 * Pemite obtener el estado de un Paciente
+	 * 
+	 * @return estado String
+	 */
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "false")
 	public EstadoEnum getEstado() {
 		return estado;
 	}
 
+	/**
+	 * Setea el estado que se va a crear.
+	 * 
+	 * @param estado
+	 *            estado
+	 */
 	public void setEstado(final EstadoEnum estado) {
 		this.estado = estado;
 	}

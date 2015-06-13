@@ -18,7 +18,13 @@ package dom.Especialidad;
 import javax.inject.Inject;
 
 import org.apache.isis.applib.DomainObjectContainer;
-
+/**
+ * Clase enumerada, de la cual agrega la especialidad de un doctor.
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 public enum EspecialidadEnum {
 	Clinica_General("Clinica General"), Dermatologia("Dermatologia"), Nutricion(
 			"Nutricion"), Alergología("Alergología"), Anestesiología_y_reanimación(

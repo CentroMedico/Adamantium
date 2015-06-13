@@ -29,13 +29,45 @@ import com.google.common.base.Predicate;
 
 import dom.Estado.EstadoEnum;
 
+/**
+ * Contiene la funcionalidad para Cargar/Listar un nuev@ Recepcionista
+ * 
+ * @author Adamantiums
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 @DomainService(repositoryFor = Recepcionista.class)
 @DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "4")
 public class RecepcionistaServicio extends AbstractFactoryAndRepository {
+	/**
+	 * Retorna el nombre del icono para el Doctor
+	 * 
+	 * @return String
+	 */
 	public String iconName() {
 		return "recepcionista";
 	}
 
+	/**
+	 * Obtiene los datos validados del Cliente
+	 * 
+	 * @param apellido
+	 *            String
+	 * @param nombre
+	 *            String
+	 * @param documento
+	 *            long
+	 * @param direccion
+	 *            String
+	 * @param correo
+	 *            String
+	 * @param telefono
+	 *            String
+	 * @param legajo
+	 *            int
+	 *
+	 * @return recepcionista
+	 */
 	@MemberOrder(name = "Recepcionista", sequence = "4.1")
 	public Recepcionista crearRecepcionista(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
@@ -59,11 +91,21 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		return recepcionista;
 	}
 
+	/**
+	 * Obtiene una lista de todos l@s Recepcionistas
+	 * 
+	 * @return listaDeRecepcionistas List<Recepcionista>
+	 */
 	@MemberOrder(name = "Recepcionista", sequence = "4.2")
 	public List<Recepcionista> listarRecepcionista() {
 		return container.allInstances(Recepcionista.class);
 	}
 
+	/**
+	 * Obtiene una lista de todos l@s Recepcionistas Activas
+	 * 
+	 * @return List<Recepcionista>
+	 */
 	@MemberOrder(name = "Recepcionista", sequence = "4.3")
 	public List<Recepcionista> listarRecepcionistasActivos() {
 		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {
@@ -76,6 +118,11 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
+	/**
+	 * Obtiene una lista de todos l@s Recepcionistas Inactivas
+	 * 
+	 * @return List<Recepcionista>
+	 */
 	@MemberOrder(name = "Recepcionista", sequence = "4.3")
 	public List<Recepcionista> listarRecepcionistasInactivos() {
 		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {

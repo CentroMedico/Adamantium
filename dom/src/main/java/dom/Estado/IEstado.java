@@ -14,7 +14,13 @@
    limitations under the License.
  */
 package dom.Estado;
-
+/**
+ * Interface para implementar los distintos tipos de Estado
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 public interface IEstado {
 
 	EstadoEnum getCategory();

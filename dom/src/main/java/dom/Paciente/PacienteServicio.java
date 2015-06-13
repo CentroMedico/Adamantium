@@ -30,13 +30,53 @@ import com.google.common.base.Predicate;
 import dom.Estado.EstadoEnum;
 import dom.GrupoSanguineo.GrupoSanguineoEnum;
 
+/**
+ * Contiene la funcionalidad para Cargar/Listar un nuevo Paciente
+ * 
+ * @author Adamantiums
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
 public class PacienteServicio extends AbstractFactoryAndRepository {
+	
+	/**
+	 * Retorna el nombre del icono para el Doctor
+	 * 
+	 * @return String
+	 */
 	public String iconName() {
 		return "paciente";
 	}
-
+	/**
+	 * Obtiene los datos validados del Cliente
+	 * 
+	 * @param apellido
+	 *            String
+	 * @param nombre
+	 *            String
+	 * @param documento
+	 *            long
+	 * @param direccion
+	 *            String
+	 * @param correo
+	 *            String
+	 * @param telefono
+	 *            String
+	 * @param legajo
+	 *            int
+	 * @param grupoSanguineo
+	 *            GrupoSanguineoEnum            
+	 * @param obraSocial
+	 *            String
+	 * @param numCarnet
+	 *            String
+	 * @param coberturaMedica
+	 *            String
+	 *
+	 * @return paciente
+	 */
 	@MemberOrder(name = "Paciente", sequence = "5.1")
 	public Paciente crearPaciente(
 			@ParameterLayout(named = "Legajo") final int legajo,
@@ -67,12 +107,20 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		persist(paciente);
 		return paciente;
 	}
-
+	/**
+	 * Obtiene una lista de todos los Pacientes
+	 * 
+	 * @return listaDePaiente List<Paciente>
+	 */
 	@MemberOrder(name = "Paciente", sequence = "5.2")
 	public List<Paciente> listarPacientes() {
 		return container.allInstances(Paciente.class);
 	}
-
+	/**
+	 * Obtiene una lista de Pacientes Activos
+	 * 
+	 * @return List<Paciente>
+	 */
 	@MemberOrder(name = "Paciente", sequence = "5.3")
 	public List<Paciente> listarPacientesActivos() {
 		return allMatches(Paciente.class, new Predicate<Paciente>() {
@@ -84,7 +132,11 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
+	/**
+	 * Obtiene una lista de Pacientes Inactivos
+	 * 
+	 * @return List<Paciente>
+	 */
 	@MemberOrder(name = "Paciente", sequence = "5.3")
 	public List<Paciente> listarPacientesInactivos() {
 		return allMatches(Paciente.class, new Predicate<Paciente>() {

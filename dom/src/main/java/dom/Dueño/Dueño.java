@@ -25,37 +25,64 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.Estado.EstadoEnum;
 import dom.Persona.Persona;
-
+/**
+ * Entidad Dueño la cual representa al dueño del
+ * centro medico. Extiende de la clase Persona.
+ * 
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 //Primera Estrategia: Una tabla por cada clase con la superclase
 //@PersistenceCapable(identityType = IdentityType.DATASTORE)
 //@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 //Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Dueño extends Persona {
-
+	/**
+	 * Representa en UI el nombre "Doctor" en carga/modificacion.
+	 */
+	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", "Dueño");
 	}
-
+	/**
+	 * Obtiene el nombre del icono.
+	 */
+	/*----------------------------------------------------*/
 	public String iconName() {
 		return "dueño";
 	}
 
 	// {{ Iniciales (property)
 	private String iniciales;
-
+	/**
+	 * Pemite obtener las iniciales del Dueño
+	 * @return matricula String
+	 */
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	public String getIniciales() {
 		return iniciales;
 	}
-
+	/**
+	 * Setea las iniciales que se va a crear.
+	 * 
+	 * @param iniciales
+	 *            iniciales
+	 */
 	public void setIniciales(final String iniciales) {
 		this.iniciales = iniciales;
 	}
 
 	// }}
-
+/**
+ * Valida las iniciales.
+ * 
+ * @param ini
+ * @return String
+ */
 	public String validateIniciales(String ini) {
 
 		if (ini.matches("[a-z,A-Z,ñ,Ñ]{2}$+") == false) {
@@ -67,13 +94,21 @@ public class Dueño extends Persona {
 
 	// {{ Estado (property)
 	private EstadoEnum estado;
-
+	/**
+	 * Pemite obtener el estado del Dueño
+	 * @return estado EstadoEnum
+	 */
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "false")
 	public EstadoEnum getEstado() {
 		return estado;
 	}
-
+	/**
+	 * Setea el estado que se va a crear.
+	 * 
+	 * @param estado
+	 *            estado
+	 */
 	public void setEstado(final EstadoEnum estado) {
 		this.estado = estado;
 	}

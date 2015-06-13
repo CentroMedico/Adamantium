@@ -17,7 +17,13 @@ package dom.GrupoSanguineo;
 
 import javax.inject.Inject;
 import org.apache.isis.applib.DomainObjectContainer;
-
+/**
+ * Clase enumerada, de la cual agrega el Grupo Sanguineo de un Paciente.
+ * 
+ * @author Adamantium
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 public enum GrupoSanguineoEnum {
 
 	// O- O+ A− A+ B− B+ AB− AB+

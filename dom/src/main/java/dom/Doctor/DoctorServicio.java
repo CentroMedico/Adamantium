@@ -36,15 +36,47 @@ import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
 import dom.Paciente.Paciente;
 
+/**
+ * Contiene la funcionalidad para Cargar/Listar un nuevo Doctor
+ * 
+ * @author Adamantiums
+ * @since 01/06/2015
+ * @version 1.0.0
+ */
 @DomainService(repositoryFor = Doctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "3")
 @Named("Doctor")
 public class DoctorServicio extends AbstractFactoryAndRepository {
-
+	/**
+	 * Retorna el nombre del icono para el Doctor
+	 * 
+	 * @return String
+	 */
 	public String iconName() {
 		return "doctor";
 	}
-
+	/**
+	 * Obtiene los datos validados del Cliente
+	 * 
+	 * @param apellido
+	 *            String
+	 * @param nombre
+	 *            String
+	 * @param documento
+	 *            long
+	 * @param direccion
+	 *            String
+	 * @param correo
+	 *            String
+	 * @param telefono
+	 *            String
+	 * @param matricula
+	 *            String
+	 * @param especialidad
+	 *            EspecialidadEnum
+	 * 
+	 * @return doctor
+	 */
 	@MemberOrder(name = "Doctor", sequence = "3.1")
 	public Doctor crearDoctor(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
@@ -69,7 +101,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		persist(doctor);
 		return doctor;
 	}
-
+	/**
+	 * Obtiene una lista de todos los doctores
+	 * 
+	 * @return listaDeDoctores List<Doctores>
+	 */
 	@MemberOrder(name = "Doctor", sequence = "3.2")
 	public List<Doctor> listarDoctores() {
 		return container.allInstances(Doctor.class);
@@ -83,7 +119,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	// : null;
 	// return null;
 	// }
-
+	/**
+	 * Obtiene una lista de Doctores Activos
+	 * 
+	 * @return List<Doctor>
+	 */
 	@MemberOrder(name = "Doctor", sequence = "3.3")
 	public List<Doctor> listarDoctoresActivos() {
 		return allMatches(Doctor.class, new Predicate<Doctor>() {
@@ -95,7 +135,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
+	/**
+	 * Obtiene una lista de Doctores Inactivos
+	 * 
+	 * @return List<Doctor>
+	 */
 	@MemberOrder(name = "Doctor", sequence = "3.4")
 	public List<Doctor> listarDoctoresInactivos() {
 		return allMatches(Doctor.class, new Predicate<Doctor>() {
@@ -107,7 +151,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
+	/**
+	 * Obtiene una lista de Doctores Activos
+	 * 
+	 * @return List<Doctor>
+	 */
 	// @MemberOrder(name = "Doctor", sequence = "3.5")
 	// public void buscarDoctor() {
 	//
