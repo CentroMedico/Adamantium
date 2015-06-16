@@ -26,15 +26,14 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.value.Password;
-import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
 import dom.Especialidad.EspecialidadEnum;
 import dom.Estado.EstadoEnum;
-import dom.Paciente.Paciente;
+
+import dom.TipoDeSexo.TipoDeSexoEnum;
+import dom.TipoDocumento.TipoDocumentoEnum;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Doctor
@@ -55,6 +54,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	public String iconName() {
 		return "doctor";
 	}
+
 	/**
 	 * Obtiene los datos validados del Cliente
 	 * 
@@ -81,6 +81,8 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	public Doctor crearDoctor(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
+			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
+			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
@@ -91,6 +93,8 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		final Doctor doctor = newTransientInstance(Doctor.class);
 		doctor.setApellido(apellido.toUpperCase());
 		doctor.setNombre(nombre.toUpperCase());
+		doctor.setTipoDeSexoEnum(tipoSexo);
+		doctor.setTipoDocumento(tipoDocumento);
 		doctor.setDocumento(documento);
 		doctor.setDireccion(direccion.toUpperCase());
 		doctor.setCorreo(correo);
@@ -101,6 +105,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		persist(doctor);
 		return doctor;
 	}
+
 	/**
 	 * Obtiene una lista de todos los doctores
 	 * 
@@ -135,6 +140,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
+
 	/**
 	 * Obtiene una lista de Doctores Inactivos
 	 * 
@@ -151,6 +157,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
+
 	/**
 	 * Obtiene una lista de Doctores Activos
 	 * 

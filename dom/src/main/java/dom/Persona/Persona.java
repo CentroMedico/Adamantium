@@ -19,7 +19,11 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+
 import org.apache.isis.applib.annotation.MemberOrder;
+
+import dom.TipoDeSexo.TipoDeSexoEnum;
+import dom.TipoDocumento.TipoDocumentoEnum;
 
 
 /**
@@ -63,7 +67,7 @@ public abstract class Persona {
 	}
 
 	/**
-	 * Valida que no se introduscan datos erroneos
+	 * Valida que no se introduzcan datos erroneos
 	 * 
 	 * @param ape
 	 * @return String
@@ -101,7 +105,7 @@ public abstract class Persona {
 	}
 
 	/**
-	 * Valida que no se introduscan datos erroneos
+	 * Valida que no se introduzcan datos erroneos
 	 * 
 	 * @param nom
 	 * @return String
@@ -114,158 +118,206 @@ public abstract class Persona {
 			return null;
 		}
 	}
-
-	private String documento;
-
+	
+	
+	// {{ TipoDeSexoEnum (property)
+	private TipoDeSexoEnum tipoDeSexo;
 	/**
-	 * Pemite obtener un numero de documento a la Persona
+	 * Pemite obtener el TipoDeSexo de la Persona
 	 * 
-	 * @return documento long
+	 * @return nombre TipoDeSexoEnum
 	 */
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
-	// @Unique
-	public String getDocumento() {
-		return documento;
+	public TipoDeSexoEnum getTipoDeSexoEnum() {
+		return tipoDeSexo;
 	}
-
 	/**
-	 * Setea el numero de documento de la Persona
+	 * Setea el TipoDeSexo de la Persona
 	 * 
-	 * @param documento
-	 *            long
+	 * @param tipoDeSexo
+	 *             TipoDeSexoEnum
 	 */
-	public void setDocumento(final String documento) {
-		this.documento = documento;
+	public void setTipoDeSexoEnum(final TipoDeSexoEnum tipoDeSexo) {
+		this.tipoDeSexo = tipoDeSexo;
 	}
+	// }}
 
-	/**
-	 * Valida que no se introduscan datos erroneos
-	 * 
-	 * @param doc
-	 * @return String
-	 */
-	public String validateDocumento(String doc) {
-
-		if (doc.matches("[0-9]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
+	// {{ TipoDocumento (property)
+		private TipoDocumentoEnum tipoDocumento;
+		/**
+		 * Pemite obtener el TipoDeDocumento de la Persona
+		 * 
+		 * @return nombre TipoDeDocumentoEnum
+		 */
+		@MemberOrder(sequence = "4")
+		@Column(allowsNull = "false")
+		public TipoDocumentoEnum getTipoDocumento() {
+			return tipoDocumento;
 		}
-	}
-
-	private String direccion;
-
-	/**
-	 * Pemite obtener una direccion de la Persona
-	 * 
-	 * @return direccion String
-	 */
-	@MemberOrder(sequence = "4")
-	@Column(allowsNull = "false")
-	public String getDireccion() {
-		return direccion;
-	}
-
-	/**
-	 * Setea la direccion de la Persona
-	 * 
-	 * @param correo
-	 *            String
-	 */
-	public void setDireccion(final String direccion) {
-		this.direccion = direccion;
-	}
-
-	/**
-	 * Valida que no se introduscan datos erroneos
-	 * 
-	 * @param dir
-	 * @return String
-	 */
-	public String validateDireccion(String dir) {
-
-		if (dir.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
+		/**
+		 * Setea el TipoDeDocumento de la Persona
+		 * 
+		 * @param tipoDocumento
+		 *             TipoDeDocumentoEnum
+		 */
+		public void setTipoDocumento(final TipoDocumentoEnum propertyName) {
+			this.tipoDocumento = propertyName;
 		}
-	}
 
-	private String correo;
+		// }}
 
-	/**
-	 * Pemite obtener un correo electronico a la Persona
-	 * 
-	 * @return correo String
-	 */
-	@MemberOrder(sequence = "5")
-	@Column(allowsNull = "false")
-	public String getCorreo() {
-		return correo;
-	}
+		private String documento;
 
-	/**
-	 * Setea el correo electronico de la Persona
-	 * 
-	 * @param correo
-	 *            String
-	 */
-	public void setCorreo(final String correo) {
-		this.correo = correo;
-	}
-
-	/**
-	 * Valida que no se introduscan datos erroneos
-	 * 
-	 * @param cor
-	 * @return String
-	 */
-	public String validateCorreo(String cor) {
-
-		if (cor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
+		/**
+		 * Pemite obtener un numero de documento a la Persona
+		 * 
+		 * @return documento long
+		 */
+		@MemberOrder(sequence = "5")
+		@Column(allowsNull = "false")
+		// @Unique
+		public String getDocumento() {
+			return documento;
 		}
-	}
 
-	private String telefono;
-
-	/**
-	 * Pemite obtener un numero de telefono celular a la Persona
-	 * 
-	 * @return telefono String
-	 */
-	@MemberOrder(sequence = "6")
-	@Column(allowsNull = "false")
-	public String getTelefono() {
-		return telefono;
-	}
-
-	/**
-	 * Setea el numero de telefono celular de la Persona
-	 * 
-	 * @param telefono
-	 *            String
-	 */
-	public void setTelefono(final String telefono) {
-		this.telefono = telefono;
-	}
-
-	/**
-	 * Valida que no se introduscan datos erroneos
-	 * 
-	 * @param tel
-	 * @return String
-	 */
-	public String validateTelefono(String tel) {
-
-		if (tel.matches("[+]?[0-9 -]*") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
-		} else {
-			return null;
+		/**
+		 * Setea el numero de documento de la Persona
+		 * 
+		 * @param documento
+		 *            long
+		 */
+		public void setDocumento(final String documento) {
+			this.documento = documento;
 		}
-	}
+
+		/**
+		 * Valida que no se introduzcan datos erroneos
+		 * 
+		 * @param doc
+		 * @return String
+		 */
+		public String validateDocumento(String doc) {
+
+			if (doc.matches("[0-9]+") == false) {
+				return "Datos erroneos, vuelva a intentarlo";
+			} else {
+				return null;
+			}
+		}
+
+		private String direccion;
+
+		/**
+		 * Pemite obtener una direccion de la Persona
+		 * 
+		 * @return direccion String
+		 */
+		@MemberOrder(sequence = "6")
+		@Column(allowsNull = "false")
+		public String getDireccion() {
+			return direccion;
+		}
+
+		/**
+		 * Setea la direccion de la Persona
+		 * 
+		 * @param correo
+		 *            String
+		 */
+		public void setDireccion(final String direccion) {
+			this.direccion = direccion;
+		}
+
+		/**
+		 * Valida que no se introduzcan datos erroneos
+		 * 
+		 * @param dir
+		 * @return String
+		 */
+		public String validateDireccion(String dir) {
+
+			if (dir.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
+				return "Datos erroneos, vuelva a intentarlo";
+			} else {
+				return null;
+			}
+		}
+
+		private String correo;
+
+		/**
+		 * Pemite obtener un correo electronico a la Persona
+		 * 
+		 * @return correo String
+		 */
+		@MemberOrder(sequence = "7")
+		@Column(allowsNull = "false")
+		public String getCorreo() {
+			return correo;
+		}
+
+		/**
+		 * Setea el correo electronico de la Persona
+		 * 
+		 * @param correo
+		 *            String
+		 */
+		public void setCorreo(final String correo) {
+			this.correo = correo;
+		}
+
+		/**
+		 * Valida que no se introduzcan datos erroneos
+		 * 
+		 * @param cor
+		 * @return String
+		 */
+		public String validateCorreo(String cor) {
+
+			if (cor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") == false) {
+				return "Datos erroneos, vuelva a intentarlo";
+			} else {
+				return null;
+			}
+		}
+
+		private String telefono;
+
+		/**
+		 * Pemite obtener un numero de telefono celular a la Persona
+		 * 
+		 * @return telefono String
+		 */
+		@MemberOrder(sequence = "8")
+		@Column(allowsNull = "false")
+		public String getTelefono() {
+			return telefono;
+		}
+
+		/**
+		 * Setea el numero de telefono celular de la Persona
+		 * 
+		 * @param telefono
+		 *            String
+		 */
+		public void setTelefono(final String telefono) {
+			this.telefono = telefono;
+		}
+
+		/**
+		 * Valida que no se introduzcan datos erroneos
+		 * 
+		 * @param tel
+		 * @return String
+		 */
+		public String validateTelefono(String tel) {
+
+			if (tel.matches("[+]?[0-9 -]*") == false) {
+				return "Datos erroneos, vuelva a intentarlo";
+			} else {
+				return null;
+			}
+		}
 }

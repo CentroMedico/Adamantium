@@ -33,6 +33,9 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import com.google.common.base.Predicate;
 
 import dom.Estado.EstadoEnum;
+import dom.TipoDeSexo.TipoDeSexoEnum;
+import dom.TipoDocumento.TipoDocumentoEnum;
+
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Dueño
  * 
@@ -51,6 +54,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	public String iconName() {
 		return "dueño";
 	}
+
 	/**
 	 * Obtiene los datos validados del Cliente
 	 * 
@@ -75,6 +79,8 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	public Dueño crearDueño(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
+			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
+			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
@@ -84,6 +90,8 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		final Dueño dueño = newTransientInstance(Dueño.class);
 		dueño.setApellido(apellido.toUpperCase());
 		dueño.setNombre(nombre.toUpperCase());
+		dueño.setTipoDeSexoEnum(tipoSexo);
+		dueño.setTipoDocumento(tipoDocumento);
 		dueño.setDocumento(documento);
 		dueño.setDireccion(direccion.toUpperCase());
 		dueño.setCorreo(correo);
@@ -93,6 +101,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		persist(dueño);
 		return dueño;
 	}
+
 	/**
 	 * Obtiene una lista de todos los dueños
 	 * 
@@ -102,6 +111,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	public List<Dueño> listarDueños() {
 		return container.allInstances(Dueño.class);
 	}
+
 	/**
 	 * Obtiene una lista de Dueños Activos
 	 * 
@@ -118,6 +128,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
+
 	/**
 	 * Obtiene una lista de Dueños Inactivos
 	 * 

@@ -166,7 +166,7 @@ public class Paciente extends Persona {
 
 	// }}
 	/**
-	 * Valida que no se introduscan datos erroneos
+	 * Valida que no se introduzcan datos erroneos
 	 * 
 	 * @param obr
 	 * @return String
@@ -206,7 +206,7 @@ public class Paciente extends Persona {
 
 	// }}
 	/**
-	 * Valida que no se introduscan datos erroneos
+	 * Valida que no se introduzcan datos erroneos
 	 * 
 	 * @param car
 	 * @return String
@@ -246,7 +246,7 @@ public class Paciente extends Persona {
 
 	// }}
 	/**
-	 * Valida que no se introduscan datos erroneos
+	 * Valida que no se introduzcan datos erroneos
 	 * 
 	 * @param cob
 	 * @return String

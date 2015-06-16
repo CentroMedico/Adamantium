@@ -28,6 +28,8 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import com.google.common.base.Predicate;
 
 import dom.Estado.EstadoEnum;
+import dom.TipoDeSexo.TipoDeSexoEnum;
+import dom.TipoDocumento.TipoDocumentoEnum;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuev@ Recepcionista
@@ -72,6 +74,8 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	public Recepcionista crearRecepcionista(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
+			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
+			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.Regex.RegexValidation.ValidaMail.EMAIL) final String correo,
@@ -81,6 +85,8 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		final Recepcionista recepcionista = newTransientInstance(Recepcionista.class);
 		recepcionista.setApellido(apellido.toUpperCase());
 		recepcionista.setNombre(nombre.toUpperCase());
+		recepcionista.setTipoDeSexoEnum(tipoSexo);
+		recepcionista.setTipoDocumento(tipoDocumento);
 		recepcionista.setDocumento(documento);
 		recepcionista.setDireccion(direccion.toUpperCase());
 		recepcionista.setCorreo(correo);
