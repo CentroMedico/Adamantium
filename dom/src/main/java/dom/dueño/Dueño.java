@@ -15,12 +15,10 @@
  */
 package dom.dueño;
 
-import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.swing.JOptionPane;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
@@ -47,7 +45,8 @@ public class Dueño extends Persona {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Dueño");
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Dueño: " + this.getApellido() + ", " + this.getNombre());
 	}
 
 	/**
@@ -143,9 +142,4 @@ public class Dueño extends Persona {
 		} else if (resp == JOptionPane.CANCEL_OPTION) {
 		}
 	}
-
-	// @Inject
-	// private DueñoServicio dueñoServicio;
-	// @Inject
-	// private DomainObjectContainer container;
 }

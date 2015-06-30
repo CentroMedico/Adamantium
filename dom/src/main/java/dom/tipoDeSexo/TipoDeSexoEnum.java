@@ -1,8 +1,5 @@
 package dom.tipoDeSexo;
 
-import javax.inject.Inject;
-
-import org.apache.isis.applib.DomainObjectContainer;
 /**
  * Clase enumerada, de la cual agrega el tipo de Sexo.
  * 
@@ -12,7 +9,7 @@ import org.apache.isis.applib.DomainObjectContainer;
  */
 public enum TipoDeSexoEnum {
 	M("Masculino"), F("Femenino"), OTRO("Otros");
-	
+
 	private final String nombre;
 
 	public String getNombre() {
@@ -29,10 +26,4 @@ public enum TipoDeSexoEnum {
 	public String toString() {
 		return this.nombre;
 	}
-
-	@Inject
-	private ITipoDeSexo itipodesexo;
-	@Inject
-	private DomainObjectContainer container;
-
 }

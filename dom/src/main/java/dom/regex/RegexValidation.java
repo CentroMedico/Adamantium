@@ -76,4 +76,12 @@ public final class RegexValidation {
 
 		public static final String COBERTURA = "[a-z, A-Z,0-9,-]+";
 	}
+
+	public static final class ValidaHora {
+		private ValidaHora() {
+
+		}
+
+		public static final String HORA = "[0-23]{2}+[:]+[0-59]{2}";
+	}
 }

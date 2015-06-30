@@ -15,8 +15,6 @@
  */
 package dom.grupoSanguineo;
 
-import javax.inject.Inject;
-import org.apache.isis.applib.DomainObjectContainer;
 /**
  * Clase enumerada, de la cual agrega el Grupo Sanguineo de un Paciente.
  * 
@@ -40,14 +38,10 @@ public enum GrupoSanguineoEnum {
 	private GrupoSanguineoEnum(String nom) {
 		nombre = nom;
 	}
+
 	@Override
 	public String toString() {
 		return this.nombre;
 	}
-
-	@Inject
-	private IGrupoSanguineo iGrupoSanguineo;
-	@Inject
-	private DomainObjectContainer container;
 
 }

@@ -14,6 +14,7 @@
    limitations under the License.
  */
 package dom.estado;
+
 /**
  * Interface para implementar los distintos tipos de Estado
  * 

@@ -15,7 +15,7 @@
  */
 package dom.doctor;
 
-import java.time.DayOfWeek;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +24,16 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.dias.DiasEnum;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;
+
 
 /**
  * Entidad Doctor la cual representa a cualquier persona que atienda en el
@@ -45,6 +48,16 @@ import dom.persona.Persona;
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor "),
+
+		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor "
+				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
+				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
+				+ " && apellido.indexOf(:parametro) >= 0 ") })
+@DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")
 @PersistenceCapable
 public class Doctor extends Persona {
 
@@ -53,7 +66,8 @@ public class Doctor extends Persona {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Doctor");
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Doctor: " + this.getApellido() + ", " + this.getNombre());
 	}
 
 	/**
@@ -154,6 +168,21 @@ public class Doctor extends Persona {
 
 	// }}
 
+	// {{ Dia (property)
+	private DiasEnum dia;
+
+	@MemberOrder(sequence = "4")
+	@Column(allowsNull = "true")
+	public DiasEnum getDia() {
+		return dia;
+	}
+
+	public void setDia(final DiasEnum dia) {
+		this.dia = dia;
+	}
+
+	// }}
+
 	public void InactivarDoctor() {
 
 		int resp = JOptionPane.showConfirmDialog(null,
@@ -173,23 +202,4 @@ public class Doctor extends Persona {
 		} else if (resp == JOptionPane.CANCEL_OPTION) {
 		}
 	}
-
-	// {{ Dia (property)
-	private DayOfWeek dia;
-
-	@MemberOrder(sequence = "3")
-	@Column(allowsNull = "true")
-	public DayOfWeek getDia() {
-		return dia;
-	}
-
-	public void setDia(final DayOfWeek dia) {
-		this.dia = dia;
-	}
-	// }}
-
-	// @Inject
-	// private DoctorServicio doctorServicio;
-	// @Inject
-	// private DomainObjectContainer container;
 }

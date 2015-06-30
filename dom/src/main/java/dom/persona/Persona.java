@@ -15,15 +15,13 @@
  */
 package dom.persona;
 
-import java.sql.Date;
-
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.value.DateTime;
+import org.joda.time.LocalDate;
 
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
@@ -148,15 +146,15 @@ public abstract class Persona {
 	// }}
 
 	// {{ FechaNacimiento (property)
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(final Date fechaNacimiento) {
+	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -221,7 +219,7 @@ public abstract class Persona {
 	public String validateDocumento(String doc) {
 
 		if (doc.matches("[0-9]+") == false) {
-			return "Datos erroneos, vuelva a intentarlo";
+			return "Datos erroneos, ingrese el número sin puntos ni espacios.";
 		} else {
 			return null;
 		}
@@ -341,5 +339,4 @@ public abstract class Persona {
 			return null;
 		}
 	}
-
 }

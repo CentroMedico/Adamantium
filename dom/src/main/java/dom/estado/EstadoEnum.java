@@ -15,11 +15,9 @@
  */
 package dom.estado;
 
-import javax.inject.Inject;
-
-import org.apache.isis.applib.DomainObjectContainer;
 /**
- * Clase enumerada, de la cual agrega el estado de un doctor,Paciente o Recepcionista.
+ * Clase enumerada, de la cual agrega el estado de un doctor,Paciente o
+ * Recepcionista.
  * 
  * @author Adamantium
  * @since 01/06/2015
@@ -42,10 +40,4 @@ public enum EstadoEnum {
 	public String toString() {
 		return this.nombre;
 	}
-
-	@Inject
-	private IEstado iestado;
-	@Inject
-	private DomainObjectContainer container;
-
 }

@@ -15,12 +15,11 @@
  */
 package dom.paciente;
 
-import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.swing.JOptionPane;
 
-import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
@@ -41,6 +40,16 @@ import dom.persona.Persona;
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.paciente.Paciente "),
+
+		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.paciente.Paciente "
+				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
+				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
+				+ " && apellido.indexOf(:parametro) >= 0 ") })
+@DomainObject(autoCompleteRepository = PacienteServicio.class, autoCompleteAction = "buscarPaciente")
 @PersistenceCapable
 public class Paciente extends Persona {
 	/**
@@ -48,7 +57,8 @@ public class Paciente extends Persona {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Paciente");
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Paciente: " + this.getApellido() + ", " + this.getNombre());
 	}
 
 	/**
@@ -158,9 +168,4 @@ public class Paciente extends Persona {
 		} else if (resp == JOptionPane.CANCEL_OPTION) {
 		}
 	}
-
-	// @Inject
-	// private PacienteServicio pacienteServicio;
-	// @Inject
-	// private DomainObjectContainer container;
 }

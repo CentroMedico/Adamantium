@@ -15,22 +15,25 @@
  */
 package dom.doctor;
 
-import java.sql.Date;
-import java.time.DayOfWeek;
 import java.util.List;
 
 import javax.inject.Named;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
+import dom.dias.DiasEnum;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
@@ -83,7 +86,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
-			@ParameterLayout(named = "Fecha de Nacimiento") final Date fechaNacimiento,
+			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
 			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
@@ -91,7 +94,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Matricula") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMatricula.MATRICULA) final String matricula,
 			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
-			@ParameterLayout(named = "Dia") final DayOfWeek dia) {
+			@ParameterLayout(named = "Dia") final DiasEnum dia) {
 
 		final Doctor doctor = newTransientInstance(Doctor.class);
 		doctor.setApellido(apellido.toUpperCase());
@@ -111,6 +114,12 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		return doctor;
 	}
 
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Doctor> buscarDoctor(String doctor) {
+		return allMatches(QueryDefault.create(Doctor.class,
+				"buscarNombre,Apellido,Id", "parametro", doctor));
+	}
+
 	/**
 	 * Obtiene una lista de todos los doctores
 	 * 
@@ -121,14 +130,6 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		return container.allInstances(Doctor.class);
 	}
 
-	// @Programmatic
-	// public String ExistenciaDocumento(final String dni) {
-	// for (Doctor doctor : listarDoctores())
-	// return dni == doctor.getDocumento() ?
-	// "Ya existe el número de documento ingresado."
-	// : null;
-	// return null;
-	// }
 	/**
 	 * Obtiene una lista de Doctores Activos
 	 * 

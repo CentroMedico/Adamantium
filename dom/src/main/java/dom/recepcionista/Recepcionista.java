@@ -15,12 +15,10 @@
  */
 package dom.recepcionista;
 
-import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.swing.JOptionPane;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
@@ -48,7 +46,8 @@ public class Recepcionista extends Persona {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Recepcionista");
+		return TranslatableString.tr("{nombre}", "nombre", "Recepcionista: "
+				+ this.getApellido() + ", " + this.getNombre());
 	}
 
 	/**
@@ -128,9 +127,4 @@ public class Recepcionista extends Persona {
 		} else if (resp == JOptionPane.CANCEL_OPTION) {
 		}
 	}
-
-	// @Inject
-	// private RecepcionistaServicio recepcionistaServicio;
-	// @Inject
-	// private DomainObjectContainer container;
 }

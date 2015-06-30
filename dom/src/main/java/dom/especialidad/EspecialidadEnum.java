@@ -15,9 +15,6 @@
  */
 package dom.especialidad;
 
-import javax.inject.Inject;
-
-import org.apache.isis.applib.DomainObjectContainer;
 /**
  * Clase enumerada, de la cual agrega la especialidad de un doctor.
  * 
@@ -63,9 +60,4 @@ public enum EspecialidadEnum {
 	public String toString() {
 		return this.nombre;
 	}
-
-	@Inject
-	private IEspecialidad iespecialidad;
-	@Inject
-	private DomainObjectContainer container;
 }
