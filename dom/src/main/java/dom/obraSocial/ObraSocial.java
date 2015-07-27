@@ -3,17 +3,28 @@ package dom.obraSocial;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import javax.swing.JOptionPane;
 
+import dom.doctor.DoctorServicio;
 import dom.estado.EstadoEnum;
 
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.obraSocial.ObraSocial "),
+
+		@javax.jdo.annotations.Query(name = "buscarNombre", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.obraSocial.ObraSocial "
+				+ "WHERE nombre == :parametro || nombre.indexOf(:parametro) == 0 "
+				+ " && nombre.indexOf(:parametro) >= 0") })
+@DomainObject(autoCompleteRepository = ObraSocialServicio.class, autoCompleteAction = "buscarObraSocial")
 @PersistenceCapable
 public class ObraSocial {
 	/**
-	 * Representa en UI el nombre "Doctor" en carga/modificacion.
+	 * Representa en UI el nombre "Obra Social" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {

@@ -19,6 +19,7 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.swing.JOptionPane;
 
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
@@ -34,15 +35,25 @@ import dom.persona.Persona;
  * @since 01/06/2015
  * @version 1.0.0
  */
+
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.recepcionista.Recepcionista "),
+
+		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.recepcionista.Recepcionista "
+				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
+				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
+				+ " && apellido.indexOf(:parametro) >= 0 ") })
+@DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @PersistenceCapable
 public class Recepcionista extends Persona {
 	/**
-	 * Representa en UI el nombre "Doctor" en carga/modificacion.
+	 * Representa en UI el nombre "Recepcionista" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
@@ -66,7 +77,7 @@ public class Recepcionista extends Persona {
 	 * 
 	 * @return legajo int
 	 */
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "false")
 	public int getLegajo() {
 		return legajo;
@@ -92,7 +103,7 @@ public class Recepcionista extends Persona {
 	 * 
 	 * @return estado String
 	 */
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "11")
 	@Column(allowsNull = "false")
 	public EstadoEnum getEstado() {
 		return estado;

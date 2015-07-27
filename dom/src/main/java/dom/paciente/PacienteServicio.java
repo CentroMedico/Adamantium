@@ -35,6 +35,7 @@ import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
+import dom.turno.Turno;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Paciente
@@ -94,18 +95,22 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
 		paciente.setLegajo(legajo);
-		paciente.setApellido(apellido.toUpperCase());
-		paciente.setNombre(nombre.toUpperCase());
+		paciente.setApellido(apellido.substring(0, 1).toUpperCase()
+				+ apellido.substring(1));
+		paciente.setNombre(nombre.substring(0, 1).toUpperCase()
+				+ nombre.substring(1));
 		paciente.setTipoDeSexoEnum(tipoSexo);
 		paciente.setFechaNacimiento(fechaNacimiento);
 		paciente.setTipoDocumento(tipoDocumento);
 		paciente.setDocumento(documento);
-		paciente.setDireccion(direccion.toUpperCase());
+		paciente.setDireccion(direccion.substring(0, 1).toUpperCase()
+				+ direccion.substring(1));
 		paciente.setCorreo(correo);
 		paciente.setTelefono(telefono);
 		paciente.setEstado(EstadoEnum.Activo);
 		paciente.setGrupoSanguineo(grupoSanguineo);
 		persist(paciente);
+		container.flush();
 		return paciente;
 	}
 
@@ -147,7 +152,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Paciente>
 	 */
-	@MemberOrder(name = "Paciente", sequence = "5.3")
+	@MemberOrder(name = "Paciente", sequence = "5.4")
 	public List<Paciente> listarPacientesInactivos() {
 		return allMatches(Paciente.class, new Predicate<Paciente>() {
 
@@ -158,8 +163,13 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
-	// @MemberOrder(name = "Paciente", sequence = "5.4")
+	@MemberOrder(name = "Paciente", sequence ="5.5")
+	public void reservarTruno(@ParameterLayout(named = "Turno")final Turno turno)
+	{
+		turno.getDisponible();
+		
+	}
+	// @MemberOrder(name = "Paciente", sequence = "5.5")
 	// public void buscarPaciente() {
 	//
 	// }

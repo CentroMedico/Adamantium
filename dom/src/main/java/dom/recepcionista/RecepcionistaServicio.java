@@ -40,7 +40,7 @@ import dom.tipoDocumento.TipoDocumentoEnum;
  * @version 1.0.0
  */
 @DomainService(repositoryFor = Recepcionista.class)
-@DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "4")
+@DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "3")
 public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	/**
 	 * Retorna el nombre del icono para el Doctor
@@ -71,7 +71,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 *
 	 * @return recepcionista
 	 */
-	@MemberOrder(name = "Recepcionista", sequence = "4.1")
+	@MemberOrder(name = "Recepcionista", sequence = "3.1")
 	public Recepcionista crearRecepcionista(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
@@ -85,18 +85,22 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Legajo") final int legajo) {
 
 		final Recepcionista recepcionista = newTransientInstance(Recepcionista.class);
-		recepcionista.setApellido(apellido.toUpperCase());
-		recepcionista.setNombre(nombre.toUpperCase());
+		recepcionista.setApellido(apellido.substring(0, 1).toUpperCase()
+				+ apellido.substring(1));
+		recepcionista.setNombre(nombre.substring(0, 1).toUpperCase()
+				+ nombre.substring(1));
 		recepcionista.setTipoDeSexoEnum(tipoSexo);
 		recepcionista.setFechaNacimiento(fechaNacimiento);
 		recepcionista.setTipoDocumento(tipoDocumento);
 		recepcionista.setDocumento(documento);
-		recepcionista.setDireccion(direccion.toUpperCase());
+		recepcionista.setDireccion(direccion.substring(0, 1).toUpperCase()
+				+ direccion.substring(1));
 		recepcionista.setCorreo(correo);
 		recepcionista.setTelefono(telefono);
 		recepcionista.setLegajo(legajo);
 		recepcionista.setEstado(EstadoEnum.Activo);
 		persist(recepcionista);
+		container.flush();
 		return recepcionista;
 	}
 
@@ -105,7 +109,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return listaDeRecepcionistas List<Recepcionista>
 	 */
-	@MemberOrder(name = "Recepcionista", sequence = "4.2")
+	@MemberOrder(name = "Recepcionista", sequence = "3.2")
 	public List<Recepcionista> listarRecepcionista() {
 		return container.allInstances(Recepcionista.class);
 	}
@@ -115,7 +119,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Recepcionista>
 	 */
-	@MemberOrder(name = "Recepcionista", sequence = "4.3")
+	@MemberOrder(name = "Recepcionista", sequence = "3.3")
 	public List<Recepcionista> listarRecepcionistasActivos() {
 		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {
 
@@ -132,7 +136,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Recepcionista>
 	 */
-	@MemberOrder(name = "Recepcionista", sequence = "4.4")
+	@MemberOrder(name = "Recepcionista", sequence = "3.4")
 	public List<Recepcionista> listarRecepcionistasInactivos() {
 		return allMatches(Recepcionista.class, new Predicate<Recepcionista>() {
 
@@ -144,7 +148,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	// @MemberOrder(name = "Recepcionista", sequence = "4.4")
+	// @MemberOrder(name = "Recepcionista", sequence = "3.4")
 	// public void buscarRecepcionista() {
 	//
 	// }

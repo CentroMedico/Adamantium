@@ -85,18 +85,23 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Iniciales") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.INICIALES) final String iniciales) {
 
 		final Dueño dueño = newTransientInstance(Dueño.class);
-		dueño.setApellido(apellido.toUpperCase());
-		dueño.setNombre(nombre.toUpperCase());
+		dueño.setApellido(apellido.substring(0, 1).toUpperCase()
+				+ apellido.substring(1));
+		dueño.setNombre(nombre.substring(0, 1).toUpperCase()
+				+ nombre.substring(1));
 		dueño.setTipoDeSexoEnum(tipoSexo);
 		dueño.setFechaNacimiento(fechaNacimiento);
 		dueño.setTipoDocumento(tipoDocumento);
 		dueño.setDocumento(documento);
-		dueño.setDireccion(direccion.toUpperCase());
+		dueño.setDireccion(direccion.substring(0, 1).toUpperCase()
+				+ direccion.substring(1));
 		dueño.setCorreo(correo);
 		dueño.setTelefono(telefono);
-		dueño.setIniciales(iniciales.toUpperCase());
+		dueño.setIniciales(iniciales.substring(0, 1).toUpperCase()
+				+ iniciales.substring(1));
 		dueño.setEstado(EstadoEnum.Activo);
 		persist(dueño);
+		container.flush();
 		return dueño;
 	}
 

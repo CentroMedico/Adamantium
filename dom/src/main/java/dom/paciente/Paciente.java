@@ -26,6 +26,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
 import dom.persona.Persona;
+import dom.turno.Turno;
 
 /**
  * Entidad Paciente la cual representa a cualquier persona que se haga atender
@@ -53,7 +54,7 @@ import dom.persona.Persona;
 @PersistenceCapable
 public class Paciente extends Persona {
 	/**
-	 * Representa en UI el nombre "Doctor" en carga/modificacion.
+	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
@@ -77,7 +78,7 @@ public class Paciente extends Persona {
 	 * 
 	 * @return legajo int
 	 */
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "false")
 	// @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence =
 	// "LegajoPaciente")
@@ -105,7 +106,7 @@ public class Paciente extends Persona {
 	 * 
 	 * @return estado String
 	 */
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "11")
 	@Column(allowsNull = "false")
 	public EstadoEnum getEstado() {
 		return estado;
@@ -131,7 +132,7 @@ public class Paciente extends Persona {
 	 * 
 	 * @return grupoSanguineo GrupoSanguineoEnum
 	 */
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "12")
 	@Column(allowsNull = "false")
 	public GrupoSanguineoEnum getGrupoSanguineo() {
 		return grupoSanguineo;

@@ -18,6 +18,7 @@ package dom.doctor;
 import java.util.List;
 
 import javax.inject.Named;
+import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -33,7 +34,6 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
-import dom.dias.DiasEnum;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
@@ -47,7 +47,7 @@ import dom.tipoDocumento.TipoDocumentoEnum;
  * @version 1.0.0
  */
 @DomainService(repositoryFor = Doctor.class)
-@DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "3")
+@DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "2")
 @Named("Doctor")
 public class DoctorServicio extends AbstractFactoryAndRepository {
 	/**
@@ -81,7 +81,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return doctor
 	 */
-	@MemberOrder(name = "Doctor", sequence = "3.1")
+	@MemberOrder(name = "Doctor", sequence = "2.1")
 	public Doctor crearDoctor(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
@@ -93,24 +93,26 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Matricula") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMatricula.MATRICULA) final String matricula,
-			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
-			@ParameterLayout(named = "Dia") final DiasEnum dia) {
+			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad) {
 
 		final Doctor doctor = newTransientInstance(Doctor.class);
-		doctor.setApellido(apellido.toUpperCase());
-		doctor.setNombre(nombre.toUpperCase());
+		doctor.setApellido(apellido.substring(0, 1).toUpperCase()
+				+ apellido.substring(1));
+		doctor.setNombre(nombre.substring(0, 1).toUpperCase()
+				+ nombre.substring(1));
 		doctor.setTipoDeSexoEnum(tipoSexo);
 		doctor.setFechaNacimiento(fechaNacimiento);
 		doctor.setTipoDocumento(tipoDocumento);
 		doctor.setDocumento(documento);
-		doctor.setDireccion(direccion.toUpperCase());
+		doctor.setDireccion(direccion.substring(0, 1).toUpperCase()
+				+ direccion.substring(1));
 		doctor.setCorreo(correo);
 		doctor.setTelefono(telefono);
 		doctor.setMatricula(matricula);
 		doctor.setEspecialidad(especialidad);
 		doctor.setEstado(EstadoEnum.Activo);
-		doctor.setDia(dia);
 		persist(doctor);
+		container.flush();
 		return doctor;
 	}
 
@@ -125,7 +127,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return listaDeDoctores List<Doctores>
 	 */
-	@MemberOrder(name = "Doctor", sequence = "3.2")
+	@MemberOrder(name = "Doctor", sequence = "2.3")
 	public List<Doctor> listarDoctores() {
 		return container.allInstances(Doctor.class);
 	}
@@ -135,7 +137,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Doctor>
 	 */
-	@MemberOrder(name = "Doctor", sequence = "3.3")
+	@MemberOrder(name = "Doctor", sequence = "2.4")
 	public List<Doctor> listarDoctoresActivos() {
 		return allMatches(Doctor.class, new Predicate<Doctor>() {
 
@@ -152,7 +154,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Doctor>
 	 */
-	@MemberOrder(name = "Doctor", sequence = "3.4")
+	@MemberOrder(name = "Doctor", sequence = "2.5")
 	public List<Doctor> listarDoctoresInactivos() {
 		return allMatches(Doctor.class, new Predicate<Doctor>() {
 
