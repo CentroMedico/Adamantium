@@ -23,7 +23,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import dom.doctor.DoctorServicio;
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;
 
@@ -134,6 +133,9 @@ public class Dueño extends Persona {
 	}
 
 	// }}
+	/**
+	 * Metodo para inactivar el Dueño mediante un boton.
+	 */
 
 	public void InactivarDueño() {
 

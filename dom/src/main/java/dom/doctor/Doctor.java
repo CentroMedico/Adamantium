@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.swing.JOptionPane;
@@ -30,7 +31,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;
-import dom.turno.Turno;
+import dom.turno.Agenda;
 
 /**
  * Entidad Doctor la cual representa a cualquier persona que atienda en el
@@ -49,11 +50,18 @@ import dom.turno.Turno;
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor "),
 
+		@javax.jdo.annotations.Query(name = "traerPorEspecialidad", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor where especialidad == :especialidad"),
+
 		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
-				+ " && apellido.indexOf(:parametro) >= 0 ") })
+				+ " && apellido.indexOf(:parametro) >= 0 "),
+		@javax.jdo.annotations.Query(name = "traerPorProvincia", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor where provincia == :provincia"),
+
+})
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")
 @PersistenceCapable
 public class Doctor extends Persona {
@@ -165,22 +173,40 @@ public class Doctor extends Persona {
 
 	// }}
 
+	/**
+	 * 
+	 */
+
 	// {{ ListaTurnos (property)
-	private List<Turno> listaTurnos = new ArrayList<Turno>();
+	private List<Agenda> listaTurnos = new ArrayList<Agenda>();
 
 	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
 	@Persistent(mappedBy = "doctor")
-	public List<Turno> getListaTurnos() {
+	@Join(column = "doctor")
+	/**
+	 * Pemite obtener una lista de turnos
+	 * 
+	 * @return listaturnos List<Turno>
+	 */
+	public List<Agenda> getListaTurnos() {
 		return listaTurnos;
 	}
 
-	public void setListaTurnos(final List<Turno> listaTurnos) {
+	/**
+	 * Setea la lista de turnos.
+	 * 
+	 * @param List
+	 *            <Turnos> listaturnos listaturnos
+	 */
+	public void setListaTurnos(final List<Agenda> listaTurnos) {
 		this.listaTurnos = listaTurnos;
 	}
 
 	// }}
-
+	/**
+	 * Metodo para inactivar el Doctor mediante un boton.
+	 */
 	public void InactivarDoctor() {
 
 		int resp = JOptionPane.showConfirmDialog(null,

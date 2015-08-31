@@ -1,3 +1,18 @@
+/*
+ Copyright 2015 Adamantium
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package dom.obraSocial;
 
 import javax.jdo.annotations.Column;
@@ -11,7 +26,14 @@ import javax.swing.JOptionPane;
 
 import dom.doctor.DoctorServicio;
 import dom.estado.EstadoEnum;
-
+/**
+ * Entidad OraSocial la cual representa la obra social de cada paciente.
+ * 
+ * 
+ * @author Adamantium
+ * @since 01/08/2015
+ * @version 1.0.0
+ */
 @javax.jdo.annotations.Queries({
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.obraSocial.ObraSocial "),
@@ -44,10 +66,20 @@ public class ObraSocial {
 
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
+	/**
+	 * Pemite obtener el nombre de Obra Social
+	 * 
+	 * @return nombre String
+	 */	
 	public String getNombre() {
 		return nombre;
 	}
-
+	/**
+	 * Setea el nombre de la obra social que se va crear.
+	 * 
+	 * @param nombre
+	 *            nombre
+	 */
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
@@ -59,7 +91,6 @@ public class ObraSocial {
 	 * @param obr
 	 * @return String
 	 */
-
 	public String validateNombre(String obr) {
 
 		if (obr.matches("[a-z,A-Z,0-9,ñ,Ñ, ]+") == false) {
@@ -74,10 +105,20 @@ public class ObraSocial {
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
+	/**
+	 * Pemite obtener la cobertura de Obra Social
+	 * 
+	 * @return nombre String
+	 */	
 	public String getCoberturaMedica() {
 		return coberturaMedica;
 	}
-
+	/**
+	 * Setea cobertura de la obra social que se va crear.
+	 * 
+	 * @param coberturamedica
+	 *            coberturamedica
+	 */
 	public void setCoberturaMedica(final String coberturaMedica) {
 		this.coberturaMedica = coberturaMedica;
 	}
@@ -90,7 +131,6 @@ public class ObraSocial {
 	 * @param cob
 	 * @return String
 	 */
-
 	public String validateCoberturaMedica(String cob) {
 
 		if (cob.matches("[a-z, A-Z,0-9,-]+") == false) {
@@ -105,16 +145,29 @@ public class ObraSocial {
 
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "false")
+	/**
+	 * Pemite obtener el estado de Obra Social
+	 * 
+	 * @return nombre String
+	 */	
 	public EstadoEnum getEstado() {
 		return estado;
 	}
+	/**
+	 * Setea el estado de la obra social que se va crear.
+	 * 
+	 * @param estado
+	 *            estado
+	 */
 
 	public void setEstado(final EstadoEnum estado) {
 		this.estado = estado;
 	}
 
 	// }}
-
+	/**
+	 * Metodo para inactivar la Obra Social mediante un boton.
+	 */
 	public void InactivarObraSocial() {
 
 		int resp = JOptionPane.showConfirmDialog(null,

@@ -23,6 +23,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.joda.time.LocalDate;
 
+import dom.proviniciasCiudades.ProvinciaEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
 
@@ -39,6 +40,14 @@ import dom.tipoDocumento.TipoDocumentoEnum;
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 // ----------------------------------------------------------------
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
+
+@javax.jdo.annotations.Queries({
+
+		@javax.jdo.annotations.Query(name = "traerPorProvincia", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.persona.Persona where provincia == :provincia"),
+
+		@javax.jdo.annotations.Query(name = "traerCiudades", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.persona.Persona") })
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Persona {
@@ -195,7 +204,6 @@ public abstract class Persona {
 	 */
 	@MemberOrder(sequence = "6")
 	@Column(allowsNull = "false")
-	// @Unique
 	public String getDocumento() {
 		return documento;
 	}
@@ -225,6 +233,36 @@ public abstract class Persona {
 		}
 	}
 
+	// {{ Provincia (property)
+	private ProvinciaEnum provincia;
+
+	@MemberOrder(sequence = "7")
+	@Column(allowsNull = "false")
+	public ProvinciaEnum getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(final ProvinciaEnum provincia) {
+		this.provincia = provincia;
+	}
+
+	// }}
+
+	// {{ Ciudad (property)
+	private String ciudad;
+
+	@MemberOrder(sequence = "8")
+	@Column(allowsNull = "false")
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(final String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	// }}
+
 	private String direccion;
 
 	/**
@@ -232,7 +270,7 @@ public abstract class Persona {
 	 * 
 	 * @return direccion String
 	 */
-	@MemberOrder(sequence = "7")
+	@MemberOrder(sequence = "9")
 	@Column(allowsNull = "false")
 	public String getDireccion() {
 		return direccion;
@@ -270,7 +308,7 @@ public abstract class Persona {
 	 * 
 	 * @return correo String
 	 */
-	@MemberOrder(sequence = "8")
+	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "false")
 	public String getCorreo() {
 		return correo;
@@ -309,7 +347,7 @@ public abstract class Persona {
 	 * 
 	 * @return telefono String
 	 */
-	@MemberOrder(sequence = "9")
+	@MemberOrder(sequence = "11")
 	@Column(allowsNull = "false")
 	public String getTelefono() {
 		return telefono;
@@ -339,4 +377,5 @@ public abstract class Persona {
 			return null;
 		}
 	}
+
 }

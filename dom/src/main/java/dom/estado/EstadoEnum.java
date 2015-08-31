@@ -14,7 +14,6 @@
    limitations under the License.
  */
 package dom.estado;
-
 /**
  * Clase enumerada, de la cual agrega el estado de un doctor,Paciente o
  * Recepcionista.

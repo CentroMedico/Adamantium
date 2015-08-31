@@ -1,3 +1,18 @@
+/*
+ Copyright 2015 Adamantium
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package dom.turno;
 
 import javax.jdo.annotations.DatastoreIdentity;
@@ -15,10 +30,10 @@ public class TurnoAtendido implements IEstadoTurno {
 		return TranslatableString.tr("{nombre}", "nombre", "Turno Atendido.");
 	}
 
-	private Turno turno;
+	private Agenda agenda;
 
-	public TurnoAtendido(Turno turno) {
-		this.turno = turno;
+	public TurnoAtendido(Agenda agenda) {
+		this.agenda = agenda;
 	}
 
 	@Override
@@ -53,7 +68,6 @@ public class TurnoAtendido implements IEstadoTurno {
 
 	@Override
 	public String nombreEstado() {
-		// TODO Auto-generated method stub
 		return "Turno Atendido.";
 	}
 

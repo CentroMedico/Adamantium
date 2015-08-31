@@ -25,7 +25,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;
-
 /**
  * Entidad Recepcionista la cual representa a cualquier persona que trabaje en
  * el centro medico. Extiende de la clase Persona.
@@ -118,7 +117,9 @@ public class Recepcionista extends Persona {
 	public void setEstado(final EstadoEnum estado) {
 		this.estado = estado;
 	}
-
+	/**
+	 * Metodo para inactivar la Recepcionista mediante un boton.
+	 */
 	public void InactivarPaciente() {
 
 		int resp = JOptionPane.showConfirmDialog(null,

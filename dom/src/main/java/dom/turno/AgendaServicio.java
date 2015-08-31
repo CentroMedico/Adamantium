@@ -1,10 +1,26 @@
+/*
+ Copyright 2015 Adamantium
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package dom.turno;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.inject.Named;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -18,11 +34,13 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
+import dom.especialidad.EspecialidadEnum;
 import dom.paciente.Paciente;
 
-@DomainService(repositoryFor = Turno.class)
+@DomainService(repositoryFor = Agenda.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
-public class TurnoServicio extends AbstractFactoryAndRepository {
+@Named("Turno")
+public class AgendaServicio extends AbstractFactoryAndRepository {
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", "Turno: ");
@@ -32,20 +50,15 @@ public class TurnoServicio extends AbstractFactoryAndRepository {
 		return "turnos";
 	}
 
+	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "50")
-	public String crearTurnos(
+	public String crearAgenda(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 
 		Date fecha = new Date();
 		fecha.setHours(07);
 		fecha.setMinutes(00);
 		fecha.setSeconds(00);
-
-		// Date fecha=new Date();
-		// //System.out.println("Hoy es: "+fecha);
-		//
-		// SimpleDateFormat format= new SimpleDateFormat("dd-MM-yyyy");
-		// String date=format.format(SumarFecha(fecha, 7));
 
 		for (int x = 0; x < 30; x++) {
 			fecha = SumarFecha(fecha, 1);
@@ -56,24 +69,19 @@ public class TurnoServicio extends AbstractFactoryAndRepository {
 
 			for (int i = 0; i < 27; i++) {
 
-				final Turno turno = newTransientInstance(Turno.class);
+				final Agenda turno = newTransientInstance(Agenda.class);
 				Calendar c1 = GregorianCalendar.getInstance();
-
-				// SimpleDateFormat fechaformato = new SimpleDateFormat(
-				// "dd/MMMMM/yyyy HH:mm:ss");
-
-				// SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
 				turno.setDia(fecha);
 				turno.setDoctor(doctor);
+				doctor.getListaTurnos().add(turno);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();
 				persistIfNotAlready(turno);
 				container.flush();
 			}
-			// return "Turnos agregados correctamente";
 		}
-		return "Turnos agregados correctamente";
+		return "Agenda de doctor creada correctamente";
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
@@ -99,13 +107,14 @@ public class TurnoServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	public List<Turno> buscarTurno(String Turno) {
-		return allMatches(QueryDefault.create(Turno.class, "traerTodos", Turno));
+	public List<Agenda> buscarTurno(String Turno) {
+		return allMatches(QueryDefault
+				.create(Agenda.class, "traerTodos", Turno));
 	}
 
 	@MemberOrder(name = "Doctor", sequence = "50")
-	public List<Turno> listarTurnos() {
-		return container.allInstances(Turno.class);
+	public List<Agenda> listarAgenda() {
+		return container.allInstances(Agenda.class);
 	}
 
 	@javax.inject.Inject

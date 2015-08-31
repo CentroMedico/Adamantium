@@ -31,11 +31,14 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
+import dom.doctor.Doctor;
+import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
+import dom.proviniciasCiudades.ProvinciaEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
-import dom.turno.Turno;
+import dom.turno.Agenda;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Paciente
@@ -79,6 +82,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 *
 	 * @return paciente
 	 */
+
 	@MemberOrder(name = "Paciente", sequence = "5.1")
 	public Paciente crearPaciente(
 			@ParameterLayout(named = "Legajo") final int legajo,
@@ -88,6 +92,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
 			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String documento,
+			@ParameterLayout(named = "Provincia") final ProvinciaEnum provincia,
+			@ParameterLayout(named = "Ciudad") final String ciudad,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -103,6 +109,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setFechaNacimiento(fechaNacimiento);
 		paciente.setTipoDocumento(tipoDocumento);
 		paciente.setDocumento(documento);
+		paciente.setProvincia(provincia);
+		paciente.setCiudad(ciudad);
 		paciente.setDireccion(direccion.substring(0, 1).toUpperCase()
 				+ direccion.substring(1));
 		paciente.setCorreo(correo);
@@ -112,6 +120,34 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		persist(paciente);
 		container.flush();
 		return paciente;
+	}
+
+	@MemberOrder(name = "Paciente", sequence = "75")
+	public String reservarTurno(final EspecialidadEnum especialidad,
+			Doctor doctor, Agenda agenda, Paciente paciente) {
+
+		return "Turno de Paciente agregado correctamente.";
+
+	}
+
+	public EspecialidadEnum default0ReservarTurno() {
+
+		return EspecialidadEnum.Clinica_General;
+
+	}
+
+	public List<Doctor> choices1ReservarTurno(
+			final EspecialidadEnum especialidad) {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerPorEspecialidad", "especialidad", especialidad));
+
+	}
+
+	public List<Agenda> choices2ReservarTurno(
+			final EspecialidadEnum especialidad, Doctor doctor) {
+		return container.allMatches(QueryDefault.create(Agenda.class,
+				"traerTurnos"));
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
@@ -163,16 +199,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-	@MemberOrder(name = "Paciente", sequence ="5.5")
-	public void reservarTruno(@ParameterLayout(named = "Turno")final Turno turno)
-	{
-		turno.getDisponible();
-		
-	}
-	// @MemberOrder(name = "Paciente", sequence = "5.5")
-	// public void buscarPaciente() {
-	//
-	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

@@ -26,7 +26,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
 import dom.persona.Persona;
-import dom.turno.Turno;
 
 /**
  * Entidad Paciente la cual representa a cualquier persona que se haga atender
@@ -42,9 +41,11 @@ import dom.turno.Turno;
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
 @javax.jdo.annotations.Queries({
+
+		@javax.jdo.annotations.Query(name = "traerCiudades", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turno.Turno"),
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.paciente.Paciente "),
-
 		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.paciente.Paciente "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
@@ -150,6 +151,26 @@ public class Paciente extends Persona {
 
 	// }}
 
+	// // {{ ListaTurnos (property)
+	// private List<Turno> listaTurnos = new ArrayList<Turno>();
+	//
+	// @MemberOrder(sequence = "13")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "doctor")
+	// @Join(column = "doctor")
+	// public List<Turno> getListaTurnos() {
+	// return listaTurnos;
+	// }
+	//
+	// public void setListaTurnos(final List<Turno> listaTurnos) {
+	// this.listaTurnos = listaTurnos;
+	// }
+	//
+	// // }
+
+	/**
+	 * Metodo para inactivar el Paciente mediante un boton.
+	 */
 	public void InactivarPaciente() {
 
 		int resp = JOptionPane.showConfirmDialog(null,

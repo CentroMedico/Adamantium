@@ -14,7 +14,6 @@
    limitations under the License.
  */
 package dom.grupoSanguineo;
-
 /**
  * Clase enumerada, de la cual agrega el Grupo Sanguineo de un Paciente.
  * 

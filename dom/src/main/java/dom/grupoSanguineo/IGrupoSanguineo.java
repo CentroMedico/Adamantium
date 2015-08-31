@@ -14,7 +14,6 @@
    limitations under the License.
  */
 package dom.grupoSanguineo;
-
 /**
  * Interface para implementar los distintos tipos de Grupos Sanguineos
  * 
