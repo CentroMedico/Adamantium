@@ -59,8 +59,6 @@ public class Agenda {
 	public TranslatableString title() {
 		final SimpleDateFormat formatoFecha = new SimpleDateFormat(
 				"dd MMMM YYYY HH:mm");
-		// return TranslatableString.tr("{nombre}", "nombre", "Turno.",
-		// formatoFecha.format(this.dia));
 		return TranslatableString.tr("{nombre}", "nombre", "Turno "
 				+ formatoFecha.format(this.getDia()));
 	}
@@ -120,7 +118,7 @@ public class Agenda {
 	private Doctor doctor;
 
 	@MemberOrder(sequence = "2")
-	@Persistent(mappedBy = "listaTurnos")
+	@Persistent(mappedBy = "listaAgenda")
 	@Column(allowsNull = "false")
 	/**
 	 * Pemite obtener un doctor 
@@ -160,21 +158,6 @@ public class Agenda {
 		// return this.getIEstadoTurno().ocultarSolicitarTurno();
 	}
 
-	// {{ Paciente (property)
-	// private Paciente paciente;
-	//
-	// @MemberOrder(sequence = "3")
-	// @Column(allowsNull = "true")
-	// public Paciente getPaciente() {
-	// return paciente;
-	// }
-	//
-	// public void setPaciente(final Paciente paciente) {
-	// this.paciente = paciente;
-	// }
-
-	// }}
-
 	// {{ Disponible (property)
 	private Boolean disponible;
 
@@ -193,7 +176,6 @@ public class Agenda {
 	// {{ IEstadoTurno (property)
 	private IEstadoTurno iEstadoTurno;
 
-	// @ActionLayout(hidden=Where.EVERYWHERE)
 	@PropertyLayout(hidden = Where.EVERYWHERE)
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "false")

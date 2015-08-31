@@ -16,7 +16,6 @@
 package dom.doctor;
 
 import java.util.List;
-
 import javax.inject.Named;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;

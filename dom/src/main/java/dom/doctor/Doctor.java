@@ -177,30 +177,30 @@ public class Doctor extends Persona {
 	 * 
 	 */
 
-	// {{ ListaTurnos (property)
-	private List<Agenda> listaTurnos = new ArrayList<Agenda>();
+	// {{ ListaAgenda (property)
+	private List<Agenda> listaAgenda = new ArrayList<Agenda>();
 
 	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
 	@Persistent(mappedBy = "doctor")
 	@Join(column = "doctor")
 	/**
-	 * Pemite obtener una lista de turnos
+	 * Pemite obtener una lista de agenda
 	 * 
-	 * @return listaturnos List<Turno>
+	 * @return listaagenda List<Agenda>
 	 */
-	public List<Agenda> getListaTurnos() {
-		return listaTurnos;
+	public List<Agenda> getListaAgenda() {
+		return listaAgenda;
 	}
 
 	/**
-	 * Setea la lista de turnos.
+	 * Setea la lista de Agenda.
 	 * 
 	 * @param List
-	 *            <Turnos> listaturnos listaturnos
+	 *            <Agenda> listaagenda listaagenda
 	 */
-	public void setListaTurnos(final List<Agenda> listaTurnos) {
-		this.listaTurnos = listaTurnos;
+	public void setListaAgenda(final List<Agenda> listaAgenda) {
+		this.listaAgenda = listaAgenda;
 	}
 
 	// }}

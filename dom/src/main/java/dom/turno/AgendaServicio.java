@@ -69,15 +69,15 @@ public class AgendaServicio extends AbstractFactoryAndRepository {
 
 			for (int i = 0; i < 27; i++) {
 
-				final Agenda turno = newTransientInstance(Agenda.class);
+				final Agenda agenda = newTransientInstance(Agenda.class);
 				Calendar c1 = GregorianCalendar.getInstance();
 
-				turno.setDia(fecha);
-				turno.setDoctor(doctor);
-				doctor.getListaTurnos().add(turno);
+				agenda.setDia(fecha);
+				agenda.setDoctor(doctor);
+				doctor.getListaAgenda().add(agenda);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();
-				persistIfNotAlready(turno);
+				persistIfNotAlready(agenda);
 				container.flush();
 			}
 		}
@@ -107,7 +107,7 @@ public class AgendaServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	public List<Agenda> buscarTurno(String Turno) {
+	public List<Agenda> buscarAgenda(String Turno) {
 		return allMatches(QueryDefault
 				.create(Agenda.class, "traerTodos", Turno));
 	}
