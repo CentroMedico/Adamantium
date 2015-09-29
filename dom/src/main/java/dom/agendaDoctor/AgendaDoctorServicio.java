@@ -13,7 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+
+package dom.agendaDoctor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,13 +35,11 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
-import dom.especialidad.EspecialidadEnum;
-import dom.paciente.Paciente;
 
-@DomainService(repositoryFor = Agenda.class)
+@DomainService(repositoryFor = AgendaDoctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
 @Named("Turno")
-public class AgendaServicio extends AbstractFactoryAndRepository {
+public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", "Turno: ");
@@ -52,7 +51,41 @@ public class AgendaServicio extends AbstractFactoryAndRepository {
 
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "50")
-	public String crearAgenda(
+	public String crearAgendaQuincenal(
+			@ParameterLayout(named = "Doctor") final Doctor doctor) {
+
+		Date fecha = new Date();
+		fecha.setHours(07);
+		fecha.setMinutes(00);
+		fecha.setSeconds(00);
+
+		for (int x = 0; x < 15; x++) {
+			fecha = SumarFecha(fecha, 1);
+
+			fecha.setHours(07);
+			fecha.setMinutes(00);
+			fecha.setSeconds(00);
+
+			for (int i = 0; i < 27; i++) {
+
+				final AgendaDoctor agenda = newTransientInstance(AgendaDoctor.class);
+				Calendar c1 = GregorianCalendar.getInstance();
+
+				agenda.setDia(fecha);
+				agenda.setDoctor(doctor);
+				doctor.getListaAgenda().add(agenda);
+				c1 = agregarMinutos(fecha, 30);
+				fecha = c1.getTime();
+				persistIfNotAlready(agenda);
+				container.flush();
+			}
+		}
+		return "Agenda de doctor creada correctamente";
+	}
+
+	@SuppressWarnings("deprecation")
+	@MemberOrder(name = "Doctor", sequence = "51")
+	public String crearAgendaMensual(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 
 		Date fecha = new Date();
@@ -69,7 +102,7 @@ public class AgendaServicio extends AbstractFactoryAndRepository {
 
 			for (int i = 0; i < 27; i++) {
 
-				final Agenda agenda = newTransientInstance(Agenda.class);
+				final AgendaDoctor agenda = newTransientInstance(AgendaDoctor.class);
 				Calendar c1 = GregorianCalendar.getInstance();
 
 				agenda.setDia(fecha);
@@ -107,16 +140,17 @@ public class AgendaServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	public List<Agenda> buscarAgenda(String Turno) {
+	public List<AgendaDoctor> buscarTurno(String Turno) {
 		return allMatches(QueryDefault
-				.create(Agenda.class, "traerTodos", Turno));
+				.create(AgendaDoctor.class, "traerTurnos", Turno));
 	}
 
 	@MemberOrder(name = "Doctor", sequence = "50")
-	public List<Agenda> listarAgenda() {
-		return container.allInstances(Agenda.class);
+	public List<AgendaDoctor> listarAgenda() {
+		return container.allInstances(AgendaDoctor.class);
 	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
+
 }

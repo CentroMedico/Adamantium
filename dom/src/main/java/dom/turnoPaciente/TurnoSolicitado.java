@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+package dom.turnoPaciente;
 
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -23,34 +23,37 @@ import javax.jdo.annotations.PersistenceCapable;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
-@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoCancelado")
-public class TurnoCancelado implements IEstadoTurno {
+@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoSolicitado")
+public class TurnoSolicitado implements IEstadoTurno {
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno Cancelado.");
+		return TranslatableString.tr("{nombre}", "nombre", "Turno Solicitado.");
 	}
 
-	private Agenda agenda;
+	private TurnoPaciente turno;
 
-	public TurnoCancelado(Agenda agenda) {
-		this.agenda = agenda;
+	public TurnoSolicitado() {
+	}
+
+	public TurnoSolicitado(TurnoPaciente turno) {
+		this.turno = turno;
 	}
 
 	@Override
 	public void disponerTurno() {
-		this.agenda.setIEstadoTurno(this.agenda.getTurnoDisponible());
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void solicitarTurno() {
-		// TODO Auto-generated method stub
-
+		turno.setDisponible(false);
 	}
 
 	@Override
 	public void aceptarTurno() {
-		// TODO Auto-generated method stub
+		// envia el mail
+		this.turno.setIEstadoTurno(this.turno.getTurnoAceptado());
 
 	}
 
@@ -62,13 +65,14 @@ public class TurnoCancelado implements IEstadoTurno {
 
 	@Override
 	public void cancelarTurno() {
-		// TODO Auto-generated method stub
+		this.turno.setIEstadoTurno(this.turno.getTurnoCancelado());
+		// turno.setDisponible(true);
 
 	}
 
 	@Override
 	public String nombreEstado() {
-		return "Turno Cancelado.";
+		return "Turno Solicitado.";
 	}
 
 }

@@ -13,13 +13,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+package dom.turnoPaciente;
 
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -30,10 +32,10 @@ public class TurnoAceptado implements IEstadoTurno {
 		return TranslatableString.tr("{nombre}", "nombre", "Turno Aceptado.");
 	}
 
-	private Agenda agenda;
+	private TurnoPaciente turno;
 
-	public TurnoAceptado(Agenda agenda) {
-		this.agenda = agenda;
+	public TurnoAceptado(TurnoPaciente turno) {
+		this.turno = turno;
 	}
 
 	@Override
@@ -56,19 +58,36 @@ public class TurnoAceptado implements IEstadoTurno {
 
 	@Override
 	public void atenderTurno() {
-		this.agenda.setIEstadoTurno(this.agenda.getTurnoAtendido());
+		this.turno.setIEstadoTurno(this.turno.getTurnoAtendido());
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		this.agenda.setIEstadoTurno(this.agenda.getTurnoCancelado());
+		this.turno.setIEstadoTurno(this.turno.getTurnoCancelado());
 
 	}
+
+//	// {{ TurnoPaciente (property)
+//	private TurnoPaciente turnoPaciente;
+//
+//	@MemberOrder(sequence = "1")
+//	public TurnoPaciente getTurnoPaciente() {
+//		return turnoPaciente;
+//	}
+//
+//	public void setTurnoPaciente(final TurnoPaciente turnoPaciente) {
+//		this.turnoPaciente = turnoPaciente;
+//	}
+
+	// }}
 
 	@Override
 	public String nombreEstado() {
 		return "Turno Aceptado.";
 	}
+
+	@javax.inject.Inject
+	private DomainObjectContainer container;
 
 }

@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+package dom.turnoPaciente;
 
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -23,28 +23,28 @@ import javax.jdo.annotations.PersistenceCapable;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
-@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoAtendido")
-public class TurnoAtendido implements IEstadoTurno {
+@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoDisponible")
+public class TurnoDisponible implements IEstadoTurno {
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno Atendido.");
+		return TranslatableString.tr("{nombre}", "nombre", "Turno Disponible.");
 	}
 
-	private Agenda agenda;
+	private TurnoPaciente turno;
 
-	public TurnoAtendido(Agenda agenda) {
-		this.agenda = agenda;
+	public TurnoDisponible(TurnoPaciente turno) {
+		this.turno = turno;
 	}
 
 	@Override
 	public void disponerTurno() {
-		// TODO Auto-generated method stub
+		turno.setDisponible(true);
 
 	}
 
 	@Override
 	public void solicitarTurno() {
-		// TODO Auto-generated method stub
+		turno.setIEstadoTurno(turno.getTurnoSolicitado());
 
 	}
 
@@ -68,7 +68,7 @@ public class TurnoAtendido implements IEstadoTurno {
 
 	@Override
 	public String nombreEstado() {
-		return "Turno Atendido.";
+		return "Turno Disponible.";
 	}
 
 }

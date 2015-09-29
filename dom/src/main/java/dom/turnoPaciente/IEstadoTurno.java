@@ -13,7 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+package dom.turnoPaciente;
+
 /**
  * Interface para implementar los distintos tipos de Estado de los turnos
  * 
