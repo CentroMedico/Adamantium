@@ -31,14 +31,15 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
+import dom.agendaDoctor.AgendaDoctor;
+import dom.ciudadProvincia.Ciudad;
+import dom.ciudadProvincia.Provincia;
 import dom.doctor.Doctor;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
-import dom.proviniciasCiudades.ProvinciaEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
-import dom.turno.Agenda;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Paciente
@@ -92,8 +93,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
 			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String documento,
-			@ParameterLayout(named = "Provincia") final ProvinciaEnum provincia,
-			@ParameterLayout(named = "Ciudad") final String ciudad,
+			@ParameterLayout(named = "Provincia") final Provincia provincia,
+			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -120,40 +121,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		persist(paciente);
 		container.flush();
 		return paciente;
-	}
-
-	@MemberOrder(name = "Paciente", sequence = "75")
-	public String reservarTurno(final EspecialidadEnum especialidad,
-			Doctor doctor, Agenda agenda, Paciente paciente) {
-
-		return "Turno de Paciente agregado correctamente.";
-
-	}
-
-	public EspecialidadEnum default0ReservarTurno() {
-
-		return EspecialidadEnum.Clinica_General;
-
-	}
-
-	public List<Doctor> choices1ReservarTurno(
-			final EspecialidadEnum especialidad) {
-
-		return container.allMatches(QueryDefault.create(Doctor.class,
-				"traerPorEspecialidad", "especialidad", especialidad));
-
-	}
-
-	public List<Agenda> choices2ReservarTurno(
-			final EspecialidadEnum especialidad, Doctor doctor) {
-		return container.allMatches(QueryDefault.create(Agenda.class,
-				"traerTurnos"));
-	}
-
-	@ActionLayout(hidden = Where.EVERYWHERE)
-	public List<Paciente> buscarPaciente(String paciente) {
-		return allMatches(QueryDefault.create(Paciente.class,
-				"buscarNombre,Apellido,Id", "parametro", paciente));
 	}
 
 	/**
@@ -200,7 +167,30 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
+	// Choices Provincias
+	/**
+	 * Choice default devuelve la primer provincia de la lista.
+	 * 
+	 */
+	public Provincia default7CrearPaciente() {
+		return container.firstMatch(QueryDefault.create(Provincia.class,
+				"traerTodas"));
+
+	}
+
+	/**
+	 * Choice8 devuelve una lista de ciudades dependiendo cual provincia se
+	 * selecciono previamente.
+	 */
+	public List<Ciudad> choices8CrearPaciente(final int legajo,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento, final String documento,
+			final Provincia provincias) {
+		return container.allMatches(QueryDefault.create(Ciudad.class,
+				"traerCiudad", "provincia", provincias));
+	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
-
 }

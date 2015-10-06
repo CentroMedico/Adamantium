@@ -16,6 +16,7 @@
 package dom.doctor;
 
 import java.util.List;
+
 import javax.inject.Named;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -32,9 +33,10 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
+import dom.ciudadProvincia.Ciudad;
+import dom.ciudadProvincia.Provincia;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
-import dom.proviniciasCiudades.ProvinciaEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
 import dom.tipoDocumento.TipoDocumentoEnum;
 
@@ -88,8 +90,8 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
 			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
-			@ParameterLayout(named = "Provincia") final ProvinciaEnum provincia,
-			@ParameterLayout(named = "Ciudad") final String ciudad,
+			@ParameterLayout(named = "Provincia") final Provincia provincia,
+			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -173,6 +175,43 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 				return input.getEstado() == EstadoEnum.Inactivo ? true : false;
 			}
 		});
+	}
+
+	// Choices de Provincia y ciudades
+	/**
+	 * buscarProvincia retorna una lista de todas las Provincias en la base de
+	 * datos.
+	 * 
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Provincia> buscarProvincia(String prov) {
+		return allMatches(QueryDefault.create(Provincia.class,
+				"traerProvincia", "nombre", prov));
+	}
+
+	/**
+	 * Choice default devuelve la primer provincia de la lista.
+	 * 
+	 */
+	public Provincia default6CrearDoctor() {
+		return container.firstMatch(QueryDefault.create(Provincia.class,
+				"traerTodas"));
+
+	}
+
+	/**
+	 * Choice7 devuelve una lista de ciudades dependiendo cual provincia se
+	 * selecciono previamente.
+	 */
+
+	public List<Ciudad> choices7CrearDoctor(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento, final String documento,
+			final Provincia provincias) {
+		return container.allMatches(QueryDefault.create(Ciudad.class,
+				"traerCiudad", "provincia", provincias));
 	}
 
 	@javax.inject.Inject

@@ -15,17 +15,25 @@
  */
 package dom.paciente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.agendaDoctor.AgendaDoctor;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
 import dom.persona.Persona;
+import dom.turnoPaciente.TurnoPaciente;
+import dom.turnoPaciente.TurnoPacienteServicio;
 
 /**
  * Entidad Paciente la cual representa a cualquier persona que se haga atender
@@ -51,7 +59,7 @@ import dom.persona.Persona;
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 ") })
-@DomainObject(autoCompleteRepository = PacienteServicio.class, autoCompleteAction = "buscarPaciente")
+@DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
 @PersistenceCapable
 public class Paciente extends Persona {
 	/**
@@ -81,8 +89,6 @@ public class Paciente extends Persona {
 	 */
 	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "false")
-	// @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence =
-	// "LegajoPaciente")
 	public int getLegajo() {
 		return legajo;
 	}
@@ -151,22 +157,31 @@ public class Paciente extends Persona {
 
 	// }}
 
-	// // {{ ListaTurnos (property)
-	// private List<Turno> listaTurnos = new ArrayList<Turno>();
-	//
-	// @MemberOrder(sequence = "13")
-	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "doctor")
-	// @Join(column = "doctor")
-	// public List<Turno> getListaTurnos() {
-	// return listaTurnos;
-	// }
-	//
-	// public void setListaTurnos(final List<Turno> listaTurnos) {
-	// this.listaTurnos = listaTurnos;
-	// }
-	//
-	// // }
+	// {{ ListaTurnos (property)
+	private List<TurnoPaciente> listaTurnos = new ArrayList<TurnoPaciente>();
+
+	@MemberOrder(sequence = "14")
+	@Column(allowsNull = "false")
+	@Persistent(mappedBy = "paciente")
+	@Join(column = "paciente")
+	/**
+	 * Pemite obtener una lista de turnos
+	 * 
+	 * @return listaturnos List<TurnoPaciente>
+	 */
+	public List<TurnoPaciente> getListaTurnos() {
+		return listaTurnos;
+	}
+
+	/**
+	 * Setea la lista de turnos.
+	 * 
+	 * @param List
+	 *            <TurnoPaciente> listaTurnos listaTurnos
+	 */
+	public void setListaTurnos(final List<TurnoPaciente> listaTurnos) {
+		this.listaTurnos = listaTurnos;
+	}
 
 	/**
 	 * Metodo para inactivar el Paciente mediante un boton.

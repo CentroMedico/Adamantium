@@ -13,37 +13,54 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package dom.turno;
+package dom.turnoPaciente;
 
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.doctor.Doctor;
+import dom.paciente.Paciente;
+
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
-@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoAceptado")
-public class TurnoAceptado implements IEstadoTurno {
+@DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoCancelado")
+public class Cancelado implements IEstadoTurno {
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno Aceptado.");
+		return TranslatableString.tr("{nombre}", "nombre", "Turno Cancelado.");
 	}
 
-	private Agenda agenda;
+	private TurnoPaciente turno;
 
-	public TurnoAceptado(Agenda agenda) {
-		this.agenda = agenda;
+	private TurnoPaciente getTurno() {
+		return turno;
+	}
+
+	private void setTurno(TurnoPaciente turno) {
+		this.turno = turno;
+	}
+
+	public Cancelado(TurnoPaciente turno) {
+		this.setTurno(turno);
+		// this.getTurno().setDisponerOcultado(false);
+		// this.getTurno().setSolicitarOcultado(true);
+		// this.getTurno().setAceptarOcultado(true);
+		// this.getTurno().setCancelarOcultado(true);
+		// this.getTurno().setAtenderOcultado(true);
 	}
 
 	@Override
 	public void disponerTurno() {
-		// TODO Auto-generated method stub
+		this.getTurno().setEstado(this.getTurno().getDisponible());
 
 	}
 
 	@Override
-	public void solicitarTurno() {
+	public void solicitarTurno(Doctor doctor, Paciente paciente) {
 		// TODO Auto-generated method stub
 
 	}
@@ -56,19 +73,14 @@ public class TurnoAceptado implements IEstadoTurno {
 
 	@Override
 	public void atenderTurno() {
-		this.agenda.setIEstadoTurno(this.agenda.getTurnoAtendido());
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		this.agenda.setIEstadoTurno(this.agenda.getTurnoCancelado());
+		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public String nombreEstado() {
-		return "Turno Aceptado.";
 	}
 
 }
