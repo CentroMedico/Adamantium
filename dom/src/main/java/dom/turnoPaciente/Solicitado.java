@@ -20,7 +20,6 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
@@ -55,13 +54,13 @@ public class Solicitado implements IEstadoTurno {
 
 	@Override
 	public void disponerTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra solicitado, se debe cancelar para poder disponer");
 
 	}
 
 	@Override
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno ya se encuentra solicitado");
 
 	}
 
@@ -73,7 +72,7 @@ public class Solicitado implements IEstadoTurno {
 
 	@Override
 	public void atenderTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra solicitado, se debe aceptar antes de atender");
 
 	}
 

@@ -166,30 +166,29 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			}
 		});
 	}
-
 	// Choices Provincias
-	/**
-	 * Choice default devuelve la primer provincia de la lista.
-	 * 
-	 */
-	public Provincia default7CrearPaciente() {
-		return container.firstMatch(QueryDefault.create(Provincia.class,
-				"traerTodas"));
+		/**
+		 * Choice default devuelve la primer provincia de la lista.
+		 * 
+		 */
+		public Provincia default7CrearPaciente() {
+			return container.firstMatch(QueryDefault.create(Provincia.class,
+					"traerTodas"));
 
-	}
+		}
 
-	/**
-	 * Choice8 devuelve una lista de ciudades dependiendo cual provincia se
-	 * selecciono previamente.
-	 */
-	public List<Ciudad> choices8CrearPaciente(final int legajo,
-			final String apellido, final String nombre,
-			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
-			final TipoDocumentoEnum tipoDocumento, final String documento,
-			final Provincia provincias) {
-		return container.allMatches(QueryDefault.create(Ciudad.class,
-				"traerCiudad", "provincia", provincias));
-	}
+		/**
+		 * Choice8 devuelve una lista de ciudades dependiendo cual provincia se
+		 * selecciono previamente.
+		 */
+		public List<Ciudad> choices8CrearPaciente(final int legajo,
+				final String apellido, final String nombre,
+				final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+				final TipoDocumentoEnum tipoDocumento, final String documento,
+				final Provincia provincias) {
+			return container.allMatches(QueryDefault.create(Ciudad.class,
+					"traerCiudad", "provincia", provincias));
+		}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

@@ -30,6 +30,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
 		turno.getEstado().solicitarTurno(doctor, paciente);
+		turno.setPaciente(paciente);
 		persistIfNotAlready(turno);
 		container.flush();
 		return turno;
@@ -70,23 +71,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	public List<TurnoPaciente> listarTurnosPaciente() {
 		return container.allInstances(TurnoPaciente.class);
 	}
-
-	// public boolean hideAsignarTurno() {
-	// return turno.getEstado().esconderAsignarTurno();
-	// }
-
-	// public TurnoPaciente nuevoTurno(final Paciente paciente, final Doctor
-	// doctor) {
-	//
-	// final TurnoPaciente turno = container
-	// .newTransientInstance(TurnoPaciente.class);
-	// turno.setPaciente(paciente);
-	// turno.setDoctor(doctor);
-	// container.persistIfNotAlready(turno);
-	// container.flush();
-	// return turno;
-	//
-	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

@@ -7,7 +7,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 
 @PersistenceCapable
 public class HorasTrabajadas {
-
 	// {{ Doctor (property)
 	private Doctor doctor;
 

@@ -20,7 +20,6 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
@@ -61,25 +60,25 @@ public class Cancelado implements IEstadoTurno {
 
 	@Override
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra cancelado, se debe disponer antes de solicitar");
 
 	}
 
 	@Override
 	public void aceptarTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra cancelado, no se puede aceptar");
 
 	}
 
 	@Override
 	public void atenderTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra cancelado, no se puede atender");
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno ya se encuentra cancelado");
 
 	}
 

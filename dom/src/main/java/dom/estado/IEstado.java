@@ -15,28 +15,16 @@
  */
 package dom.estado;
 /**
- * Clase enumerada, de la cual agrega el estado de un doctor,Paciente o
- * Recepcionista.
+ * Interface para implementar los distintos tipos de Estado
  * 
  * @author Adamantium
  * @since 01/06/2015
  * @version 1.0.0
  */
-public enum EstadoEnum {
-	Activo("Activo"), Inactivo("Inactivo");
+public interface IEstado {
 
-	private final String nombre;
+	EstadoEnum getCategory();
 
-	public String getNombre() {
-		return nombre;
-	}
+	void setCategory(EstadoEnum estado);
 
-	private EstadoEnum(String nom) {
-		nombre = nom;
-	}
-
-	@Override
-	public String toString() {
-		return this.nombre;
-	}
 }

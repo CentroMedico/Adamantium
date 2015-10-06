@@ -6,10 +6,12 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
@@ -18,6 +20,10 @@ import dom.paciente.Paciente;
 		+ "FROM dom.turnoPaciente.TurnoPaciente "), })
 @PersistenceCapable
 public class TurnoPaciente {
+
+	public TranslatableString title() {
+		return TranslatableString.tr("{nombre}", "nombre", "Turno Paciente.");
+	}
 
 	public TurnoPaciente() {
 		this.disponible = new Disponible(this);
@@ -77,7 +83,7 @@ public class TurnoPaciente {
 			@Column(name = "idTurnoAceptado"),
 			@Column(name = "idTurnoAtendido"),
 			@Column(name = "idTurnoCancelado") })
-	public IEstadoTurno getEstado() {
+	IEstadoTurno getEstado() {
 		return estado;
 	}
 
@@ -173,7 +179,7 @@ public class TurnoPaciente {
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	@Property(hidden = Where.EVERYWHERE)
-	public Disponible getDisponible() {
+	Disponible getDisponible() {
 		return disponible;
 	}
 
@@ -280,26 +286,35 @@ public class TurnoPaciente {
 
 	// }}
 
+	// MENSAJE DE ERROR EN CAMBIO DE ESTADOS
+
+	void mostarMensajeUsuario(final String msg) {
+		container.informUser(msg);
+	}
+
 	// METODOS PARA OCULTAR BOTONES DE CAMBIAR ESTADO DE TURNOS
 
-	public boolean hideDisponerTurno() {
-		return this.disponerOcultado;
-	}
+	// public boolean hideDisponerTurno() {
+	// return this.disponerOcultado;
+	// }
+	//
+	// public boolean hideSolicitarTurno() {
+	// return this.solicitarOcultado;
+	// }
+	//
+	// public boolean hideAceptarTurno() {
+	// return this.aceptarOcultado;
+	// }
+	//
+	// public boolean hideCancelarTurno() {
+	// return this.cancelarOcultado;
+	// }
+	//
+	// public boolean hideAtenderTurno() {
+	// return this.atenderOcultado;
+	// }
 
-	public boolean hideSolicitarTurno() {
-		return this.solicitarOcultado;
-	}
-
-	public boolean hideAceptarTurno() {
-		return this.aceptarOcultado;
-	}
-
-	public boolean hideCancelarTurno() {
-		return this.cancelarOcultado;
-	}
-
-	public boolean hideAtenderTurno() {
-		return this.atenderOcultado;
-	}
+	@javax.inject.Inject
+	private DomainObjectContainer container;
 
 }

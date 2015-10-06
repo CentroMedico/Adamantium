@@ -16,4 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-
+.buscarMedicamento {
+	color: red;
+	font-family: "Times New Roman";
+	font-size: 13px;
+	text-align: center;
+}

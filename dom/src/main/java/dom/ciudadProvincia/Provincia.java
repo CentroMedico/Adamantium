@@ -32,10 +32,6 @@ import dom.doctor.DoctorServicio;
  * @version 1.0.0
  */
 @javax.jdo.annotations.Queries({
-//		@javax.jdo.annotations.Query(name = "traerProvincia", language = "JDOQL", value = "SELECT"
-//				+ "FROM dom.ciudadProvincia.Provincia "
-//				+ "WHERE nombre.indexOf(:parametro) == 0 "
-//				+ " && nombre.indexOf(:parametro) >= 0"),
 	@javax.jdo.annotations.Query(name = "traerProvincia", language = "JDOQL", value = "SELECT "
 			+ "FROM dom.ciudadProvincia.Provincia WHERE nombre == :nombre "
 			+ " || nombre.indexOf(:nombre) >= 0"),

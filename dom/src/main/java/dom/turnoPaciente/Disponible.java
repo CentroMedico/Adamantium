@@ -20,7 +20,6 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
@@ -55,6 +54,7 @@ public class Disponible implements IEstadoTurno {
 
 	@Override
 	public void disponerTurno() {
+		turno.mostarMensajeUsuario("El turno ya se encuentra disponible");
 
 	}
 
@@ -62,26 +62,25 @@ public class Disponible implements IEstadoTurno {
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
 		this.getTurno().setDoctor(doctor);
 		this.getTurno().setPaciente(paciente);
-
 		this.getTurno().setEstado(this.getTurno().getSolicitado());
 
 	}
 
 	@Override
 	public void aceptarTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno ya se encuentra disponible, se debe solicitar antes de aceptar");
 
 	}
 
 	@Override
 	public void atenderTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra disponible, se debe solicitar antes de atender");
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		// TODO Auto-generated method stub
+		turno.mostarMensajeUsuario("El turno se encuentra disponible, no se puede cancelar");
 
 	}
 }

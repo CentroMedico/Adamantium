@@ -177,42 +177,64 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		});
 	}
 
-	// Choices de Provincia y ciudades
-	/**
-	 * buscarProvincia retorna una lista de todas las Provincias en la base de
-	 * datos.
-	 * 
-	 */
-
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	public List<Provincia> buscarProvincia(String prov) {
-		return allMatches(QueryDefault.create(Provincia.class,
-				"traerProvincia", "nombre", prov));
-	}
+	public String buscarCiudad(final Provincia provincia, Ciudad ciudad) {
 
-	/**
-	 * Choice default devuelve la primer provincia de la lista.
-	 * 
-	 */
-	public Provincia default6CrearDoctor() {
-		return container.firstMatch(QueryDefault.create(Provincia.class,
-				"traerTodas"));
+		return "";
 
 	}
 
-	/**
-	 * Choice7 devuelve una lista de ciudades dependiendo cual provincia se
-	 * selecciono previamente.
-	 */
-
-	public List<Ciudad> choices7CrearDoctor(final String apellido,
-			final String nombre, final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
-			final TipoDocumentoEnum tipoDocumento, final String documento,
-			final Provincia provincias) {
-		return container.allMatches(QueryDefault.create(Ciudad.class,
-				"traerCiudad", "provincia", provincias));
+	public List<Provincia> choices0BuscarCiudad(final Provincia provincia) {
+		return container.allMatches(QueryDefault.create(Provincia.class,
+				"traerProvincia", "provincia", provincia));
 	}
+
+	public Provincia default0BuscarCiudad(final Provincia prov) {
+		return container.allInstances(Provincia.class, 0).get(0);
+	}
+
+	public List<Provincia> choices1BuscarCiudad(final Provincia provincia,
+			Ciudad ciudad) {
+		return container.allMatches(QueryDefault.create(Provincia.class,
+				"traerCiudad", "provincia", provincia, "ciudad", ciudad));
+	}
+
+	// Choices de Provincia y ciudades
+		/**
+		 * buscarProvincia retorna una lista de todas las Provincias en la base de
+		 * datos.
+		 * 
+		 */
+
+		@ActionLayout(hidden = Where.EVERYWHERE)
+		public List<Provincia> buscarProvincia(String prov) {
+			return allMatches(QueryDefault.create(Provincia.class,
+					"traerProvincia", "nombre", prov));
+		}
+
+		/**
+		 * Choice default devuelve la primer provincia de la lista.
+		 * 
+		 */
+		public Provincia default6CrearDoctor() {
+			return container.firstMatch(QueryDefault.create(Provincia.class,
+					"traerTodas"));
+
+		}
+
+		/**
+		 * Choice7 devuelve una lista de ciudades dependiendo cual provincia se
+		 * selecciono previamente.
+		 */
+
+		public List<Ciudad> choices7CrearDoctor(final String apellido,
+				final String nombre, final TipoDeSexoEnum tipoSexo,
+				final LocalDate fechaNacimiento,
+				final TipoDocumentoEnum tipoDocumento, final String documento,
+				final Provincia provincias) {
+			return container.allMatches(QueryDefault.create(Ciudad.class,
+					"traerCiudad", "provincia", provincias));
+		}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
