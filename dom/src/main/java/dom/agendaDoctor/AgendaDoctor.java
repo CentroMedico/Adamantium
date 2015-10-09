@@ -23,8 +23,10 @@ import dom.doctor.Doctor;
 
 @javax.jdo.annotations.Queries({
 
-@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
-		+ "FROM dom.agendaDoctor.Doctor") })
+		@javax.jdo.annotations.Query(name = "traerPorDoctor", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE doctor == :doctor"),
+		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.agendaDoctor.AgendaDoctor"), })
 @PersistenceCapable
 public class AgendaDoctor {
 

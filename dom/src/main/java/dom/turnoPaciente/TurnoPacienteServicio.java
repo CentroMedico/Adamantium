@@ -30,11 +30,12 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
 		turno.getEstado().solicitarTurno(doctor, paciente);
-		turno.setPaciente(paciente);
 		persistIfNotAlready(turno);
 		container.flush();
 		return turno;
 	}
+
+	// ////////////
 
 	public EspecialidadEnum default0AsignarTurno() {
 
@@ -47,12 +48,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		return container.allMatches(QueryDefault.create(Doctor.class,
 				"traerPorEspecialidad", "especialidad", especialidad));
 
-	}
-
-	public List<AgendaDoctor> choices2AsignarTurno(
-			final EspecialidadEnum especialidad, Doctor doctor) {
-		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-				"traerTurnos"));
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
@@ -70,6 +65,23 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Paciente", sequence = "5.2")
 	public List<TurnoPaciente> listarTurnosPaciente() {
 		return container.allInstances(TurnoPaciente.class);
+	}
+
+	// Choices Agenda Doctor
+
+	public Doctor default1AsignarTurno() {
+		return container.firstMatch(QueryDefault.create(Doctor.class,
+				"traerTodos"));
+	}
+
+	/**
+	 * Choice2 devuelve una lista de agendas dependiendo cual doctor se
+	 * selecciono previamente.
+	 */
+	public List<AgendaDoctor> choices2AsignarTurno(
+			final EspecialidadEnum especialidad, final Doctor doctor) {
+		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerPorDoctor", "doctor", doctor));
 	}
 
 	@javax.inject.Inject
