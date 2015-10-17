@@ -22,6 +22,7 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.Unique;
 import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.annotation.DomainObject;
@@ -58,9 +59,12 @@ import dom.turnoPaciente.TurnoPacienteServicio;
 				+ "FROM dom.paciente.Paciente "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
-				+ " && apellido.indexOf(:parametro) >= 0 ") })
+				+ " && apellido.indexOf(:parametro) >= 0 "),
+				@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
+				+"FROM dom.paciente.Paciente "+" WHERE documento ==:documento || legajo == :legajo")})
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
 @PersistenceCapable
+@Unique
 public class Paciente extends Persona {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.

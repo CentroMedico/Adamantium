@@ -7,6 +7,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -15,9 +17,11 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
+import dom.vademecum.VademecumServicio;
 
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 		+ "FROM dom.turnoPaciente.TurnoPaciente "), })
+
 @PersistenceCapable
 public class TurnoPaciente {
 

@@ -20,7 +20,10 @@ import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Where;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import dom.ciudadProvincia.Ciudad;
@@ -167,7 +170,38 @@ public abstract class Persona {
 	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
+	/////////////////////////////////////7
+//	final LocalDate fecha_actual= LocalDate.now();
+//	public String validaFecha(LocalDate fech)
+//	{
+//		
+//		if (fech.isAfter(fecha_actual))
+//			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
+//		if (validaMayorEdad(fech) == false)
+//			return "El Paciente es menor de edad";
+//		return "";
+//	}
+//	@ActionLayout(hidden = Where.EVERYWHERE)
+//	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
+//		
+//		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	/**
+//	 * Obtiene la cantidad de dias entre la fecha de nacimiento y la fecha actual
+//	 * @param fechadeNacimiento LocalDate
+//	 * @return org.joda.time.Days meses
+//	 */
+//	@ActionLayout(hidden = Where.EVERYWHERE)
+//	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
+//		
+//		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
+//		return meses.getDays();
+//	}
+	///////////////////////////////////////////////////
 	// }}
 
 	// {{ TipoDocumento (property)

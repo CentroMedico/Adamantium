@@ -78,12 +78,10 @@ public class VademecumServicio extends AbstractFactoryAndRepository {
 	public List<Vademecum> listarMedicamentos() {
 		return container.allInstances(Vademecum.class);
 	}
-
-	// public Vademecum buscarMedicamento() {
-	// return container.firstMatch(QueryDefault.create(Vademecum.class,
-	// "traerTodos"));
-	//
-	// }
+//	public class Vademecum {
+//	    
+//	    public String cssClass() {return "auto-updating-entity"; }
+//	  	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

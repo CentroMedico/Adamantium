@@ -21,9 +21,12 @@ public final class RegexValidation {
 		private ValidaNombres() {
 		}
 
-		public static final String REFERENCIA = "[a-z,A-Z,0-9,ñ,Ñ, ]+";
+		public static final String REFERENCIA = "[a-z,A-Z,ñ,Ñ, ]+";
 		public static final String INICIALES = "[a-z,A-Z,ñ,Ñ]{2}$+";
+		public static final String DIRECCION = "[a-z,A-Z,0-9,ñ,Ñ, ]+";
 	}
+	
+	
 
 	public static final class ValidaTel {
 		private ValidaTel() {
@@ -92,4 +95,5 @@ public final class RegexValidation {
 
 		public static final String HORARIO = "[0-9,:]+";
 	}
+	
 }

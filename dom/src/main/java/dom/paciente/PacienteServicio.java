@@ -27,15 +27,13 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
-import dom.agendaDoctor.AgendaDoctor;
 import dom.ciudadProvincia.Ciudad;
 import dom.ciudadProvincia.Provincia;
-import dom.doctor.Doctor;
-import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.grupoSanguineo.GrupoSanguineoEnum;
 import dom.tipoDeSexo.TipoDeSexoEnum;
@@ -50,7 +48,7 @@ import dom.tipoDocumento.TipoDocumentoEnum;
  */
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
-public class PacienteServicio extends AbstractFactoryAndRepository {
+public class PacienteServicio extends AbstractFactoryAndRepository{
 
 	/**
 	 * Retorna el nombre del icono para el Doctor
@@ -60,7 +58,10 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	public String iconName() {
 		return "paciente";
 	}
-
+	/**
+	 * Atributo Extra para las validaciones de las fechas
+	 */
+	final LocalDate fecha_actual = LocalDate.now();
 	/**
 	 * Obtiene los datos validados del Cliente
 	 * 
@@ -92,10 +93,10 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
 			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
 			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
-			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String documento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Provincia") final Provincia provincia,
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
-			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String direccion,
+			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo) {
@@ -190,7 +191,84 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
 				"traerCiudad", "provincia", provincias));
 	}
+/**
+ * Valida
+ */
+	
+	public String validateCrearPaciente(final int legajo,
+			final String apellido,
+			final String nombre,
+			final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento,
+			final String documento,
+			final Provincia provincia,
+			final Ciudad ciudad,
+			final String direccion,
+			final String correo,
+			final String telefono,
+			final GrupoSanguineoEnum grupoSanguineo)
+			{
 
+			final Paciente miPaciente = container.firstMatch(QueryDefault.create(Paciente.class,"buscarDuplicados","documento",documento,"legajo",legajo));
+			if (miPaciente != null)
+			{
+				if (miPaciente.getDocumento().equals(documento))
+				{
+					return "Ya existe un Paciente con este numero de documento: "+documento;
+				}
+				else
+				{				
+					return "Ya existe un Paciente con este numero de legajo: "+legajo;
+			
+				}
+			}
+		if (fechaNacimiento.isAfter(fecha_actual))
+			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
+		if (validaMayorEdad(fechaNacimiento) == false)
+			return "El Paciente es menor de edad";
+		return "";
+			
+//		if (firstMatch(Persona.class, new Predicate<Persona>() {
+//
+//			@Override
+//			public boolean apply(Persona _persona) {
+//				// TODO Auto-generated method stub
+//				return _persona.getUsuario().getNombre().equals(_nombreUsuario);
+//			}
+//		}) != null)
+//			return "Ya existe el nombre de usuario!";
+//		return _telefono == null && _celular == null ? "Debe ingresar al menos un teléfono"
+//				: null;
+			}
+	
+	/**
+	 * Validacion de la mayoria de edad de los empleados ingresados 6575 son la
+	 * cantidad de dias que tiene una persona de 18 años
+	 * @param fechadeNacimiento LocalDate
+	 * @return boolean
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
+		
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Obtiene la cantidad de dias entre la fecha de nacimiento y la fecha actual
+	 * @param fechadeNacimiento LocalDate
+	 * @return org.joda.time.Days meses
+	 */
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
+		
+		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
+		return meses.getDays();
+	}
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

@@ -43,7 +43,8 @@ import dom.persona.Persona;
 				+ "FROM dom.recepcionista.Recepcionista "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
-				+ " && apellido.indexOf(:parametro) >= 0 ") })
+				+ " && apellido.indexOf(:parametro) >= 0 "),@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
+						+"FROM dom.recepcionista.Recepcionista "+" WHERE documento ==:documento || legajo == :legajo") })
 @DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)

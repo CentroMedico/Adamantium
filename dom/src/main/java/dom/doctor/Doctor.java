@@ -59,7 +59,8 @@ import dom.persona.Persona;
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
 		@javax.jdo.annotations.Query(name = "traerPorProvincia", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.doctor.Doctor where provincia == :provincia"),
+				+ "FROM dom.doctor.Doctor where provincia == :provincia"),@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
+						+"FROM dom.doctor.Doctor "+" WHERE documento ==:documento")
 
 })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")

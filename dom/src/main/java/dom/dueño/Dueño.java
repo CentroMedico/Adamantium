@@ -48,7 +48,9 @@ import dom.persona.Persona;
 				+ "FROM dom.dueño.Dueño "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
-				+ " && apellido.indexOf(:parametro) >= 0 ") })
+				+ " && apellido.indexOf(:parametro) >= 0 "),
+		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.dueño.Dueño " + " WHERE documento ==:documento") })
 @DomainObject(autoCompleteRepository = DueñoServicio.class, autoCompleteAction = "buscarDueño")
 @PersistenceCapable
 public class Dueño extends Persona {
