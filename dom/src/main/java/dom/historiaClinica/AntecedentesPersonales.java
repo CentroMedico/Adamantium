@@ -1,145 +1,425 @@
+/*
+Copyright 2015 Adamantium
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
 package dom.historiaClinica;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.paciente.Paciente;
+
+@PersistenceCapable
 public class AntecedentesPersonales {
+	
+	/**
+	 * Representa en UI el nombre "Paciente" en carga/modificacion.
+	 */
+	/*----------------------------------------------------*/
+	public TranslatableString title() {
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Antecedentes Personales de: " + this.paciente.getApellido() + ", " + this.paciente.getNombre());
+	}
 
-	// {{ Alcohol (property)
-	private String alcohol;
+	/**
+	 * Obtiene el nombre del icono.
+	 */
+	/*----------------------------------------------------*/
+	public String iconName() {
+		return "historia";
+	}
+	
+	
+	
+
+	// {{ Paciente (property)
+	private Paciente paciente;
+
+	@MemberOrder(sequence = "0")
+	@Column(allowsNull = "true")
+	@Property(editing=Editing.DISABLED)
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(final Paciente paciente) {
+		this.paciente = paciente;
+	}
+	// }}
+
+
+	// {{ Tabaquismo (property)
+	private boolean tabaquismo;
 
 	@MemberOrder(sequence = "1")
-	public String getAlcohol() {
+	@Column(allowsNull = "true")
+	public boolean getTabaquismo() {
+		return tabaquismo;
+	}
+
+	public void setTabaquismo(final boolean tabaquismo) {
+		this.tabaquismo = tabaquismo;
+	}
+
+	// }}
+
+	// {{ DesdequeEdad (property)
+	private int desdequeedad;
+
+	@MemberOrder(sequence = "2")
+	@Column(allowsNull = "true")
+	public int getDesdequeEdad() {
+		return desdequeedad;
+	}
+	
+	public void setDesdequeEdad(final int desdequeedad) {
+		this.desdequeedad = desdequeedad;
+	}
+
+	// }}
+	// {{ CantidadCigarrillos (property)
+	private int cantidadCigarrillos;
+
+	@MemberOrder(sequence = "3")
+	@Column(allowsNull = "true")
+	public int getCantidadCigarrillos() {
+		return cantidadCigarrillos;
+	}
+
+	public void setCantidadCigarrillos(final int cantidadCigarrillos) {
+		this.cantidadCigarrillos = cantidadCigarrillos;
+	}
+
+	// }}
+
+	// {{ Alcohol (property)
+	private boolean alcohol;
+
+	@MemberOrder(sequence = "4")
+	@Column(allowsNull = "true")
+	public boolean getAlcohol() {
 		return alcohol;
 	}
 
-	public void setAlcohol(final String alcohol) {
+	public void setAlcohol(final boolean alcohol) {
 		this.alcohol = alcohol;
 	}
 
 	// }}
 
-	// {{ Tabaco (property)
-	private String tabaco;
+	// {{ CriticasporTomar (property)
+	private boolean criticasporTomar;
 
-	@MemberOrder(sequence = "1")
-	public String getTabaco() {
-		return tabaco;
+	@MemberOrder(sequence = "5")
+	@Column(allowsNull = "true")
+	public boolean getCriticasporTomar() {
+		return criticasporTomar;
 	}
 
-	public void setTabaco(final String tabaco) {
-		this.tabaco = tabaco;
+	public void setCriticasporTomar(final boolean criticasporTomar) {
+		this.criticasporTomar = criticasporTomar;
+	}
+
+	// }}
+
+	// {{ TomaporlaMañana (property)
+	private boolean tomaporlaMañana;
+
+	@MemberOrder(sequence = "6")
+	@Column(allowsNull = "true")
+	public boolean getTomaporlaMañana() {
+		return tomaporlaMañana;
+	}
+
+	public void setTomaporlaMañana(final boolean tomaporlaMañana) {
+		this.tomaporlaMañana = tomaporlaMañana;
 	}
 
 	// }}
 
 	// {{ Drogas (property)
-	private String drogas;
+	private boolean drogas;
 
-	@MemberOrder(sequence = "1")
-	public String getDrogas() {
+	@MemberOrder(sequence = "7")
+	@Column(allowsNull = "true")
+	public boolean getDrogas() {
 		return drogas;
 	}
 
-	public void setDrogas(final String drogas) {
+	public void setDrogas(final boolean drogas) {
 		this.drogas = drogas;
 	}
 
 	// }}
 
-	// {{ Infusiones (property)
-	private String infusiones;
+	// {{ TipoDroga (property)
+	private String tipoDroga;
 
-	@MemberOrder(sequence = "1")
-	public String getInfusiones() {
-		return infusiones;
+	@MemberOrder(sequence = "8")
+	@Column(allowsNull = "true")
+	public String getTipoDroga() {
+		return tipoDroga;
 	}
 
-	public void setInfusiones(final String infusiones) {
-		this.infusiones = infusiones;
-	}
-
-	// }}
-
-	// {{ Alimentacion (property)
-	private String alimentacion;
-
-	@MemberOrder(sequence = "1")
-	public String getAlimentacion() {
-		return alimentacion;
-	}
-
-	public void setAlimentacion(final String alimentacion) {
-		this.alimentacion = alimentacion;
+	public void setTipoDroga(final String tipoDroga) {
+		this.tipoDroga = tipoDroga;
 	}
 
 	// }}
 
-	// {{ Dipsia (property)
-	private String dipsia;
+	// {{ ActividadFisica (property)
+	private boolean actividadFisica;
 
-	@MemberOrder(sequence = "1")
-	public String getDipsia() {
-		return dipsia;
+	@MemberOrder(sequence = "9")
+	@Column(allowsNull = "true")
+	public boolean getActividadFisica() {
+		return actividadFisica;
 	}
 
-	public void setDipsia(final String dipsia) {
-		this.dipsia = dipsia;
-	}
-
-	// }}
-
-	// {{ Diuresis (property)
-	private String diuresis;
-
-	@MemberOrder(sequence = "1")
-	public String getDiuresis() {
-		return diuresis;
-	}
-
-	public void setDiuresis(final String diuresis) {
-		this.diuresis = diuresis;
+	public void setActividadFisica(final boolean actividadFisica) {
+		this.actividadFisica = actividadFisica;
 	}
 
 	// }}
 
-	// {{ Catarsis (property)
-	private String catarsis;
+	// {{ TipoActividad (property)
+	private String tipoActivida;
 
-	@MemberOrder(sequence = "1")
-	public String getCatarsis() {
-		return catarsis;
+	@MemberOrder(sequence = "10")
+	@Column(allowsNull = "true")
+	public String getTipoActividad() {
+		return tipoActivida;
 	}
 
-	public void setCatarsis(final String catarsis) {
-		this.catarsis = catarsis;
-	}
-
-	// }}
-
-	// {{ Somnia (property)
-	private String somnia;
-
-	@MemberOrder(sequence = "1")
-	public String getSomnia() {
-		return somnia;
-	}
-
-	public void setSomnia(final String somnia) {
-		this.somnia = somnia;
+	public void setTipoActividad(final String tipoActivida) {
+		this.tipoActivida = tipoActivida;
 	}
 
 	// }}
 
-	// {{ Infancia (property)
-	private String infancia;
+	// {{ HTA (property)
+	private boolean hta;
 
-	@MemberOrder(sequence = "1")
-	public String getInfancia() {
-		return infancia;
+	@MemberOrder(sequence = "11")
+	@Column(allowsNull = "true")
+	public boolean getHTA() {
+		return hta;
 	}
 
-	public void setInfancia(final String infancia) {
-		this.infancia = infancia;
+	public void setHTA(final boolean hta) {
+		this.hta = hta;
+	}
+
+	// }}
+
+	// {{ Diabetes (property)
+	private boolean diabetes;
+
+	@MemberOrder(sequence = "12")
+	@Column(allowsNull = "true")
+	public boolean getDiabetes() {
+		return diabetes;
+	}
+
+	public void setDiabetes(final boolean diabetes) {
+		this.diabetes = diabetes;
+	}
+
+	// }}
+
+	// {{ EnfermedadCoronaria (property)
+	private boolean enfermedadCoronaria;
+
+	@MemberOrder(sequence = "13")
+	@Column(allowsNull = "true")
+	public boolean getEnfermedadCoronaria() {
+		return enfermedadCoronaria;
+	}
+
+	public void setEnfermedadCoronaria(final boolean enfermedadCoronaria) {
+		this.enfermedadCoronaria = enfermedadCoronaria;
+	}
+
+	// }}
+
+	// {{ ACV (property)
+	private boolean acv;
+
+	@MemberOrder(sequence = "14")
+	@Column(allowsNull = "true")
+	public boolean getACV() {
+		return acv;
+	}
+
+	public void setACV(final boolean acv) {
+		this.acv = acv;
+	}
+
+	// }}
+
+	// {{ EPOC (property)
+	private boolean epoc;
+
+	@MemberOrder(sequence = "15")
+	@Column(allowsNull = "true")
+	public boolean getEPOC() {
+		return epoc;
+	}
+
+	public void setEPOC(final boolean epoc) {
+		this.epoc = epoc;
+	}
+
+	// }}
+
+	// {{ Alergia (property)
+	private boolean alergia;
+
+	@MemberOrder(sequence = "16")
+	@Column(allowsNull = "true")
+	public boolean getAlergia() {
+		return alergia;
+	}
+
+	public void setAlergia(final boolean alergia) {
+		this.alergia = alergia;
+	}
+
+	// }}
+
+	// {{ EnfermedadReumatica (property)
+	private boolean enfermedadReumatica;
+
+	@MemberOrder(sequence = "17")
+	@Column(allowsNull = "true")
+	public boolean getEnfermedadReumatica() {
+		return enfermedadReumatica;
+	}
+
+	public void setEnfermedadReumatica(final boolean enfermedadReumatica) {
+		this.enfermedadReumatica = enfermedadReumatica;
+	}
+
+	// }}
+
+	// {{ EnfermedadOncologica (property)
+	private boolean enfermedadOncologica;
+
+	@MemberOrder(sequence = "18")
+	@Column(allowsNull = "true")
+	public boolean getEnfermedadOncologica() {
+		return enfermedadOncologica;
+	}
+
+	public void setEnfermedadOncologica(final boolean enfermedadOncologica) {
+		this.enfermedadOncologica = enfermedadOncologica;
+	}
+
+	// }}
+
+	// {{ TBC (property)
+	private boolean tbc;
+
+	@MemberOrder(sequence = "19")
+	@Column(allowsNull = "true")
+	public boolean getTBC() {
+		return tbc;
+	}
+
+	public void setTBC(final boolean tbc) {
+		this.tbc = tbc;
+	}
+
+	// }}
+
+	// {{ VIH (property)
+	private boolean vih;
+
+	@MemberOrder(sequence = "20")
+	@Column(allowsNull = "true")
+	public boolean getVIH() {
+		return vih;
+	}
+
+	public void setVIH(final boolean vih) {
+		this.vih = vih;
+	}
+
+	// }}
+
+	// {{ Chagas (property)
+	private boolean chagas;
+
+	@MemberOrder(sequence = "21")
+	@Column(allowsNull = "true")
+	public boolean getChagas() {
+		return chagas;
+	}
+
+	public void setChagas(final boolean chagas) {
+		this.chagas = chagas;
+	}
+
+	// }}
+
+	// {{ ITS (property)
+	private boolean its;
+
+	@MemberOrder(sequence = "22")
+	@Column(allowsNull = "true")
+	public boolean getITS() {
+		return its;
+	}
+
+	public void setITS(final boolean its) {
+		this.its = its;
+	}
+
+	// }}
+
+	// {{ Neurologicos (property)
+	private boolean neurologicos;
+
+	@MemberOrder(sequence = "23")
+	@Column(allowsNull = "true")
+	public boolean getNeurologicos() {
+		return neurologicos;
+	}
+
+	public void setNeurologicos(final boolean neurologicos) {
+		this.neurologicos = neurologicos;
+	}
+
+	// }}
+
+	// {{ Tranfuciones (property)
+	private boolean transfuciones;
+
+	@MemberOrder(sequence = "24")
+	@Column(allowsNull = "true")
+	public boolean getTranfuciones() {
+		return transfuciones;
+	}
+
+	public void setTranfuciones(final boolean transfuciones) {
+		this.transfuciones = transfuciones;
 	}
 	// }}
 
