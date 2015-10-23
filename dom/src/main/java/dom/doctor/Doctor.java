@@ -28,7 +28,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import dom.agendaDoctor.AgendaDoctor;
+import dom.agendadoctor.AgendaDoctor;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;

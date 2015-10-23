@@ -26,10 +26,10 @@ import org.apache.isis.applib.annotation.Where;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import dom.ciudadProvincia.Ciudad;
-import dom.ciudadProvincia.Provincia;
-import dom.tipoDeSexo.TipoDeSexoEnum;
-import dom.tipoDocumento.TipoDocumentoEnum;
+import dom.ciudadprovincia.Ciudad;
+import dom.ciudadprovincia.Provincia;
+import dom.tipodesexo.TipoDeSexoEnum;
+import dom.tipodocumento.TipoDocumentoEnum;
 
 /**
  * Clase abstracta que representa a una persona, de la cual extenderan todos los

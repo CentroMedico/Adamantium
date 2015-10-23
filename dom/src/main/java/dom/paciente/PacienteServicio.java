@@ -32,12 +32,12 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
-import dom.ciudadProvincia.Ciudad;
-import dom.ciudadProvincia.Provincia;
+import dom.ciudadprovincia.Ciudad;
+import dom.ciudadprovincia.Provincia;
 import dom.estado.EstadoEnum;
-import dom.grupoSanguineo.GrupoSanguineoEnum;
-import dom.tipoDeSexo.TipoDeSexoEnum;
-import dom.tipoDocumento.TipoDocumentoEnum;
+import dom.gruposanguineo.GrupoSanguineoEnum;
+import dom.tipodesexo.TipoDeSexoEnum;
+import dom.tipodocumento.TipoDocumentoEnum;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Paciente

@@ -29,12 +29,12 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import dom.agendaDoctor.AgendaDoctor;
+import dom.agendadoctor.AgendaDoctor;
 import dom.estado.EstadoEnum;
-import dom.grupoSanguineo.GrupoSanguineoEnum;
+import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.persona.Persona;
-import dom.turnoPaciente.TurnoPaciente;
-import dom.turnoPaciente.TurnoPacienteServicio;
+import dom.turnopaciente.TurnoPaciente;
+import dom.turnopaciente.TurnoPacienteServicio;
 
 /**
  * Entidad Paciente la cual representa a cualquier persona que se haga atender

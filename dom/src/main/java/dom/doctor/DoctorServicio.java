@@ -34,12 +34,12 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Predicate;
 
-import dom.ciudadProvincia.Ciudad;
-import dom.ciudadProvincia.Provincia;
+import dom.ciudadprovincia.Ciudad;
+import dom.ciudadprovincia.Provincia;
 import dom.especialidad.EspecialidadEnum;
 import dom.estado.EstadoEnum;
-import dom.tipoDeSexo.TipoDeSexoEnum;
-import dom.tipoDocumento.TipoDocumentoEnum;
+import dom.tipodesexo.TipoDeSexoEnum;
+import dom.tipodocumento.TipoDocumentoEnum;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar un nuevo Doctor
