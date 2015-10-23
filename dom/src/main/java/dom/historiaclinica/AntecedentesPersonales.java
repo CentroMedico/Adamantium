@@ -81,29 +81,29 @@ public class AntecedentesPersonales {
 	// }}
 
 	// {{ DesdequeEdad (property)
-	private int desdequeedad;
+	private String desdequeedad;
 
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
-	public int getDesdequeEdad() {
+	public String getDesdequeEdad() {
 		return desdequeedad;
 	}
 	
-	public void setDesdequeEdad(final int desdequeedad) {
+	public void setDesdequeEdad(final String desdequeedad) {
 		this.desdequeedad = desdequeedad;
 	}
 
 	// }}
 	// {{ CantidadCigarrillos (property)
-	private int cantidadCigarrillos;
+	private String cantidadCigarrillos;
 
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
-	public int getCantidadCigarrillos() {
+	public String getCantidadCigarrillos() {
 		return cantidadCigarrillos;
 	}
 
-	public void setCantidadCigarrillos(final int cantidadCigarrillos) {
+	public void setCantidadCigarrillos(final String cantidadCigarrillos) {
 		this.cantidadCigarrillos = cantidadCigarrillos;
 	}
 

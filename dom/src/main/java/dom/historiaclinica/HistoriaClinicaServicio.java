@@ -57,8 +57,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public AntecedentesPersonales crearAntecedentesPersonales(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Tabaquismo") final boolean tabaquismo,
-			@ParameterLayout(named = "Edad que empezo a Fumar") final @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) int edad,
-			@ParameterLayout(named = "Cantidad de Cigarrillos") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final int cantidad,
+			@ParameterLayout(named = "Edad que empezo a Fumar") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String edad,
+			@ParameterLayout(named = "Cantidad de Cigarrillos") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String cantidad,
 			@ParameterLayout(named = "Alcohol") final boolean alcohol,
 			@ParameterLayout(named = "Lo han criticado por tomar") final boolean criticas,
 			@ParameterLayout(named = "Toma por la mañana") final boolean tomapormañana,
@@ -162,23 +162,23 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Historia Clinica", sequence = "4")
 	public ExamenFisico crearExamenFisico(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Piel y Anexos") final String piel,
-			@ParameterLayout(named = "Utiliza Lentes? Tipo de enfermedad") final String lentes,
-			@ParameterLayout(named = "Agudeza Visual") final String agudezaVisual,
-			@ParameterLayout(named = "Oidos") final String oidos,
-			@ParameterLayout(named = "Dentadura") final String dentadura,
-			@ParameterLayout(named = "Pulmones") final String pulmones,
-			@ParameterLayout(named = "Corazon") final String corazon,
-			@ParameterLayout(named = "Abdomen") final String abdomen,
-			@ParameterLayout(named = "Genitales") final String genitales,
-			@ParameterLayout(named = "Mamas") final String mamas,
-			@ParameterLayout(named = "Altura") final String talla,
-			@ParameterLayout(named = "Peso") final String peso,
-			@ParameterLayout(named = "Temperatura Corporal") final String temperatura,
-			@ParameterLayout(named = "Frecuencia Cardiaca") final String frecuenciaCardiaca,
-			@ParameterLayout(named = "Frecuencia Respiratoria") final String frecuenciaRespiratoria,
-			@ParameterLayout(named = "Tension Arterial") final String tensionArterial,
-			@ParameterLayout(named = "Estado General") final String estadoGeneral) {
+			@ParameterLayout(named = "Piel y Anexos") @Parameter(optionality = Optionality.OPTIONAL)final String piel,
+			@ParameterLayout(named = "Utiliza Lentes? Tipo de enfermedad") @Parameter(optionality = Optionality.OPTIONAL)final String lentes,
+			@ParameterLayout(named = "Agudeza Visual") @Parameter(optionality = Optionality.OPTIONAL)final String agudezaVisual,
+			@ParameterLayout(named = "Oidos") @Parameter(optionality = Optionality.OPTIONAL)final String oidos,
+			@ParameterLayout(named = "Dentadura")@Parameter(optionality = Optionality.OPTIONAL) final String dentadura,
+			@ParameterLayout(named = "Pulmones") @Parameter(optionality = Optionality.OPTIONAL)final String pulmones,
+			@ParameterLayout(named = "Corazon")@Parameter(optionality = Optionality.OPTIONAL) final String corazon,
+			@ParameterLayout(named = "Abdomen") @Parameter(optionality = Optionality.OPTIONAL)final String abdomen,
+			@ParameterLayout(named = "Genitales") @Parameter(optionality = Optionality.OPTIONAL)final String genitales,
+			@ParameterLayout(named = "Mamas")@Parameter(optionality = Optionality.OPTIONAL) final String mamas,
+			@ParameterLayout(named = "Altura") @Parameter(optionality = Optionality.OPTIONAL)final String talla,
+			@ParameterLayout(named = "Peso") @Parameter(optionality = Optionality.OPTIONAL)final String peso,
+			@ParameterLayout(named = "Temperatura Corporal") @Parameter(optionality = Optionality.OPTIONAL)final String temperatura,
+			@ParameterLayout(named = "Frecuencia Cardiaca")@Parameter(optionality = Optionality.OPTIONAL) final String frecuenciaCardiaca,
+			@ParameterLayout(named = "Frecuencia Respiratoria")@Parameter(optionality = Optionality.OPTIONAL) final String frecuenciaRespiratoria,
+			@ParameterLayout(named = "Tension Arterial")@Parameter(optionality = Optionality.OPTIONAL) final String tensionArterial,
+			@ParameterLayout(named = "Estado General")@Parameter(optionality = Optionality.OPTIONAL) final String estadoGeneral) {
 		final ExamenFisico examen = newTransientInstance(ExamenFisico.class);
 
 		examen.setPaciente(paciente);
@@ -240,7 +240,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public IndicacionesMedicas crearIndicacionesMedicas(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
-			@ParameterLayout(named = "Como Tomarlo") final String comoTomarlo,
+			@ParameterLayout(named = "Como Tomarlo")@Parameter(optionality = Optionality.OPTIONAL) final String comoTomarlo,
 			@ParameterLayout(named = "Doctor") final Doctor doctor)
 	{
 		final IndicacionesMedicas indicaciones =newTransientInstance(IndicacionesMedicas.class);
