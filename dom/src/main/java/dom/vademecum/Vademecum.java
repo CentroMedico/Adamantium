@@ -37,7 +37,7 @@ public class Vademecum {
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				" " + this.getProducto());
+				" " + this.getProducto() + ", " + getPresentacion());
 	}
 
 	/**

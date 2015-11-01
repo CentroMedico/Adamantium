@@ -45,11 +45,6 @@ public class Aceptado implements IEstadoTurno {
 
 	public Aceptado(TurnoPaciente turno) {
 		this.setTurno(turno);
-		// this.getTurno().setDisponerOcultado(true);
-		// this.getTurno().setSolicitarOcultado(true);
-		// this.getTurno().setAceptarOcultado(true);
-		// this.getTurno().setCancelarOcultado(false);
-		// this.getTurno().setAtenderOcultado(false);
 	}
 
 	@Override
@@ -72,13 +67,11 @@ public class Aceptado implements IEstadoTurno {
 	@Override
 	public void atenderTurno() {
 		this.getTurno().setEstado(this.getTurno().getAtendido());
-
 	}
 
 	@Override
 	public void cancelarTurno() {
 		this.getTurno().setEstado(this.getTurno().getCancelado());
-
 	}
 
 }

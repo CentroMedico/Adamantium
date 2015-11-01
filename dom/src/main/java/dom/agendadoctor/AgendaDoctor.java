@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -24,9 +25,28 @@ import dom.doctor.Doctor;
 @javax.jdo.annotations.Queries({
 
 		@javax.jdo.annotations.Query(name = "traerPorDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE doctor == :doctor"),
+				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE doctor == :doctor ORDER BY dia"),
+		@javax.jdo.annotations.Query(name = "traerTurnosDisponibles", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' "),
 		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor"), })
+				+ "FROM dom.agendaDoctor.AgendaDoctor"),
+
+		// @javax.jdo.annotations.Query(name = "buscarAlumnoPorcuilYNombre",
+		// language = "JDOQL", value =
+		// "SELECT FROM dom.alumno.Alumno WHERE (cuil== :cuil || nombre.indexOf(:nombre) >= 0 || "
+		// +
+		// "apellido.indexOf(:apellido) >= 0 ) && establecimiento==:institucion && estaBorrado== 'ACTIVO'"+
+		// " range 0, 4"),
+
+		@javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor ==: doctor ORDER BY dia")
+
+// @javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language
+// = "JDOQL", value = "SELECT "
+// +
+// "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' && WHERE doctor ==: doctor ORDER BY dia")
+
+})
 @PersistenceCapable
 public class AgendaDoctor {
 
@@ -81,7 +101,8 @@ public class AgendaDoctor {
 	private Doctor doctor;
 
 	@MemberOrder(sequence = "2")
-	@Persistent(mappedBy = "listaAgenda")
+	@Persistent(table = "lista_agenda", mappedBy = "listaAgenda")
+	@Join(column = "agenda_id")
 	@Column(allowsNull = "false")
 	/**
 	 * Pemite obtener un doctor 
@@ -102,6 +123,20 @@ public class AgendaDoctor {
 		this.doctor = doctor;
 	}
 
+	// }}
+
+	// {{ Estado (property)
+	private String estado;
+
+	@MemberOrder(sequence = "3")
+	@Column(allowsNull = "false")
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final String estado) {
+		this.estado = estado;
+	}
 	// }}
 
 }

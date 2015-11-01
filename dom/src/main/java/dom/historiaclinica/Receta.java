@@ -28,16 +28,17 @@ import dom.doctor.Doctor;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
 import dom.vademecum.Vademecum;
+
 @PersistenceCapable
-public class Receta 
-{
+public class Receta {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Receta de: " + this.paciente.getApellido() + ", " + this.paciente.getNombre());
+				"Receta de: " + this.paciente.getApellido() + ", "
+						+ this.paciente.getNombre());
 	}
 
 	/**
@@ -47,16 +48,13 @@ public class Receta
 	public String iconName() {
 		return "historia";
 	}
-	
-	
-	
 
 	// {{ Paciente (property)
 	private Paciente paciente;
 
 	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "true")
-	@Property(editing=Editing.DISABLED)
+	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -64,9 +62,9 @@ public class Receta
 	public void setPaciente(final Paciente paciente) {
 		this.paciente = paciente;
 	}
+
 	// }}
 
-	
 	// {{ ObraSocial (property)
 	private ObraSocial obraSocial;
 
@@ -79,6 +77,7 @@ public class Receta
 	public void setObraSocial(final ObraSocial obraSocial) {
 		this.obraSocial = obraSocial;
 	}
+
 	// }}
 
 	// {{ Medicamento (property)
@@ -93,8 +92,9 @@ public class Receta
 	public void setMedicamento(final Vademecum medicamento) {
 		this.medicamento = medicamento;
 	}
+
 	// }}
-	
+
 	// {{ Medicamento2 (property)
 	private Vademecum medicamento2;
 
@@ -107,6 +107,7 @@ public class Receta
 	public void setMedicamento2(final Vademecum medicamento2) {
 		this.medicamento2 = medicamento2;
 	}
+
 	// }}
 
 	// {{ Doctor (property)
@@ -122,8 +123,5 @@ public class Receta
 		this.doctor = doctor;
 	}
 	// }}
-
-
-
 
 }

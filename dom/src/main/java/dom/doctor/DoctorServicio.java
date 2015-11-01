@@ -1,4 +1,5 @@
 /*
+
  Copyright 2015 Adamantium
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -88,8 +89,11 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return doctor
 	 */
+
 	@MemberOrder(name = "Doctor", sequence = "2.1")
+	@ActionLayout(cssClass = "boton")
 	public Doctor crearDoctor(
+			@ParameterLayout(named = "Matricula") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMatricula.MATRICULA) final String matricula,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
@@ -101,7 +105,6 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Matricula") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMatricula.MATRICULA) final String matricula,
 			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad) {
 
 		final Doctor doctor = newTransientInstance(Doctor.class);
@@ -122,6 +125,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		doctor.setMatricula(matricula);
 		doctor.setEspecialidad(especialidad);
 		doctor.setEstado(EstadoEnum.Activo);
+		doctor.setFechaAlta(LocalDate.now());
 		persist(doctor);
 		container.flush();
 		return doctor;
@@ -222,7 +226,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * Choice default devuelve la primer provincia de la lista.
 	 * 
 	 */
-	public Provincia default6CrearDoctor() {
+	public Provincia default7CrearDoctor() {
 		return container.firstMatch(QueryDefault.create(Provincia.class,
 				"traerTodas"));
 
@@ -233,9 +237,9 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * selecciono previamente.
 	 */
 
-	public List<Ciudad> choices7CrearDoctor(final String apellido,
-			final String nombre, final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
+	public List<Ciudad> choices8CrearDoctor(final String matricula,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincias) {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
@@ -246,26 +250,28 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	 * Valida
 	 */
 
-	public String validateCrearDoctor(final String apellido,
-			final String nombre, final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
+	public String validateCrearDoctor(final String matricula,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
 			final String direccion, final String correo, final String telefono,
-			final String matricula, final EspecialidadEnum especialidad) {
+			final EspecialidadEnum especialidad) {
 
 		final Doctor miDoctor = container.firstMatch(QueryDefault.create(
 				Doctor.class, "buscarDuplicados", "documento", documento));
 		if (miDoctor != null) {
 			if (miDoctor.getDocumento().equals(documento)) {
-				return "Ya existe un Paciente con este numero de documento: "
+				return "Ya existe un doctor con este numero de documento: "
 						+ documento;
 			}
 		}
 		if (fechaNacimiento.isAfter(fecha_actual))
 			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
 		if (validaMayorEdad(fechaNacimiento) == false)
-			return "El Doctor es menor de edad";
+			return "El doctor es menor de edad";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "El doctor no puede ser mayor a 100 años";
 		return "";
 
 		// if (firstMatch(Persona.class, new Predicate<Persona>() {
@@ -283,7 +289,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	}
 
 	/**
-	 * Validacion de la mayoria de edad de los empleados ingresados 6575 son la
+	 * Validacion de la mayoria de edad de las personas ingresadas, 6575 es la
 	 * cantidad de dias que tiene una persona de 18 años
 	 * 
 	 * @param fechadeNacimiento
@@ -295,6 +301,24 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
 
 		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Validacion de la edad de las personas ingresadas, 36500 es la cantidad de
+	 * dias que tiene una persona de 100 años
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
+	 * @return boolean
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
 			return true;
 		}
 		return false;

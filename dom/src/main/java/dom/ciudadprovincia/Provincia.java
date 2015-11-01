@@ -23,6 +23,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.DoctorServicio;
+
 /**
  * Entidad Provincia la cual representa a cualquier Provincia
  * 
@@ -32,34 +33,34 @@ import dom.doctor.DoctorServicio;
  * @version 1.0.0
  */
 @javax.jdo.annotations.Queries({
-	@javax.jdo.annotations.Query(name = "traerProvincia", language = "JDOQL", value = "SELECT "
-			+ "FROM dom.ciudadProvincia.Provincia WHERE nombre == :nombre "
-			+ " || nombre.indexOf(:nombre) >= 0"),
-			@javax.jdo.annotations.Query(name = "traerTodas", language = "JDOQL", value = "SELECT "
-					+ "FROM dom.ciudadProvincia.Provincia"),})
-
+		@javax.jdo.annotations.Query(name = "traerProvincia", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.ciudadprovincia.Provincia WHERE nombre == :nombre "
+				+ " || nombre.indexOf(:nombre) >= 0"),
+		@javax.jdo.annotations.Query(name = "traerTodas", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.ciudadprovincia.Provincia"), })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarProvincia")
 @PersistenceCapable
-public class Provincia 
-{
-	
+public class Provincia {
+
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				" " + this.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", " " + getNombre());
 	}
+
 	// {{ Nombre (property)
 	private String nombre;
+
 	/**
 	 * Pemite obtener el nombre de la provincia
 	 * 
 	 * @return nombre String
 	 */
-	
+
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	public String getNombre() {
 		return nombre;
 	}
+
 	/**
 	 * Setea el nombre de la Provincia
 	 * 

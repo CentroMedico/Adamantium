@@ -19,15 +19,19 @@ import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 
 import com.google.common.base.Predicate;
 
 import dom.estado.EstadoEnum;
+import dom.paciente.Paciente;
 
 /**
  * Contiene la funcionalidad para Cargar/Listar una Obra Social
@@ -49,6 +53,7 @@ public class ObraSocialServicio extends AbstractFactoryAndRepository {
 	}
 
 	@MemberOrder(name = "Obra Social", sequence = "4.1")
+	@ActionLayout(cssClass = "boton")
 	public ObraSocial crearObraSocial(
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Cobertura Medica") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaCobertura.COBERTURA) final String cobertura) {
@@ -104,6 +109,12 @@ public class ObraSocialServicio extends AbstractFactoryAndRepository {
 			}
 		});
 
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
+	public List<ObraSocial> buscarObraSocial(String obraSocial) {
+		return allMatches(QueryDefault.create(ObraSocial.class, "buscarNombre",
+				"parametro", obraSocial));
 	}
 
 	@javax.inject.Inject

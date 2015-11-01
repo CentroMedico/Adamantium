@@ -32,7 +32,7 @@ import dom.doctor.DoctorServicio;
  * @version 1.0.0
  */
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerCiudad", language = "JDOQL", value = "SELECT "
-		+ "FROM dom.ciudadProvincia.Ciudad WHERE provincia == :provincia ") })
+		+ "FROM dom.ciudadprovincia.Ciudad WHERE provincia == :provincia ") })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarCiudad")
 @PersistenceCapable
 public class Ciudad {
@@ -42,24 +42,24 @@ public class Ciudad {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				" " + this.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", " " + getNombre());
 	}
 
 	// {{ Nombre (property)
 	private String nombre;
-	
+
 	/**
 	 * Pemite obtener el nombre de la ciudad
 	 * 
 	 * @return nombre String
 	 */
-	
+
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
 	public String getNombre() {
 		return nombre;
 	}
+
 	/**
 	 * Setea el nombre de la Ciudad
 	 * 
@@ -70,10 +70,9 @@ public class Ciudad {
 		this.nombre = ciudad;
 	}
 
-	
-
 	// {{ Provincia (property)
 	private Provincia provincia;
+
 	/**
 	 * Pemite obtener la provincia
 	 * 
@@ -84,6 +83,7 @@ public class Ciudad {
 	public Provincia getProvincia() {
 		return provincia;
 	}
+
 	/**
 	 * Setea la provincia
 	 * 

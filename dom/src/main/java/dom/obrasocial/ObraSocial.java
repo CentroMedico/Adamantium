@@ -22,10 +22,8 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import javax.swing.JOptionPane;
-
-import dom.doctor.DoctorServicio;
 import dom.estado.EstadoEnum;
+
 /**
  * Entidad OraSocial la cual representa la obra social de cada paciente.
  * 
@@ -36,12 +34,11 @@ import dom.estado.EstadoEnum;
  */
 @javax.jdo.annotations.Queries({
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.obraSocial.ObraSocial "),
-
+				+ "FROM dom.obrasocial.ObraSocial "),
 		@javax.jdo.annotations.Query(name = "buscarNombre", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.obraSocial.ObraSocial "
+				+ "FROM dom.obrasocial.ObraSocial "
 				+ "WHERE nombre == :parametro || nombre.indexOf(:parametro) == 0 "
-				+ " && nombre.indexOf(:parametro) >= 0") })
+				+ " && nombre.indexOf(:parametro) >= 0"), })
 @DomainObject(autoCompleteRepository = ObraSocialServicio.class, autoCompleteAction = "buscarObraSocial")
 @PersistenceCapable
 public class ObraSocial {
@@ -50,7 +47,8 @@ public class ObraSocial {
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Obra Social");
+		return TranslatableString.tr("{nombre}", "nombre", "Obra Social: "
+				+ getNombre());
 	}
 
 	/**
@@ -70,10 +68,11 @@ public class ObraSocial {
 	 * Pemite obtener el nombre de Obra Social
 	 * 
 	 * @return nombre String
-	 */	
+	 */
 	public String getNombre() {
 		return nombre;
 	}
+
 	/**
 	 * Setea el nombre de la obra social que se va crear.
 	 * 
@@ -109,10 +108,11 @@ public class ObraSocial {
 	 * Pemite obtener la cobertura de Obra Social
 	 * 
 	 * @return nombre String
-	 */	
+	 */
 	public String getCoberturaMedica() {
 		return coberturaMedica;
 	}
+
 	/**
 	 * Setea cobertura de la obra social que se va crear.
 	 * 
@@ -149,10 +149,11 @@ public class ObraSocial {
 	 * Pemite obtener el estado de Obra Social
 	 * 
 	 * @return nombre String
-	 */	
+	 */
 	public EstadoEnum getEstado() {
 		return estado;
 	}
+
 	/**
 	 * Setea el estado de la obra social que se va crear.
 	 * 
@@ -165,26 +166,4 @@ public class ObraSocial {
 	}
 
 	// }}
-	/**
-	 * Metodo para inactivar la Obra Social mediante un boton.
-	 */
-	public void InactivarObraSocial() {
-
-		int resp = JOptionPane.showConfirmDialog(null,
-				"¿Seguro que desea eliminar?");
-
-		if (resp == JOptionPane.YES_OPTION) {
-			if (this.estado == EstadoEnum.Inactivo) {
-				JOptionPane.showMessageDialog(null,
-						"La obra social ya se encuentra inactiva");
-			} else {
-				this.setEstado(EstadoEnum.Inactivo);
-				JOptionPane.showMessageDialog(null,
-						"Obra social inactivada correctamente");
-			}
-
-		} else if (resp == JOptionPane.NO_OPTION) {
-		} else if (resp == JOptionPane.CANCEL_OPTION) {
-		}
-	}
 }

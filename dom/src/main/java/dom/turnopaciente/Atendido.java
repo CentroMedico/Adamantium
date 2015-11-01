@@ -45,11 +45,6 @@ public class Atendido implements IEstadoTurno {
 
 	public Atendido(TurnoPaciente turno) {
 		this.setTurno(turno);
-		// this.getTurno().setDisponerOcultado(true);
-		// this.getTurno().setSolicitarOcultado(true);
-		// this.getTurno().setAceptarOcultado(true);
-		// this.getTurno().setCancelarOcultado(true);
-		// this.getTurno().setAtenderOcultado(true);
 	}
 
 	@Override

@@ -77,12 +77,11 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	 *            String
 	 * @param telefono
 	 *            String
-	 * @param iniciales
-	 *            String
 	 *
 	 * @return dueño
 	 */
 	@MemberOrder(name = "Dueño", sequence = "1.1")
+	@ActionLayout(cssClass = "boton")
 	public Dueño crearDueño(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
@@ -94,8 +93,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
-			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Iniciales") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.INICIALES) final String iniciales) {
+			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono) {
 
 		final Dueño dueño = newTransientInstance(Dueño.class);
 		dueño.setApellido(apellido.substring(0, 1).toUpperCase()
@@ -112,9 +110,8 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 				+ direccion.substring(1));
 		dueño.setCorreo(correo);
 		dueño.setTelefono(telefono);
-		dueño.setIniciales(iniciales.substring(0, 1).toUpperCase()
-				+ iniciales.substring(1));
 		dueño.setEstado(EstadoEnum.Activo);
+		dueño.setFechaAlta(LocalDate.now());
 		persist(dueño);
 		container.flush();
 		return dueño;
@@ -198,21 +195,22 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
-			final String direccion, final String correo, final String telefono,
-			final String iniciales) {
+			final String direccion, final String correo, final String telefono) {
 
 		final Dueño miDueño = container.firstMatch(QueryDefault.create(
 				Dueño.class, "buscarDuplicados", "documento", documento));
 		if (miDueño != null) {
 			if (miDueño.getDocumento().equals(documento)) {
-				return "Ya existe un Dueño con este numero de documento: "
+				return "Ya existe un dueño con este numero de documento: "
 						+ documento;
 			}
 		}
 		if (fechaNacimiento.isAfter(fecha_actual))
 			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
 		if (validaMayorEdad(fechaNacimiento) == false)
-			return "El Doctor es menor de edad";
+			return "El dueño es menor de edad";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "El dueño no puede ser mayor a 100 años";
 		return "";
 
 		// if (firstMatch(Persona.class, new Predicate<Persona>() {
@@ -230,7 +228,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	}
 
 	/**
-	 * Validacion de la mayoria de edad de los empleados ingresados 6575 son la
+	 * Validacion de la mayoria de edad de las personas ingresadas, 6575 es la
 	 * cantidad de dias que tiene una persona de 18 años
 	 * 
 	 * @param fechadeNacimiento
@@ -242,6 +240,24 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
 
 		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Validacion de la edad de las personas ingresadas, 36500 es la cantidad de
+	 * dias que tiene una persona de 100 años
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
+	 * @return boolean
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
 			return true;
 		}
 		return false;

@@ -2,32 +2,38 @@ package dom.turnopaciente;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Extension;
-import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import java.util.Date;
+
 import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.AutoComplete;
-import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
-import dom.vademecum.VademecumServicio;
 
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
-		+ "FROM dom.turnoPaciente.TurnoPaciente "), })
-
+		+ "FROM dom.turnopaciente.TurnoPaciente "), })
 @PersistenceCapable
 public class TurnoPaciente {
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno Paciente.");
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Turno de: " + this.paciente.getApellido() + ", "
+						+ this.paciente.getNombre());
 	}
+
+	// public TranslatableString title() {
+	// return TranslatableString.tr("{nombre}", "nombre", "Turno paciente");
+	// }
 
 	public TurnoPaciente() {
 		this.disponible = new Disponible(this);
@@ -43,7 +49,15 @@ public class TurnoPaciente {
 	private Paciente paciente;
 
 	@MemberOrder(sequence = "1")
+	@Persistent(table = "lista_turnos", mappedBy = "listaTurnos")
+	@Join(column = "turno_id")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	/**
+	 * Pemite obtener un paciente 
+	 * 
+	 * @return paciente Paciente
+	 */
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -59,6 +73,7 @@ public class TurnoPaciente {
 
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
 	public Doctor getDoctor() {
 		return doctor;
 	}
@@ -75,6 +90,7 @@ public class TurnoPaciente {
 	@PropertyLayout(hidden = Where.EVERYWHERE)
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
 	@Persistent(extensions = {
 			@Extension(vendorName = "datanucleous", key = "mapping-strategy", value = "per-implementation"),
 			@Extension(vendorName = "datanucleus", key = "implementation-clases", value = "dom.turnoPaciente.Disponible"
@@ -95,38 +111,73 @@ public class TurnoPaciente {
 		this.estado = estado;
 	}
 
+	// {{ HorarioTurno (property)
+	private Date horarioTurno;
+
+	@MemberOrder(sequence = "4")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public Date getHorarioTurno() {
+		return horarioTurno;
+	}
+
+	public void setHorarioTurno(final Date horarioTurno) {
+		this.horarioTurno = horarioTurno;
+	}
+
+	// }}
+
+	// {{ MensajeAPaciente (property)
+	private String mensajeAPaciente;
+
+	@MemberOrder(sequence = "5")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public String getMensajeAPaciente() {
+		return mensajeAPaciente;
+	}
+
+	public void setMensajeAPaciente(final String mensajeAPaciente) {
+		this.mensajeAPaciente = mensajeAPaciente;
+	}
+
+	// }}
+
+	// AgendaDoctor agenda = new AgendaDoctor();
+
 	public TurnoPaciente disponerTurno() {
 		getEstado().disponerTurno();
+		// agenda.setEstado("Disponible");
 		return this;
 
 	}
 
 	public TurnoPaciente solicitarTurno(Doctor doctor, Paciente paciente) {
 		getEstado().solicitarTurno(doctor, paciente);
+		// agenda.setEstado("Solicitado");
 		return this;
 
 	}
 
 	public TurnoPaciente aceptarTurno() {
 		getEstado().aceptarTurno();
+		// agenda.setEstado("Aceptado");
 		return this;
 
 	}
 
 	public TurnoPaciente atenderTurno() {
 		getEstado().atenderTurno();
+		// agenda.setEstado("Atendido");
 		return this;
 
 	}
 
 	public TurnoPaciente cancelarTurno() {
 		getEstado().cancelarTurno();
+		// agenda.setEstado("Cancelado");
 		return this;
 
-	}
-
-	public String getNombreDeEstado() {
-		return this.getEstado().getClass().getSimpleName();
 	}
 
 	// {{ Aceptado (property)
@@ -193,87 +244,6 @@ public class TurnoPaciente {
 
 	// }}
 
-	// {{ DisponerOcultado (property)
-	private boolean disponerOcultado = false;
-
-	@NotPersistent
-	@MemberOrder(sequence = "1")
-	@Property(hidden = Where.EVERYWHERE)
-	public boolean getDisponerOcultado() {
-		return disponerOcultado;
-	}
-
-	public void setDisponerOcultado(final boolean disponerOcultado) {
-		this.disponerOcultado = disponerOcultado;
-	}
-
-	// }}
-
-	// {{ SolicitarOcultado (property)
-	private boolean solicitarOcultado = false;
-
-	@NotPersistent
-	@MemberOrder(sequence = "1")
-	@Property(hidden = Where.EVERYWHERE)
-	public boolean getSolicitarOcultado() {
-		return solicitarOcultado;
-	}
-
-	public void setSolicitarOcultado(final boolean solicitarOcultado) {
-		this.solicitarOcultado = solicitarOcultado;
-	}
-
-	// }}
-
-	// {{ AceptarOcultado (property)
-	private boolean aceptarOcultado = false;
-
-	@NotPersistent
-	@MemberOrder(sequence = "1")
-	@Property(hidden = Where.EVERYWHERE)
-	public boolean getAceptarOcultado() {
-		return aceptarOcultado;
-	}
-
-	public void setAceptarOcultado(final boolean aceptarOcultado) {
-		this.aceptarOcultado = aceptarOcultado;
-	}
-
-	// }}
-
-	// {{ AtenderOcultado (property)
-	private boolean atenderOcultado = false;
-
-	@NotPersistent
-	@MemberOrder(sequence = "1")
-	@Property(hidden = Where.EVERYWHERE)
-	public boolean getAtenderOcultado() {
-		return atenderOcultado;
-	}
-
-	public void setAtenderOcultado(final boolean atenderOcultado) {
-		this.atenderOcultado = atenderOcultado;
-	}
-
-	// }}
-
-	// {{ CancelarOcultado (property)
-	private boolean cancelarOcultado;
-
-	@NotPersistent
-	@MemberOrder(sequence = "1")
-	@Property(hidden = Where.EVERYWHERE)
-	public boolean getCancelarOcultado() {
-		return cancelarOcultado;
-	}
-
-	public void setCancelarOcultado(final boolean cancelarOcultado) {
-		this.cancelarOcultado = cancelarOcultado;
-
-	}
-
-	// }}
-
 	// {{ Solicitado (property)
 	private Solicitado solicitado;
 
@@ -290,33 +260,21 @@ public class TurnoPaciente {
 
 	// }}
 
+	// AgendaDoctor agenda = new AgendaDoctor();
+	//
+	// public void actualizarEstadoAgenda() {
+	// agenda.setEstado(getNombreDeEstado());
+	// }
+
+	public String getNombreDeEstado() {
+		return this.getEstado().getClass().getSimpleName();
+	}
+
 	// MENSAJE DE ERROR EN CAMBIO DE ESTADOS
 
 	void mostarMensajeUsuario(final String msg) {
 		container.informUser(msg);
 	}
-
-	// METODOS PARA OCULTAR BOTONES DE CAMBIAR ESTADO DE TURNOS
-
-	// public boolean hideDisponerTurno() {
-	// return this.disponerOcultado;
-	// }
-	//
-	// public boolean hideSolicitarTurno() {
-	// return this.solicitarOcultado;
-	// }
-	//
-	// public boolean hideAceptarTurno() {
-	// return this.aceptarOcultado;
-	// }
-	//
-	// public boolean hideCancelarTurno() {
-	// return this.cancelarOcultado;
-	// }
-	//
-	// public boolean hideAtenderTurno() {
-	// return this.atenderOcultado;
-	// }
 
 	@javax.inject.Inject
 	private DomainObjectContainer container;

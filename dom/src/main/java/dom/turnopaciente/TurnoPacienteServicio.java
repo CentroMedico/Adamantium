@@ -22,6 +22,10 @@ import dom.paciente.Paciente;
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
 public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
+	String mensajeDia = "Su turno es el: ";
+	String mensajeDoctor = ", con el doctor: ";
+
+	@ActionLayout(cssClass = "boton")
 	public TurnoPaciente asignarTurno(
 			final @Named("Especialidad") EspecialidadEnum especialidad,
 			final @Named("Doctor") Doctor doctor,
@@ -29,13 +33,17 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 			final @Named("Paciente") Paciente paciente) {
 
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
+
 		turno.getEstado().solicitarTurno(doctor, paciente);
+		turno.setHorarioTurno(agendaDoctor.getDia());
+		agendaDoctor.setEstado(turno.getNombreDeEstado());
+		turno.setMensajeAPaciente(mensajeDia + agendaDoctor.getDia()
+				+ mensajeDoctor + doctor.getApellido() + doctor.getNombre());
+		paciente.getListaTurnos().add(turno);
 		persistIfNotAlready(turno);
 		container.flush();
 		return turno;
 	}
-
-	// ////////////
 
 	public EspecialidadEnum default0AsignarTurno() {
 
@@ -50,13 +58,31 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
-	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<AgendaDoctor> choices2AsignarTurno(
+			final EspecialidadEnum especialidad, Doctor doctor) {
+		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerTurnosDisponibles"));
+	}
+
+	// public List<AgendaDoctor> choices2AsignarTurno(
+	// final EspecialidadEnum especialidad, Doctor doctor) {
+	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+	// "traerPorDoctor", "doctor", doctor));
+	// }
+
+	// public List<AgendaDoctor> choices2AsignarTurno(
+	// final EspecialidadEnum especialidad, Doctor doctor) {
+	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+	// "traerTurnosDisponiblesDoctor", "doctor", doctor));
+	// }
+
+	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
 	public List<Paciente> buscarPaciente(String paciente) {
 		return allMatches(QueryDefault.create(Paciente.class,
 				"buscarNombre,Apellido,Id", "parametro", paciente));
 	}
 
-	@ActionLayout(hidden = Where.EVERYWHERE)
+	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
 	public List<TurnoPaciente> listarTurnos(String turno) {
 		return allMatches(QueryDefault.create(TurnoPaciente.class,
 				"traerTodos", "parametro", turno));
@@ -65,23 +91,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Paciente", sequence = "5.2")
 	public List<TurnoPaciente> listarTurnosPaciente() {
 		return container.allInstances(TurnoPaciente.class);
-	}
-
-	// Choices Agenda Doctor
-
-	public Doctor default1AsignarTurno() {
-		return container.firstMatch(QueryDefault.create(Doctor.class,
-				"traerTodos"));
-	}
-
-	/**
-	 * Choice2 devuelve una lista de agendas dependiendo cual doctor se
-	 * selecciono previamente.
-	 */
-	public List<AgendaDoctor> choices2AsignarTurno(
-			final EspecialidadEnum especialidad, final Doctor doctor) {
-		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-				"traerPorDoctor", "doctor", doctor));
 	}
 
 	@javax.inject.Inject

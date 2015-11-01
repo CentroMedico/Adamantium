@@ -17,12 +17,15 @@ package dom.paciente;
 
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
@@ -36,6 +39,7 @@ import dom.ciudadprovincia.Ciudad;
 import dom.ciudadprovincia.Provincia;
 import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
+import dom.obrasocial.ObraSocial;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 
@@ -48,7 +52,8 @@ import dom.tipodocumento.TipoDocumentoEnum;
  */
 @DomainService(repositoryFor = Paciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
-public class PacienteServicio extends AbstractFactoryAndRepository{
+@Named("Paciente")
+public class PacienteServicio extends AbstractFactoryAndRepository {
 
 	/**
 	 * Retorna el nombre del icono para el Doctor
@@ -58,10 +63,12 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 	public String iconName() {
 		return "paciente";
 	}
+
 	/**
 	 * Atributo Extra para las validaciones de las fechas
 	 */
 	final LocalDate fecha_actual = LocalDate.now();
+
 	/**
 	 * Obtiene los datos validados del Cliente
 	 * 
@@ -86,8 +93,9 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 	 */
 
 	@MemberOrder(name = "Paciente", sequence = "5.1")
+	@ActionLayout(cssClass = "boton")
 	public Paciente crearPaciente(
-			@ParameterLayout(named = "Legajo") final int legajo,
+			// @ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
@@ -99,10 +107,11 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo) {
+			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
+			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial) {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
-		paciente.setLegajo(legajo);
+		// paciente.setLegajo(legajo);
 		paciente.setApellido(apellido.substring(0, 1).toUpperCase()
 				+ apellido.substring(1));
 		paciente.setNombre(nombre.substring(0, 1).toUpperCase()
@@ -119,6 +128,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 		paciente.setTelefono(telefono);
 		paciente.setEstado(EstadoEnum.Activo);
 		paciente.setGrupoSanguineo(grupoSanguineo);
+		paciente.setFechaAlta(LocalDate.now());
+		paciente.setObraSocial(obraSocial);
 		persist(paciente);
 		container.flush();
 		return paciente;
@@ -173,7 +184,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 	 * Choice default devuelve la primer provincia de la lista.
 	 * 
 	 */
-	public Provincia default7CrearPaciente() {
+	public Provincia default6CrearPaciente() {
 		return container.firstMatch(QueryDefault.create(Provincia.class,
 				"traerTodas"));
 
@@ -183,7 +194,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 	 * Choice8 devuelve una lista de ciudades dependiendo cual provincia se
 	 * selecciono previamente.
 	 */
-	public List<Ciudad> choices8CrearPaciente(final int legajo,
+	public List<Ciudad> choices7CrearPaciente(
+			// final int legajo,
 			final String apellido, final String nombre,
 			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
@@ -191,84 +203,108 @@ public class PacienteServicio extends AbstractFactoryAndRepository{
 		return container.allMatches(QueryDefault.create(Ciudad.class,
 				"traerCiudad", "provincia", provincias));
 	}
-/**
- * Valida
- */
-	
-	public String validateCrearPaciente(final int legajo,
-			final String apellido,
-			final String nombre,
-			final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
-			final TipoDocumentoEnum tipoDocumento,
-			final String documento,
-			final Provincia provincia,
-			final Ciudad ciudad,
-			final String direccion,
-			final String correo,
-			final String telefono,
-			final GrupoSanguineoEnum grupoSanguineo)
-			{
 
-			final Paciente miPaciente = container.firstMatch(QueryDefault.create(Paciente.class,"buscarDuplicados","documento",documento,"legajo",legajo));
-			if (miPaciente != null)
-			{
-				if (miPaciente.getDocumento().equals(documento))
-				{
-					return "Ya existe un Paciente con este numero de documento: "+documento;
-				}
-				else
-				{				
-					return "Ya existe un Paciente con este numero de legajo: "+legajo;
-			
-				}
+	/**
+	 * Valida
+	 */
+
+	public String validateCrearPaciente(
+			// final int legajo,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento, final String documento,
+			final Provincia provincia, final Ciudad ciudad,
+			final String direccion, final String correo, final String telefono,
+			final GrupoSanguineoEnum grupoSanguineo, final ObraSocial obraSocial) {
+
+		final Paciente miPaciente = container.firstMatch(QueryDefault.create(
+		// Paciente.class, "buscarDuplicados", "documento", documento,
+		// "legajo", legajo));
+				Paciente.class, "buscarDocDuplicados", "documento", documento));
+		if (miPaciente != null) {
+			if (miPaciente.getDocumento().equals(documento)) {
+				return "Ya existe un Paciente con este numero de documento: "
+						+ documento;
 			}
+			// else {
+			// return "Ya existe un Paciente con este numero de legajo: "
+			// + legajo;
+
+			// }
+		}
 		if (fechaNacimiento.isAfter(fecha_actual))
 			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
 		if (validaMayorEdad(fechaNacimiento) == false)
-			return "El Paciente es menor de edad";
+			return "El Paciente es menor a 2 años";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "El paciente no puede ser mayor a 100 años";
 		return "";
-			
-//		if (firstMatch(Persona.class, new Predicate<Persona>() {
-//
-//			@Override
-//			public boolean apply(Persona _persona) {
-//				// TODO Auto-generated method stub
-//				return _persona.getUsuario().getNombre().equals(_nombreUsuario);
-//			}
-//		}) != null)
-//			return "Ya existe el nombre de usuario!";
-//		return _telefono == null && _celular == null ? "Debe ingresar al menos un teléfono"
-//				: null;
-			}
-	
+
+		// if (firstMatch(Persona.class, new Predicate<Persona>() {
+		//
+		// @Override
+		// public boolean apply(Persona _persona) {
+		// // TODO Auto-generated method stub
+		// return _persona.getUsuario().getNombre().equals(_nombreUsuario);
+		// }
+		// }) != null)
+		// return "Ya existe el nombre de usuario!";
+		// return _telefono == null && _celular == null ?
+		// "Debe ingresar al menos un teléfono"
+		// : null;
+	}
+
 	/**
-	 * Validacion de la mayoria de edad de los empleados ingresados 6575 son la
-	 * cantidad de dias que tiene una persona de 18 años
-	 * @param fechadeNacimiento LocalDate
+	 * Validacion de la edad de los pacientes ingresados, 730 es la cantidad de
+	 * dias que tiene un paciente mayor a 18 años
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
 	 * @return boolean
 	 */
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
-		
-		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 730) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Obtiene la cantidad de dias entre la fecha de nacimiento y la fecha actual
-	 * @param fechadeNacimiento LocalDate
+	 * Validacion de la edad de las personas ingresadas, 36500 es la cantidad de
+	 * dias que tiene una persona de 100 años
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
+	 * @return boolean
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Obtiene la cantidad de dias entre la fecha de nacimiento y la fecha
+	 * actual
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
 	 * @return org.joda.time.Days meses
 	 */
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
-		
+
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

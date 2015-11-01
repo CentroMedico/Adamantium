@@ -22,6 +22,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
 
@@ -45,11 +46,6 @@ public class Solicitado implements IEstadoTurno {
 
 	public Solicitado(TurnoPaciente turno) {
 		this.setTurno(turno);
-		// this.getTurno().setDisponerOcultado(true);
-		// this.getTurno().setSolicitarOcultado(true);
-		// this.getTurno().setAceptarOcultado(false);
-		// this.getTurno().setCancelarOcultado(false);
-		// this.getTurno().setAtenderOcultado(true);
 	}
 
 	@Override
@@ -67,7 +63,6 @@ public class Solicitado implements IEstadoTurno {
 	@Override
 	public void aceptarTurno() {
 		this.getTurno().setEstado(this.getTurno().getAceptado());
-
 	}
 
 	@Override

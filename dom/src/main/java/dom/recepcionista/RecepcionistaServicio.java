@@ -83,7 +83,9 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * @return recepcionista
 	 */
 	@MemberOrder(name = "Recepcionista", sequence = "3.1")
+	@ActionLayout(cssClass = "boton")
 	public Recepcionista crearRecepcionista(
+			@ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
@@ -94,8 +96,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
-			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
-			@ParameterLayout(named = "Legajo") final int legajo) {
+			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono) {
 
 		final Recepcionista recepcionista = newTransientInstance(Recepcionista.class);
 		recepcionista.setApellido(apellido.substring(0, 1).toUpperCase()
@@ -114,6 +115,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		recepcionista.setTelefono(telefono);
 		recepcionista.setLegajo(legajo);
 		recepcionista.setEstado(EstadoEnum.Activo);
+		recepcionista.setFechaAlta(LocalDate.now());
 		persist(recepcionista);
 		container.flush();
 		return recepcionista;
@@ -168,7 +170,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 */
 
-	public Provincia default6CrearRecepcionista() {
+	public Provincia default7CrearRecepcionista() {
 		return container.firstMatch(QueryDefault.create(Provincia.class,
 				"traerTodas"));
 
@@ -179,9 +181,9 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 */
 
-	public List<Ciudad> choices7CrearRecepcionista(final String apellido,
-			final String nombre, final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
+	public List<Ciudad> choices8CrearRecepcionista(final int legajo,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincias) {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
@@ -192,13 +194,12 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * Valida
 	 */
 
-	public String validateCrearRecepcionista(final String apellido,
-			final String nombre, final TipoDeSexoEnum tipoSexo,
-			final LocalDate fechaNacimiento,
+	public String validateCrearRecepcionista(final int legajo,
+			final String apellido, final String nombre,
+			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
-			final String direccion, final String correo, final String telefono,
-			final int legajo) {
+			final String direccion, final String correo, final String telefono) {
 
 		final Recepcionista miRecepcionista = container.firstMatch(QueryDefault
 				.create(Recepcionista.class, "buscarDuplicados", "documento",
@@ -216,7 +217,9 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		if (fechaNacimiento.isAfter(fecha_actual))
 			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
 		if (validaMayorEdad(fechaNacimiento) == false)
-			return "El Paciente es menor de edad";
+			return "Recepcionista menor de edad";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "Recepcionista mayor a 100 años";
 		return "";
 
 		// if (firstMatch(Persona.class, new Predicate<Persona>() {
@@ -234,7 +237,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	}
 
 	/**
-	 * Validacion de la mayoria de edad de los empleados ingresados 6575 son la
+	 * Validacion de la mayoria de edad de las personas ingresadas, 6575 es la
 	 * cantidad de dias que tiene una persona de 18 años
 	 * 
 	 * @param fechadeNacimiento
@@ -246,6 +249,24 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
 
 		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Validacion de la edad de las personas ingresadas, 36500 es la cantidad de
+	 * dias que tiene una persona de 100 años
+	 * 
+	 * @param fechadeNacimiento
+	 *            LocalDate
+	 * @return boolean
+	 */
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
 			return true;
 		}
 		return false;

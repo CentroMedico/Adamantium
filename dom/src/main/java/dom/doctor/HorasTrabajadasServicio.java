@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -14,6 +15,7 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Doctor", sequence = "4.1")
+	@ActionLayout(cssClass = "boton")
 	public String registrarIngreso(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 
@@ -29,6 +31,7 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 	}
 
 	@MemberOrder(name = "Doctor", sequence = "4.2")
+	@ActionLayout(cssClass = "boton")
 	public String registrarEgreso(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 		final SimpleDateFormat formatoFecha = new SimpleDateFormat(

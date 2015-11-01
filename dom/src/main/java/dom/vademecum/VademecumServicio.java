@@ -35,12 +35,11 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 
-@DomainService(repositoryFor = Vademecum.class,nature=NatureOfService.VIEW_MENU_ONLY)
+@DomainService(repositoryFor = Vademecum.class, nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(named = "Vademecum", menuBar = DomainServiceLayout.MenuBar.SECONDARY, menuOrder = "1")
 @Named("Vademecum")
 public class VademecumServicio extends AbstractFactoryAndRepository {
-	
-	
+
 	/**
 	 * Retorna el nombre del icono para el Vademecum
 	 * 
@@ -49,10 +48,10 @@ public class VademecumServicio extends AbstractFactoryAndRepository {
 	public String iconName() {
 		return "vademecum";
 	}
-	@ActionLayout(named="Buscar Medicamento" ,cssClass="buscarMedicamento")
+
+	@ActionLayout(named = "Buscar Medicamento", cssClass = "buscarMedicamento")
 	public Vademecum buscarMedicamento(
-			@ParameterLayout(named="Buscar Medicamento en Mayusculas",describedAs = "Busca Medicamentos en el Vademecum" ,cssClass="buscarMedicamento")Vademecum vademecum) 
-	{	
+			@ParameterLayout(named = "Buscar Medicamento en Mayusculas", describedAs = "Busca Medicamentos en el Vademecum", cssClass = "buscarMedicamento") Vademecum vademecum) {
 		return vademecum;
 	}
 
@@ -65,7 +64,7 @@ public class VademecumServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Vademecum> autocompletarMedicamento(final String vademecum) {
 		return allMatches(QueryDefault.create(Vademecum.class,
-				"traerMedicamentos", "nombre", vademecum));
+				"traerMedicamentos", "nombre", vademecum.toUpperCase()));
 	}
 
 	/**
@@ -73,15 +72,16 @@ public class VademecumServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return buscarMedicamentos List<Vademecum>
 	 */
-	
+
 	@MemberOrder(name = "Vademecum", sequence = "2.3")
 	public List<Vademecum> listarMedicamentos() {
 		return container.allInstances(Vademecum.class);
 	}
-//	public class Vademecum {
-//	    
-//	    public String cssClass() {return "auto-updating-entity"; }
-//	  	}
+
+	// public class Vademecum {
+	//
+	// public String cssClass() {return "auto-updating-entity"; }
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

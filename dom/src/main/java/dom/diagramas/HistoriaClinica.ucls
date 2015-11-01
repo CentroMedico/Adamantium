@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="dom.historiaclinica.AdicionalesPaciente" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/AdicionalesPaciente.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="351" width="202" x="600" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="dom.historiaclinica.AntecedentesFamiliares" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/AntecedentesFamiliares.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="711" width="190" x="130" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="dom.historiaclinica.Receta" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/Receta.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="200" x="360" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="dom.historiaclinica.HistoriaClinicaServicio" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/HistoriaClinicaServicio.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="333" width="1292" x="842" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="dom.historiaclinica.ExamenFisico" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/ExamenFisico.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1089" width="212" x="2174" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="dom.historiaclinica.IndicacionesMedicas" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/IndicacionesMedicas.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="333" width="194" x="2426" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="dom.historiaclinica.AntecedentesPersonales" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/AntecedentesPersonales.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1467" width="222" x="2660" y="-515"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="8" language="java" name="dom.historiaclinica.EstadoCivilEnum" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/EstadoCivilEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="541" y="82"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="9" language="java" name="dom.historiaclinica.EducacionEnum" project="adamantium-dom" 
+    file="/adamantium-dom/src/main/java/dom/historiaclinica/EducacionEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="789" y="87"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <association id="10">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="11" name="estadoCivil"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="13">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="14" name="educacion"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

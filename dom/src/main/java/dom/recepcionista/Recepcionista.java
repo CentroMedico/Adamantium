@@ -17,7 +17,6 @@ package dom.recepcionista;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -25,6 +24,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.estado.EstadoEnum;
 import dom.persona.Persona;
+
 /**
  * Entidad Recepcionista la cual representa a cualquier persona que trabaje en
  * el centro medico. Extiende de la clase Persona.
@@ -43,8 +43,10 @@ import dom.persona.Persona;
 				+ "FROM dom.recepcionista.Recepcionista "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
-				+ " && apellido.indexOf(:parametro) >= 0 "),@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
-						+"FROM dom.recepcionista.Recepcionista "+" WHERE documento ==:documento || legajo == :legajo") })
+				+ " && apellido.indexOf(:parametro) >= 0 "),
+		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.recepcionista.Recepcionista "
+				+ " WHERE documento ==:documento || legajo == :legajo") })
 @DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -77,7 +79,7 @@ public class Recepcionista extends Persona {
 	 * 
 	 * @return legajo int
 	 */
-	@MemberOrder(sequence = "10")
+	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "false")
 	public int getLegajo() {
 		return legajo;
@@ -94,50 +96,4 @@ public class Recepcionista extends Persona {
 	}
 
 	// }}
-
-	// {{ Estado (property)
-	private EstadoEnum estado;
-
-	/**
-	 * Pemite obtener el estado de un Paciente
-	 * 
-	 * @return estado String
-	 */
-	@MemberOrder(sequence = "11")
-	@Column(allowsNull = "false")
-	public EstadoEnum getEstado() {
-		return estado;
-	}
-
-	/**
-	 * Setea el estado que se va a crear.
-	 * 
-	 * @param estado
-	 *            estado
-	 */
-	public void setEstado(final EstadoEnum estado) {
-		this.estado = estado;
-	}
-	/**
-	 * Metodo para inactivar la Recepcionista mediante un boton.
-	 */
-	public void InactivarPaciente() {
-
-		int resp = JOptionPane.showConfirmDialog(null,
-				"¿Seguro que desea eliminar?");
-
-		if (resp == JOptionPane.YES_OPTION) {
-			if (this.estado == EstadoEnum.Inactivo) {
-				JOptionPane.showMessageDialog(null,
-						"El recepcionista ya se encuentra inactivo");
-			} else {
-				this.setEstado(EstadoEnum.Inactivo);
-				JOptionPane.showMessageDialog(null,
-						"Recepcionista inactivado correctamente");
-			}
-
-		} else if (resp == JOptionPane.NO_OPTION) {
-		} else if (resp == JOptionPane.CANCEL_OPTION) {
-		}
-	}
 }

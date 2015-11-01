@@ -3,3 +3,5 @@ $(function() {
         setTimeout(function() {document.location.reload();}, 5000); // 1000 is 5 sec
     }
 });
+
+var enlace = document.getElementById("");

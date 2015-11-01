@@ -35,6 +35,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
+import dom.turnopaciente.TurnoPaciente;
 
 @DomainService(repositoryFor = AgendaDoctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
@@ -49,8 +50,11 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		return "turnos";
 	}
 
+	TurnoPaciente turno = new TurnoPaciente();
+
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "50")
+	@ActionLayout(cssClass = "boton")
 	public String crearAgendaQuincenal(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 
@@ -73,6 +77,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 				agenda.setDia(fecha);
 				agenda.setDoctor(doctor);
+				agenda.setEstado(turno.getNombreDeEstado());
 				doctor.getListaAgenda().add(agenda);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();
@@ -80,11 +85,13 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 				container.flush();
 			}
 		}
+
 		return "Agenda de doctor creada correctamente";
 	}
 
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "51")
+	@ActionLayout(cssClass = "boton")
 	public String crearAgendaMensual(
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 
@@ -114,6 +121,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 				container.flush();
 			}
 		}
+
 		return "Agenda de doctor creada correctamente";
 	}
 
@@ -141,8 +149,8 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<AgendaDoctor> buscarTurno(String Turno) {
-		return allMatches(QueryDefault
-				.create(AgendaDoctor.class, "traerTurnos", Turno));
+		return allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerTurnos", Turno));
 	}
 
 	@MemberOrder(name = "Doctor", sequence = "50")

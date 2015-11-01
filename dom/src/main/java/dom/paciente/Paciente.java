@@ -19,19 +19,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Unique;
-import javax.swing.JOptionPane;
+import javax.jdo.annotations.Sequence;
+import javax.jdo.annotations.SequenceStrategy;
 
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.RenderType;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
-import dom.agendadoctor.AgendaDoctor;
+import dom.doctor.Doctor;
 import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
+import dom.historiaclinica.AdicionalesPaciente;
+import dom.historiaclinica.AntecedentesFamiliares;
+import dom.historiaclinica.AntecedentesPersonales;
+import dom.historiaclinica.ExamenFisico;
+import dom.historiaclinica.IndicacionesMedicas;
+import dom.historiaclinica.Receta;
+import dom.obrasocial.ObraSocial;
 import dom.persona.Persona;
 import dom.turnopaciente.TurnoPaciente;
 import dom.turnopaciente.TurnoPacienteServicio;
@@ -49,6 +68,7 @@ import dom.turnopaciente.TurnoPacienteServicio;
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
 // @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 // Segunda Estrategia: Una tabla por cada clase, solo las subclases
+@Sequence(name = "numeroLegajo", strategy = SequenceStrategy.CONTIGUOUS)
 @javax.jdo.annotations.Queries({
 
 		@javax.jdo.annotations.Query(name = "traerCiudades", language = "JDOQL", value = "SELECT "
@@ -60,11 +80,16 @@ import dom.turnopaciente.TurnoPacienteServicio;
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
-				@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
-				+"FROM dom.paciente.Paciente "+" WHERE documento ==:documento || legajo == :legajo")})
+		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.paciente.Paciente "
+				+ " WHERE documento ==:documento || legajo == :legajo"),
+		@javax.jdo.annotations.Query(name = "buscarDocDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.paciente.Paciente "
+				+ " WHERE documento ==:documento")
+
+})
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
 @PersistenceCapable
-@Unique
 public class Paciente extends Persona {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
@@ -91,8 +116,10 @@ public class Paciente extends Persona {
 	 * 
 	 * @return legajo int
 	 */
-	@MemberOrder(sequence = "10")
+	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "false")
+	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence = "numeroLegajo")
+	@Property(editing = Editing.DISABLED)
 	public int getLegajo() {
 		return legajo;
 	}
@@ -109,31 +136,47 @@ public class Paciente extends Persona {
 
 	// }}
 
-	// {{ Estado (property)
-	private EstadoEnum estado;
+	// {{ FechaNacimiento (property)
+	private LocalDate fechaNacimiento;
 
-	/**
-	 * Pemite obtener el estado de un Paciente
-	 * 
-	 * @return estado String
-	 */
-	@MemberOrder(sequence = "11")
+	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
-	public EstadoEnum getEstado() {
-		return estado;
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
 	}
 
-	/**
-	 * Setea el estado que se va a crear.
-	 * 
-	 * @param estado
-	 *            estado
-	 */
-	public void setEstado(final EstadoEnum estado) {
-		this.estado = estado;
+	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	// }}
+	final LocalDate fecha_actual = LocalDate.now();
+
+	public String validateFechaNacimiento(final LocalDate fechaNacimiento) {
+
+		if (fechaNacimiento.isAfter(fecha_actual))
+			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
+		if (validaMayorEdad(fechaNacimiento) == false)
+			return "El paciente es menor a 2 años";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "La persona no puede ser mayor a 100 años";
+		return "";
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 730) {
+			return true;
+		}
+		return false;
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
+
+		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
+		return meses.getDays();
+	}
 
 	// {{ GrupoSanguineo (property)
 	private GrupoSanguineoEnum grupoSanguineo;
@@ -143,7 +186,7 @@ public class Paciente extends Persona {
 	 * 
 	 * @return grupoSanguineo GrupoSanguineoEnum
 	 */
-	@MemberOrder(sequence = "12")
+	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
 	public GrupoSanguineoEnum getGrupoSanguineo() {
 		return grupoSanguineo;
@@ -161,13 +204,29 @@ public class Paciente extends Persona {
 
 	// }}
 
+	// {{ ObraSocial (property)
+	private ObraSocial obraSocial;
+
+	@MemberOrder(sequence = "14")
+	@Column(allowsNull = "true")
+	public ObraSocial getObraSocial() {
+		return obraSocial;
+	}
+
+	public void setObraSocial(final ObraSocial obraSocial) {
+		this.obraSocial = obraSocial;
+	}
+
+	// }}
+
 	// {{ ListaTurnos (property)
 	private List<TurnoPaciente> listaTurnos = new ArrayList<TurnoPaciente>();
 
-	@MemberOrder(sequence = "14")
+	@MemberOrder(sequence = "15")
 	@Column(allowsNull = "false")
-	@Persistent(mappedBy = "paciente")
-	@Join(column = "paciente")
+	@Persistent(table = "lista_turnos", mappedBy = "paciente")
+	@Join(column = "paciente_id")
+	@CollectionLayout(render = RenderType.EAGERLY)
 	/**
 	 * Pemite obtener una lista de turnos
 	 * 
@@ -176,6 +235,12 @@ public class Paciente extends Persona {
 	public List<TurnoPaciente> getListaTurnos() {
 		return listaTurnos;
 	}
+
+	// public void addListaTurnos(TurnoPaciente turno) {
+	// turno.setPaciente(this);
+	// listaTurnos.add(turno);
+	//
+	// }
 
 	/**
 	 * Setea la lista de turnos.
@@ -189,26 +254,196 @@ public class Paciente extends Persona {
 
 	// }}
 
-	/**
-	 * Metodo para inactivar el Paciente mediante un boton.
-	 */
-	public void InactivarPaciente() {
+	// //////////////////////////////
 
-		int resp = JOptionPane.showConfirmDialog(null,
-				"¿Seguro que desea eliminar?");
+	// // {{ ListaAdicionalesPaciente (property)
+	// private List<AdicionalesPaciente> listaAdicionalesPaciente = new
+	// ArrayList<AdicionalesPaciente>();
+	//
+	// @MemberOrder(sequence = "15")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de adicionales paciente
+	// *
+	// * @return listaAdicionalesPaciente List<AdicionalesPaciente>
+	// */
+	// public List<AdicionalesPaciente> getListaAdicionalesPaciente() {
+	// return listaAdicionalesPaciente;
+	// }
+	//
+	// /**
+	// * Setea la lista de adicionales de paciente.
+	// *
+	// * @param List
+	// * <AdicionalesPaciente> listaAdicionalesPaciente
+	// * listaAdicionalesPaciente
+	// */
+	// public void setListaAdicionalesPaciente(
+	// final List<AdicionalesPaciente> listaAdicionalesPaciente) {
+	// this.listaAdicionalesPaciente = listaAdicionalesPaciente;
+	// }
+	//
+	// // }}
+	//
+	// // {{ ListaAntecedentesFamiliares (property)
+	// private List<AntecedentesFamiliares> listaAntecedentesFamiliares = new
+	// ArrayList<AntecedentesFamiliares>();
+	//
+	// @MemberOrder(sequence = "16")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de antecedentes familiares
+	// *
+	// * @return listaAntecedentesFamiliares List<AntecedentesFamiliares>
+	// */
+	// public List<AntecedentesFamiliares> getListaAntecedentesFamiliares() {
+	// return listaAntecedentesFamiliares;
+	// }
+	//
+	// /**
+	// * Setea la lista de antecedentes familiares.
+	// *
+	// * @param List
+	// * <AntecedentesFamiliares> listaAntecedentesFamiliares
+	// * listaAntecedentesFamiliares
+	// */
+	// public void setListaAntecedentesFamiliares(
+	// final List<AntecedentesFamiliares> listaAntecedentesFamiliares) {
+	// this.listaAntecedentesFamiliares = listaAntecedentesFamiliares;
+	// }
+	//
+	// // }}
+	//
+	// // {{ ListaAntecedentesPersonales (property)
+	// private List<AntecedentesPersonales> listaAntecedentesPersonales = new
+	// ArrayList<AntecedentesPersonales>();
+	//
+	// @MemberOrder(sequence = "17")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de antecedentes personales
+	// *
+	// * @return listaAntecedentesPersonales List<AntecedentesPersonales>
+	// */
+	// public List<AntecedentesPersonales> getListaAntecedentesPersonales() {
+	// return listaAntecedentesPersonales;
+	// }
+	//
+	// /**
+	// * Setea la lista de antecedentes personales.
+	// *
+	// * @param List
+	// * <AntecedentesPersonales> listaAntecedentesPersonales
+	// * listaAntecedentesPersonales
+	// */
+	// public void setListaAntecedentesPersonales(
+	// final List<AntecedentesPersonales> listaAntecedentesPersonales) {
+	// this.listaAntecedentesPersonales = listaAntecedentesPersonales;
+	// }
+	//
+	// // }}
+	//
+	// // {{ ListaExamesFisico (property)
+	// private List<ExamenFisico> listaExamenFisico = new
+	// ArrayList<ExamenFisico>();
+	//
+	// @MemberOrder(sequence = "18")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de examenes fisicos
+	// *
+	// * @return listaExamenFisico List<ExamenFisico>
+	// */
+	// public List<ExamenFisico> getListaExmanenFisico() {
+	// return listaExamenFisico;
+	// }
+	//
+	// /**
+	// * Setea la lista de exmanes fisicos.
+	// *
+	// * @param List
+	// * <ExmaneFisico> listaExamenFisico listaExamenFisico
+	// */
+	// public void setListaExamenFisico(final List<ExamenFisico>
+	// listaExamenFisico) {
+	// this.listaExamenFisico = listaExamenFisico;
+	// }
+	//
+	// // }}
+	//
+	// // {{ ListaIndicacionesMedicas (property)
+	// private List<IndicacionesMedicas> listaIndicacionesMedicas = new
+	// ArrayList<IndicacionesMedicas>();
+	//
+	// @MemberOrder(sequence = "19")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de indiciaciones medicas
+	// *
+	// * @return listaIndicacionesMedicas List<IndicacionesMedicas>
+	// */
+	// public List<IndicacionesMedicas> getListaIndicacionesMedicas() {
+	// return listaIndicacionesMedicas;
+	// }
+	//
+	// /**
+	// * Setea la lista de indiciaciones medicas.
+	// *
+	// * @param List
+	// * <IndicacionesMedicas> listaIndicacionesMedicas
+	// * listaIndicacionesMedicas
+	// */
+	// public void setListaIndicacionesMedicas(
+	// final List<IndicacionesMedicas> listaIndicacionesMedicas) {
+	// this.listaIndicacionesMedicas = listaIndicacionesMedicas;
+	// }
+	//
+	// // }}
+	//
+	// // {{ ListaReceta (property)
+	// private List<Receta> listaReceta = new ArrayList<Receta>();
+	//
+	// @MemberOrder(sequence = "20")
+	// @Column(allowsNull = "false")
+	// @Persistent(mappedBy = "paciente")
+	// @Join(column = "paciente")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// /**
+	// * Pemite obtener una lista de receta
+	// *
+	// * @return listaReceta List<Receta>
+	// */
+	// public List<Receta> getListaReceta() {
+	// return listaReceta;
+	// }
+	//
+	// /**
+	// * Setea la lista de receta.
+	// *
+	// * @param List
+	// * <Receta> listaReceta listaReceta
+	// */
+	// public void setListaReceta(final List<Receta> listaReceta) {
+	// this.listaReceta = listaReceta;
+	// }
+	//
+	// // }}
 
-		if (resp == JOptionPane.YES_OPTION) {
-			if (this.estado == EstadoEnum.Inactivo) {
-				JOptionPane.showMessageDialog(null,
-						"El paciente ya se encuentra inactivo");
-			} else {
-				this.setEstado(EstadoEnum.Inactivo);
-				JOptionPane.showMessageDialog(null,
-						"Paciente inactivado correctamente");
-			}
-
-		} else if (resp == JOptionPane.NO_OPTION) {
-		} else if (resp == JOptionPane.CANCEL_OPTION) {
-		}
-	}
+	@javax.inject.Inject
+	DomainObjectContainer container;
 }

@@ -21,13 +21,19 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
+import org.datanucleus.store.rdbms.mapping.java.SubclassPCMapping;
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import dom.ciudadprovincia.Ciudad;
 import dom.ciudadprovincia.Provincia;
+import dom.estado.EstadoEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 
@@ -170,39 +176,44 @@ public abstract class Persona {
 	public void setFechaNacimiento(final LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	/////////////////////////////////////7
-//	final LocalDate fecha_actual= LocalDate.now();
-//	public String validaFecha(LocalDate fech)
-//	{
-//		
-//		if (fech.isAfter(fecha_actual))
-//			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
-//		if (validaMayorEdad(fech) == false)
-//			return "El Paciente es menor de edad";
-//		return "";
-//	}
-//	@ActionLayout(hidden = Where.EVERYWHERE)
-//	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
-//		
-//		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
-//			return true;
-//		}
-//		return false;
-//	}
-//
-//	/**
-//	 * Obtiene la cantidad de dias entre la fecha de nacimiento y la fecha actual
-//	 * @param fechadeNacimiento LocalDate
-//	 * @return org.joda.time.Days meses
-//	 */
-//	@ActionLayout(hidden = Where.EVERYWHERE)
-//	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
-//		
-//		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
-//		return meses.getDays();
-//	}
-	///////////////////////////////////////////////////
-	// }}
+
+	final LocalDate fecha_actual = LocalDate.now();
+
+	public String validateFechaNacimiento(final LocalDate fechaNacimiento) {
+
+		if (fechaNacimiento.isAfter(fecha_actual))
+			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
+		if (validaMayorEdad(fechaNacimiento) == false)
+			return "La persona es menor de edad";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "La persona no puede ser mayor a 100 años";
+		return "";
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorEdad(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) >= 6575) {
+			return true;
+		}
+		return false;
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public boolean validaMayorCien(LocalDate fechadeNacimiento) {
+
+		if (getDiasNacimiento_Hoy(fechadeNacimiento) <= 36500) {
+			return true;
+		}
+		return false;
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public int getDiasNacimiento_Hoy(LocalDate fechadeNacimiento) {
+
+		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
+		return meses.getDays();
+	}
 
 	// {{ TipoDocumento (property)
 	private TipoDocumentoEnum tipoDocumento;
@@ -412,5 +423,48 @@ public abstract class Persona {
 			return null;
 		}
 	}
+
+	// {{ FechaAlta (property)
+	private LocalDate fechaAlta;
+
+	@MemberOrder(sequence = "12")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public LocalDate getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(final LocalDate fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	// }}
+
+	// {{ Estado (property)
+	private EstadoEnum estado;
+
+	/**
+	 * Pemite obtener un estado de la persona
+	 * 
+	 * @return estado String
+	 */
+	@MemberOrder(sequence = "13")
+	@Column(allowsNull = "false")
+	public EstadoEnum getEstado() {
+		return estado;
+	}
+
+	/**
+	 * Setea la Estado que se va a crear.
+	 * 
+	 * @param estado
+	 *            estado
+	 */
+	/*----------------------------------------------------*/
+	public void setEstado(final EstadoEnum estado) {
+		this.estado = estado;
+	}
+
+	// }}
 
 }

@@ -19,14 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.swing.JOptionPane;
 
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.joda.time.DateTime;
 
 import dom.agendadoctor.AgendaDoctor;
 import dom.especialidad.EspecialidadEnum;
@@ -59,8 +62,9 @@ import dom.persona.Persona;
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
 		@javax.jdo.annotations.Query(name = "traerPorProvincia", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.doctor.Doctor where provincia == :provincia"),@javax.jdo.annotations.Query(name="buscarDuplicados", language = "JDOQL", value = "SELECT "
-						+"FROM dom.doctor.Doctor "+" WHERE documento ==:documento")
+				+ "FROM dom.doctor.Doctor where provincia == :provincia"),
+		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor " + " WHERE documento ==:documento")
 
 })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")
@@ -92,7 +96,7 @@ public class Doctor extends Persona {
 	 * 
 	 * @return matricula String
 	 */
-	@MemberOrder(sequence = "11")
+	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "false")
 	public String getMatricula() {
 		return matricula;
@@ -131,7 +135,7 @@ public class Doctor extends Persona {
 	 * 
 	 * @return especialidad EspecialidadEnum
 	 */
-	@MemberOrder(sequence = "12")
+	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
 	public EspecialidadEnum getEspecialidad() {
 		return especialidad;
@@ -147,44 +151,14 @@ public class Doctor extends Persona {
 		this.especialidad = especialidad;
 	}
 
-	// {{ Estado (property)
-	private EstadoEnum estado;
-
-	/**
-	 * Pemite obtener un estado del Doctor
-	 * 
-	 * @return estado String
-	 */
-	@MemberOrder(sequence = "13")
-	@Column(allowsNull = "false")
-	public EstadoEnum getEstado() {
-		return estado;
-	}
-
-	/**
-	 * Setea la Estado que se va a crear.
-	 * 
-	 * @param estado
-	 *            estado
-	 */
-	/*----------------------------------------------------*/
-	public void setEstado(final EstadoEnum estado) {
-		this.estado = estado;
-	}
-
-	// }}
-
-	/**
-	 * 
-	 */
-
 	// {{ ListaAgenda (property)
 	private List<AgendaDoctor> listaAgenda = new ArrayList<AgendaDoctor>();
 
-	@MemberOrder(sequence = "14")
+	@MemberOrder(sequence = "15")
 	@Column(allowsNull = "false")
-	@Persistent(mappedBy = "doctor")
-	@Join(column = "doctor")
+	@Persistent(table = "lista_agenda", mappedBy = "doctor")
+	@Join(column = "doctor_id")
+	@CollectionLayout(render = RenderType.EAGERLY)
 	/**
 	 * Pemite obtener una lista de agenda
 	 * 
@@ -205,26 +179,5 @@ public class Doctor extends Persona {
 	}
 
 	// }}
-	/**
-	 * Metodo para inactivar el Doctor mediante un boton.
-	 */
-	public void InactivarDoctor() {
 
-		int resp = JOptionPane.showConfirmDialog(null,
-				"¿Seguro que desea inactivar?");
-
-		if (resp == JOptionPane.YES_OPTION) {
-			if (this.estado == EstadoEnum.Inactivo) {
-				JOptionPane.showMessageDialog(null,
-						"El doctor ya se encuentra inactivo");
-			} else {
-				this.setEstado(EstadoEnum.Inactivo);
-				JOptionPane.showMessageDialog(null,
-						"Doctor inactivado correctamente");
-			}
-
-		} else if (resp == JOptionPane.NO_OPTION) {
-		} else if (resp == JOptionPane.CANCEL_OPTION) {
-		}
-	}
 }
