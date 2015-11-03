@@ -17,7 +17,9 @@ limitations under the License.
 package dom.historiaclinica;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -28,14 +30,15 @@ import dom.paciente.Paciente;
 
 @PersistenceCapable
 public class AntecedentesPersonales {
-	
+
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Antecedentes Personales de: " + this.paciente.getApellido() + ", " + this.paciente.getNombre());
+				"Antecedentes Personales de: " + this.paciente.getApellido()
+						+ ", " + this.paciente.getNombre());
 	}
 
 	/**
@@ -45,16 +48,16 @@ public class AntecedentesPersonales {
 	public String iconName() {
 		return "historia";
 	}
-	
-	
-	
 
 	// {{ Paciente (property)
 	private Paciente paciente;
 
 	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "true")
-	@Property(editing=Editing.DISABLED)
+	// @Persistent(table = "lista_antecedentesPersonales", mappedBy =
+	// "listaAntecedentesPersonales")
+	//	@Join(column = "antecedentesPersonales_id")
+	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -62,8 +65,8 @@ public class AntecedentesPersonales {
 	public void setPaciente(final Paciente paciente) {
 		this.paciente = paciente;
 	}
-	// }}
 
+	// }}
 
 	// {{ Tabaquismo (property)
 	private boolean tabaquismo;
@@ -88,7 +91,7 @@ public class AntecedentesPersonales {
 	public String getDesdequeEdad() {
 		return desdequeedad;
 	}
-	
+
 	public void setDesdequeEdad(final String desdequeedad) {
 		this.desdequeedad = desdequeedad;
 	}

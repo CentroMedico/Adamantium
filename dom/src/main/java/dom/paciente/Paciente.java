@@ -236,12 +236,6 @@ public class Paciente extends Persona {
 		return listaTurnos;
 	}
 
-	// public void addListaTurnos(TurnoPaciente turno) {
-	// turno.setPaciente(this);
-	// listaTurnos.add(turno);
-	//
-	// }
-
 	/**
 	 * Setea la lista de turnos.
 	 * 
@@ -254,16 +248,15 @@ public class Paciente extends Persona {
 
 	// }}
 
-	// //////////////////////////////
+	// LISTAS DE LA HISTORIA CLINICA //
 
 	// // {{ ListaAdicionalesPaciente (property)
 	// private List<AdicionalesPaciente> listaAdicionalesPaciente = new
 	// ArrayList<AdicionalesPaciente>();
 	//
 	// @MemberOrder(sequence = "15")
-	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
+	// @Persistent(table = "lista_adicionalesPaciente", mappedBy = "paciente")
+	// @Join(column = "paciente_id")
 	// @CollectionLayout(render = RenderType.EAGERLY)
 	// /**
 	// * Pemite obtener una lista de adicionales paciente
@@ -294,8 +287,9 @@ public class Paciente extends Persona {
 	//
 	// @MemberOrder(sequence = "16")
 	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
+	// @Persistent(table = "lista_antecedentesFamiliares", mappedBy =
+	// "paciente")
+	// @Join(column = "paciente_id")
 	// @CollectionLayout(render = RenderType.EAGERLY)
 	// /**
 	// * Pemite obtener una lista de antecedentes familiares
@@ -326,8 +320,9 @@ public class Paciente extends Persona {
 	//
 	// @MemberOrder(sequence = "17")
 	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
+	// @Persistent(table = "lista_antecedentesPersonales", mappedBy =
+	// "paciente")
+	// @Join(column = "paciente_id")
 	// @CollectionLayout(render = RenderType.EAGERLY)
 	// /**
 	// * Pemite obtener una lista de antecedentes personales
@@ -358,8 +353,8 @@ public class Paciente extends Persona {
 	//
 	// @MemberOrder(sequence = "18")
 	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
+	// @Persistent(table = "lista_examenFisico", mappedBy = "paciente")
+	// @Join(column = "paciente_id")
 	// @CollectionLayout(render = RenderType.EAGERLY)
 	// /**
 	// * Pemite obtener una lista de examenes fisicos
@@ -382,68 +377,66 @@ public class Paciente extends Persona {
 	// }
 	//
 	// // }}
-	//
-	// // {{ ListaIndicacionesMedicas (property)
-	// private List<IndicacionesMedicas> listaIndicacionesMedicas = new
-	// ArrayList<IndicacionesMedicas>();
-	//
-	// @MemberOrder(sequence = "19")
-	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de indiciaciones medicas
-	// *
-	// * @return listaIndicacionesMedicas List<IndicacionesMedicas>
-	// */
-	// public List<IndicacionesMedicas> getListaIndicacionesMedicas() {
-	// return listaIndicacionesMedicas;
-	// }
-	//
-	// /**
-	// * Setea la lista de indiciaciones medicas.
-	// *
-	// * @param List
-	// * <IndicacionesMedicas> listaIndicacionesMedicas
-	// * listaIndicacionesMedicas
-	// */
-	// public void setListaIndicacionesMedicas(
-	// final List<IndicacionesMedicas> listaIndicacionesMedicas) {
-	// this.listaIndicacionesMedicas = listaIndicacionesMedicas;
-	// }
-	//
-	// // }}
-	//
-	// // {{ ListaReceta (property)
-	// private List<Receta> listaReceta = new ArrayList<Receta>();
-	//
-	// @MemberOrder(sequence = "20")
-	// @Column(allowsNull = "false")
-	// @Persistent(mappedBy = "paciente")
-	// @Join(column = "paciente")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de receta
-	// *
-	// * @return listaReceta List<Receta>
-	// */
-	// public List<Receta> getListaReceta() {
-	// return listaReceta;
-	// }
-	//
-	// /**
-	// * Setea la lista de receta.
-	// *
-	// * @param List
-	// * <Receta> listaReceta listaReceta
-	// */
-	// public void setListaReceta(final List<Receta> listaReceta) {
-	// this.listaReceta = listaReceta;
-	// }
-	//
-	// // }}
 
+	// {{ ListaIndicacionesMedicas (property)
+	private List<IndicacionesMedicas> listaIndicacionesMedicas = new ArrayList<IndicacionesMedicas>();
+
+	@MemberOrder(sequence = "19")
+	@Column(allowsNull = "false")
+	@Persistent(table = "lista_indicacionesMedicas", mappedBy = "paciente")
+	@Join(column = "paciente_id")
+	@CollectionLayout(render = RenderType.EAGERLY)
+	/**
+	 * Pemite obtener una lista de indiciaciones medicas
+	 *
+	 * @return listaIndicacionesMedicas List<IndicacionesMedicas>
+	 */
+	public List<IndicacionesMedicas> getListaIndicacionesMedicas() {
+		return listaIndicacionesMedicas;
+	}
+
+	/**
+	 * Setea la lista de indiciaciones medicas.
+	 *
+	 * @param List
+	 *            <IndicacionesMedicas> listaIndicacionesMedicas
+	 *            listaIndicacionesMedicas
+	 */
+	public void setListaIndicacionesMedicas(
+			final List<IndicacionesMedicas> listaIndicacionesMedicas) {
+		this.listaIndicacionesMedicas = listaIndicacionesMedicas;
+	}
+
+	// }}
+
+	// {{ ListaReceta (property)
+	private List<Receta> listaReceta = new ArrayList<Receta>();
+
+	@MemberOrder(sequence = "20")
+	@Column(allowsNull = "false")
+	@Persistent(table = "lista_receta", mappedBy = "paciente")
+	@Join(column = "paciente_id")
+	@CollectionLayout(render = RenderType.EAGERLY)
+	/**
+	 * Pemite obtener una lista de receta
+	 *
+	 * @return listaReceta List<Receta>
+	 */
+	public List<Receta> getListaReceta() {
+		return listaReceta;
+	}
+
+	/**
+	 * Setea la lista de receta.
+	 *
+	 * @param List
+	 *            <Receta> listaReceta listaReceta
+	 */
+	public void setListaReceta(final List<Receta> listaReceta) {
+		this.listaReceta = listaReceta;
+	}
+
+	// }}
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

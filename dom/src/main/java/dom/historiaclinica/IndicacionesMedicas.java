@@ -17,7 +17,9 @@ limitations under the License.
 package dom.historiaclinica;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -27,16 +29,17 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
 import dom.vademecum.Vademecum;
+
 @PersistenceCapable
-public class IndicacionesMedicas 
-{
+public class IndicacionesMedicas {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Indicaciones Medicas de: " + this.paciente.getApellido() + ", " + this.paciente.getNombre());
+				"Indicaciones Medicas de: " + this.paciente.getApellido()
+						+ ", " + this.paciente.getNombre());
 	}
 
 	/**
@@ -46,16 +49,15 @@ public class IndicacionesMedicas
 	public String iconName() {
 		return "historia";
 	}
-	
-	
-	
 
 	// {{ Paciente (property)
 	private Paciente paciente;
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	@Property(editing=Editing.DISABLED)
+	@Persistent(table = "lista_indicacionesMedicas", mappedBy = "listaIndicacionesMedicas")
+	@Join(column = "indicacionesMedicas_id")
+	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -63,6 +65,7 @@ public class IndicacionesMedicas
 	public void setPaciente(final Paciente paciente) {
 		this.paciente = paciente;
 	}
+
 	// }}
 
 	// {{ Medicamento (property)
@@ -77,6 +80,7 @@ public class IndicacionesMedicas
 	public void setMedicamento(final Vademecum medicamento) {
 		this.medicamento = medicamento;
 	}
+
 	// }}
 
 	// {{ Comotomarlo (property)
@@ -91,8 +95,9 @@ public class IndicacionesMedicas
 	public void setComotomarlo(final String comoTomarlo) {
 		this.comoTomarlo = comoTomarlo;
 	}
+
 	// }}
-	
+
 	// {{ Doctor (property)
 	private Doctor doctor;
 
@@ -106,9 +111,5 @@ public class IndicacionesMedicas
 		this.doctor = doctor;
 	}
 	// }}
-
-
-
-	
 
 }

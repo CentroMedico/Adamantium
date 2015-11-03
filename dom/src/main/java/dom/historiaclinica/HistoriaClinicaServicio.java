@@ -50,7 +50,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		adicionalPaciente.setTrabajo(trabajo);
 		adicionalPaciente.setObraSocial(obraSocial);
 		adicionalPaciente.setEducacion(educacion);
-
+		// paciente.getListaAdicionalesPaciente().add(adicionalPaciente);
 		persist(adicionalPaciente);
 		container.flush();
 		return adicionalPaciente;
@@ -115,7 +115,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentes.setITS(its);
 		antecedentes.setNeurologicos(neurologicas);
 		antecedentes.setTranfuciones(tranfuciones);
-
+		// paciente.getListaAntecedentesPersonales().add(antecedentes);
 		persist(antecedentes);
 		container.flush();
 		return antecedentes;
@@ -159,6 +159,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentesfamiliares.setConsumoDrogas(consumoDrogas);
 		antecedentesfamiliares.setAbusoAlcohol(abusoAlcohol);
 		antecedentesfamiliares.setDepresion(depresion);
+		// paciente.getListaAntecedentesFamiliares().add(antecedentesfamiliares);
 		persist(antecedentesfamiliares);
 		container.flush();
 		return antecedentesfamiliares;
@@ -210,7 +211,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		examen.setFrecuenciaRespiratoria(frecuenciaRespiratoria);
 		examen.setTensionArterial(tensionArterial);
 		examen.setEstadoGeneral(estadoGeneral);
-
+		// paciente.getListaExmanenFisico().add(examen);
 		persist(examen);
 		container.flush();
 		return examen;
@@ -236,7 +237,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		receta.setMedicamento(medicamento);
 		receta.setMedicamento2(medicamento2);
 		receta.setDoctor(doctor);
-
+		paciente.getListaReceta().add(receta);
 		persist(receta);
 		container.flush();
 		return receta;
@@ -261,7 +262,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		indicaciones.setMedicamento(medicamento);
 		indicaciones.setComotomarlo(comoTomarlo);
 		indicaciones.setDoctor(doctor);
-
+		paciente.getListaIndicacionesMedicas().add(indicaciones);
 		persist(indicaciones);
 		container.flush();
 		return indicaciones;

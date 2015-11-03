@@ -16,7 +16,9 @@ limitations under the License.
 package dom.historiaclinica;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -24,17 +26,18 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+
 @PersistenceCapable
-public class AdicionalesPaciente 
-{
-	
+public class AdicionalesPaciente {
+
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Adicionales de Paciente: " + this.paciente.getApellido() + ", " + this.paciente.getNombre());
+				"Adicionales de Paciente: " + this.paciente.getApellido()
+						+ ", " + this.paciente.getNombre());
 	}
 
 	/**
@@ -44,16 +47,16 @@ public class AdicionalesPaciente
 	public String iconName() {
 		return "historia";
 	}
-	
-	
-	
 
 	// {{ Paciente (property)
 	private Paciente paciente;
 
 	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "true")
-	@Property(editing=Editing.DISABLED)
+	// @Persistent(table = "lista_adicionalesPaciente", mappedBy =
+	// "listaAdicionalesPaciente")
+	// @Join(column = "adicionalesPaciente_id")
+	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -61,9 +64,9 @@ public class AdicionalesPaciente
 	public void setPaciente(final Paciente paciente) {
 		this.paciente = paciente;
 	}
+
 	// }}
 
-	
 	// {{ EstadoCivil (property)
 	private EstadoCivilEnum estadoCivil;
 
@@ -106,8 +109,9 @@ public class AdicionalesPaciente
 	public void setObraSocial(final Boolean obraSocial) {
 		this.obraSocial = obraSocial;
 	}
+
 	// }}
-	
+
 	// {{ Educacion (property)
 	private EducacionEnum educacion;
 
@@ -121,7 +125,5 @@ public class AdicionalesPaciente
 		this.educacion = educacion;
 	}
 	// }}
-
-
 
 }
