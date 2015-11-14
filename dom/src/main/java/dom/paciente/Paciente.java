@@ -85,7 +85,9 @@ import dom.turnopaciente.TurnoPacienteServicio;
 				+ " WHERE documento ==:documento || legajo == :legajo"),
 		@javax.jdo.annotations.Query(name = "buscarDocDuplicados", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.paciente.Paciente "
-				+ " WHERE documento ==:documento")
+				+ " WHERE documento ==:documento"),
+		@javax.jdo.annotations.Query(name = "traerPaciente", language = "JDOQL", value = "SELECT "
+		+ " FROMdom.paciente.Paciente "),
 
 })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
@@ -437,6 +439,8 @@ public class Paciente extends Persona {
 	}
 
 	// }}
+	
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

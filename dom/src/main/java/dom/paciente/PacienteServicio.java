@@ -304,6 +304,21 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
+	
+
+	@MemberOrder(name = "Paciente", sequence = "5.1.2")
+	public Paciente buscarPaciente(
+			@ParameterLayout(named = "Buscar Paciente") Paciente paciente) {
+		return paciente;
+	}
+
+	
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Paciente> autocompletarPaciente(final String paciente) {
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPaciente", "nombre", paciente.substring(0, 1).toUpperCase()
+				+ paciente.substring(1,paciente.length())));
+	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

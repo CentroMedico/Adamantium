@@ -1,6 +1,10 @@
 package dom.turnopaciente;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -8,8 +12,10 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.email.EmailService;
 
 import com.google.inject.name.Named;
 
@@ -21,24 +27,29 @@ import dom.paciente.Paciente;
 @DomainService(repositoryFor = TurnoPaciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
 public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
-
+	@Inject
+	private EmailService email;
 	String mensajeDia = "Su turno es el: ";
 	String mensajeDoctor = ", con el doctor: ";
-
+	SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yy HH:mm");
 	@ActionLayout(cssClass = "boton")
 	public TurnoPaciente asignarTurno(
-			final @Named("Especialidad") EspecialidadEnum especialidad,
-			final @Named("Doctor") Doctor doctor,
-			final @Named("Agenda Doctor") AgendaDoctor agendaDoctor,
-			final @Named("Paciente") Paciente paciente) {
+				@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
+				@ParameterLayout(named = "Doctor") final Doctor doctor,
+				@ParameterLayout(named = "Agenda Doctor") final AgendaDoctor agendaDoctor,
+				@ParameterLayout(named = "Paciente") final Paciente paciente,
+				@ParameterLayout(named = "Motivo de Consulta") final String motivoConsulta) {
 
+				
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
 
 		turno.getEstado().solicitarTurno(doctor, paciente);
 		turno.setHorarioTurno(agendaDoctor.getDia());
 		agendaDoctor.setEstado(turno.getNombreDeEstado());
-		turno.setMensajeAPaciente(mensajeDia + agendaDoctor.getDia()
-				+ mensajeDoctor + doctor.getApellido() + doctor.getNombre());
+		turno.setMensajeAPaciente(mensajeDia +fecha.format(agendaDoctor.getDia())
+		+ mensajeDoctor + doctor.getApellido() +" "+ doctor.getNombre());
+		EnviarEmail(paciente, turno);
+		turno.setMotivoConsulta(motivoConsulta);
 		paciente.getListaTurnos().add(turno);
 		persistIfNotAlready(turno);
 		container.flush();
@@ -91,6 +102,18 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Paciente", sequence = "5.2")
 	public List<TurnoPaciente> listarTurnosPaciente() {
 		return container.allInstances(TurnoPaciente.class);
+	}
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public void EnviarEmail(Paciente paciente,TurnoPaciente turno)
+	{
+		if(paciente.getCorreo().contains("@"))
+		{
+		ArrayList<String> to = new ArrayList<String>();
+		to.add(paciente.getCorreo());
+		
+		email.send(to, null, null, "Adamantium le Recuenda su Turno", turno.getMensajeAPaciente(), (javax.activation.DataSource[])null);
+		container.informUser("se ha enviado un correo");
+		}
 	}
 
 	@javax.inject.Inject

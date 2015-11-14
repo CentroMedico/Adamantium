@@ -259,7 +259,21 @@ public class TurnoPaciente {
 	}
 
 	// }}
+	
+	// {{ MotivoConsulta (property)
+		private String motivoConsulta;
 
+		@MemberOrder(sequence = "6")
+		@Column(allowsNull = "false")
+		public String getMotivoConsulta() {
+			return motivoConsulta;
+		}
+
+		public void setMotivoConsulta(final String motivoConsulta) {
+			this.motivoConsulta = motivoConsulta;
+		}
+
+		// }}
 	// AgendaDoctor agenda = new AgendaDoctor();
 	//
 	// public void actualizarEstadoAgenda() {
