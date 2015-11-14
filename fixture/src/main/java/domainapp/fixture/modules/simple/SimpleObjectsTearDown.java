@@ -24,13 +24,12 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
 public class SimpleObjectsTearDown extends FixtureScript {
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"SimpleObject\"");
-    }
+	@Override
+	protected void execute(ExecutionContext executionContext) {
+		isisJdoSupport.executeUpdate("delete from \"SimpleObject\"");
+	}
 
-
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
+	@javax.inject.Inject
+	private IsisJdoSupport isisJdoSupport;
 
 }

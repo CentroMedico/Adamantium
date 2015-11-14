@@ -26,46 +26,49 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 public class SimpleObjectCreate extends FixtureScript {
 
-    //region > name (input)
-    private String name;
-    /**
-     * Name of the object (required)
-     */
-    public String getName() {
-        return name;
-    }
+	// region > name (input)
+	private String name;
 
-    public SimpleObjectCreate setName(final String name) {
-        this.name = name;
-        return this;
-    }
-    //endregion
+	/**
+	 * Name of the object (required)
+	 */
+	public String getName() {
+		return name;
+	}
 
+	public SimpleObjectCreate setName(final String name) {
+		this.name = name;
+		return this;
+	}
 
-    //region > simpleObject (output)
-    private SimpleObject simpleObject;
+	// endregion
 
-    /**
-     * The created simple object (output).
-     * @return
-     */
-    public SimpleObject getSimpleObject() {
-        return simpleObject;
-    }
-    //endregion
+	// region > simpleObject (output)
+	private SimpleObject simpleObject;
 
-    @Override
-    protected void execute(final ExecutionContext ec) {
+	/**
+	 * The created simple object (output).
+	 * 
+	 * @return
+	 */
+	public SimpleObject getSimpleObject() {
+		return simpleObject;
+	}
 
-        String name = checkParam("name", ec, String.class);
+	// endregion
 
-        this.simpleObject = simpleObjects.create(name);
+	@Override
+	protected void execute(final ExecutionContext ec) {
 
-        // also make available to UI
-        ec.addResult(this, simpleObject);
-    }
+		String name = checkParam("name", ec, String.class);
 
-    @javax.inject.Inject
-    private SimpleObjects simpleObjects;
+		this.simpleObject = simpleObjects.create(name);
+
+		// also make available to UI
+		ec.addResult(this, simpleObject);
+	}
+
+	@javax.inject.Inject
+	private SimpleObjects simpleObjects;
 
 }

@@ -23,7 +23,11 @@ import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
+import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
@@ -87,6 +91,7 @@ public class IndicacionesMedicas {
 	private String comoTomarlo;
 
 	@MemberOrder(sequence = "3")
+	@PropertyLayout(multiLine = 5)
 	@Column(allowsNull = "true")
 	public String getComotomarlo() {
 		return comoTomarlo;

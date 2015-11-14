@@ -40,93 +40,92 @@ import static org.junit.Assert.assertThat;
 
 public class SimpleObjectIntegTest extends SimpleAppIntegTest {
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
-    @Inject
-    FixtureScripts fixtureScripts;
-    @Inject
-    SimpleObjects simpleObjects;
-    @Inject
-    TranslationService translationService;
+	@Inject
+	FixtureScripts fixtureScripts;
+	@Inject
+	SimpleObjects simpleObjects;
+	@Inject
+	TranslationService translationService;
 
-    RecreateSimpleObjects fs;
-    SimpleObject simpleObjectPojo;
-    SimpleObject simpleObjectWrapped;
+	RecreateSimpleObjects fs;
+	SimpleObject simpleObjectPojo;
+	SimpleObject simpleObjectWrapped;
 
-    @Before
-    public void setUp() throws Exception {
-        // given
-        fs = new RecreateSimpleObjects().setNumber(1);
-        fixtureScripts.runFixtureScript(fs, null);
+	@Before
+	public void setUp() throws Exception {
+		// given
+		fs = new RecreateSimpleObjects().setNumber(1);
+		fixtureScripts.runFixtureScript(fs, null);
 
-        simpleObjectPojo = fs.getSimpleObjects().get(0);
+		simpleObjectPojo = fs.getSimpleObjects().get(0);
 
-        assertThat(simpleObjectPojo, is(not(nullValue())));
-        simpleObjectWrapped = wrap(simpleObjectPojo);
-    }
+		assertThat(simpleObjectPojo, is(not(nullValue())));
+		simpleObjectWrapped = wrap(simpleObjectPojo);
+	}
 
-    public static class Name extends SimpleObjectIntegTest {
+	public static class Name extends SimpleObjectIntegTest {
 
-        @Test
-        public void accessible() throws Exception {
+		@Test
+		public void accessible() throws Exception {
 
-            // when
-            final String name = simpleObjectWrapped.getName();
-            //
-            // then
-            assertThat(name, is(fs.NAMES.get(0)));
-        }
+			// when
+			final String name = simpleObjectWrapped.getName();
+			//
+			// then
+			assertThat(name, is(fs.NAMES.get(0)));
+		}
 
-        @Test
-        public void cannotBeUpdatedDirectly() throws Exception {
+		@Test
+		public void cannotBeUpdatedDirectly() throws Exception {
 
-            // expect
-            expectedExceptions.expect(DisabledException.class);
+			// expect
+			expectedExceptions.expect(DisabledException.class);
 
-            // when
-            simpleObjectWrapped.setName("new name");
-        }
-    }
+			// when
+			simpleObjectWrapped.setName("new name");
+		}
+	}
 
-    public static class UpdateName extends SimpleObjectIntegTest {
+	public static class UpdateName extends SimpleObjectIntegTest {
 
-        @Test
-        public void happyCase() throws Exception {
+		@Test
+		public void happyCase() throws Exception {
 
-            // when
-            simpleObjectWrapped.updateName("new name");
+			// when
+			simpleObjectWrapped.updateName("new name");
 
-            // then
-            assertThat(simpleObjectWrapped.getName(), is("new name"));
-        }
+			// then
+			assertThat(simpleObjectWrapped.getName(), is("new name"));
+		}
 
-        @Test
-        public void failsValidation() throws Exception {
+		@Test
+		public void failsValidation() throws Exception {
 
-            // expect
-            expectedExceptions.expect(InvalidException.class);
-            expectedExceptions.expectMessage("Exclamation mark is not allowed");
+			// expect
+			expectedExceptions.expect(InvalidException.class);
+			expectedExceptions.expectMessage("Exclamation mark is not allowed");
 
-            // when
-            simpleObjectWrapped.updateName("new name!");
-        }
-    }
+			// when
+			simpleObjectWrapped.updateName("new name!");
+		}
+	}
 
+	public static class Title extends SimpleObjectIntegTest {
 
-    public static class Title extends SimpleObjectIntegTest {
+		@Test
+		public void interpolatesName() throws Exception {
 
-        @Test
-        public void interpolatesName() throws Exception {
+			// given
+			final String name = simpleObjectWrapped.getName();
 
-            // given
-            final String name = simpleObjectWrapped.getName();
+			// when
+			final String title = container().titleOf(simpleObjectWrapped);
 
-            // when
-            final String title = container().titleOf(simpleObjectWrapped);
-
-            // then
-            assertThat(title, is("Object: " + name));
-        }
-    }
+			// then
+			assertThat(title, is("Object: " + name));
+		}
+	}
 }

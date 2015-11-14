@@ -51,8 +51,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		adicionalPaciente.setObraSocial(obraSocial);
 		adicionalPaciente.setEducacion(educacion);
 		// paciente.getListaAdicionalesPaciente().add(adicionalPaciente);
-		persist(adicionalPaciente);
-		container.flush();
+		container.persistIfNotAlready(adicionalPaciente);
 		return adicionalPaciente;
 	}
 
@@ -116,8 +115,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentes.setNeurologicos(neurologicas);
 		antecedentes.setTranfuciones(tranfuciones);
 		// paciente.getListaAntecedentesPersonales().add(antecedentes);
-		persist(antecedentes);
-		container.flush();
+		container.persistIfNotAlready(antecedentes);
 		return antecedentes;
 	}
 
@@ -160,8 +158,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentesfamiliares.setAbusoAlcohol(abusoAlcohol);
 		antecedentesfamiliares.setDepresion(depresion);
 		// paciente.getListaAntecedentesFamiliares().add(antecedentesfamiliares);
-		persist(antecedentesfamiliares);
-		container.flush();
+		container.persistIfNotAlready(antecedentesfamiliares);
 		return antecedentesfamiliares;
 	}
 
@@ -212,8 +209,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		examen.setTensionArterial(tensionArterial);
 		examen.setEstadoGeneral(estadoGeneral);
 		// paciente.getListaExmanenFisico().add(examen);
-		persist(examen);
-		container.flush();
+		container.persistIfNotAlready(examen);
 		return examen;
 
 	}
@@ -238,8 +234,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		receta.setMedicamento2(medicamento2);
 		receta.setDoctor(doctor);
 		paciente.getListaReceta().add(receta);
-		persist(receta);
-		container.flush();
+		container.persistIfNotAlready(receta);
 		return receta;
 
 	}
@@ -254,7 +249,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public IndicacionesMedicas crearIndicacionesMedicas(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
-			@ParameterLayout(named = "Como Tomarlo") final String comoTomarlo,
+			@ParameterLayout(named = "Como Tomarlo", multiLine = 5) final String comoTomarlo,
 			@ParameterLayout(named = "Doctor") final Doctor doctor) {
 		final IndicacionesMedicas indicaciones = newTransientInstance(IndicacionesMedicas.class);
 
@@ -263,8 +258,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		indicaciones.setComotomarlo(comoTomarlo);
 		indicaciones.setDoctor(doctor);
 		paciente.getListaIndicacionesMedicas().add(indicaciones);
-		persist(indicaciones);
-		container.flush();
+		container.persistIfNotAlready(indicaciones);
 		return indicaciones;
 
 	}
