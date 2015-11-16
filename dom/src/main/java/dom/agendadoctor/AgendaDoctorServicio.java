@@ -77,7 +77,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 				agenda.setDia(fecha);
 				agenda.setDoctor(doctor);
-				agenda.setEstado(turno.getNombreDeEstado());
+				agenda.setEstado(turno.getEstadoTurno());
 				doctor.getListaAgenda().add(agenda);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();

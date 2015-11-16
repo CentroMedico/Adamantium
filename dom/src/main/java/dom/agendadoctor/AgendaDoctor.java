@@ -30,14 +30,6 @@ import dom.doctor.Doctor;
 				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' "),
 		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.agendaDoctor.AgendaDoctor"),
-
-		// @javax.jdo.annotations.Query(name = "buscarAlumnoPorcuilYNombre",
-		// language = "JDOQL", value =
-		// "SELECT FROM dom.alumno.Alumno WHERE (cuil== :cuil || nombre.indexOf(:nombre) >= 0 || "
-		// +
-		// "apellido.indexOf(:apellido) >= 0 ) && establecimiento==:institucion && estaBorrado== 'ACTIVO'"+
-		// " range 0, 4"),
-
 		@javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor ==: doctor ORDER BY dia")
 

@@ -17,8 +17,6 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.email.EmailService;
 
-import com.google.inject.name.Named;
-
 import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.especialidad.EspecialidadEnum;
@@ -31,23 +29,24 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	private EmailService email;
 	String mensajeDia = "Su turno es el: ";
 	String mensajeDoctor = ", con el doctor: ";
-	SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yy HH:mm");
+	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
+
 	@ActionLayout(cssClass = "boton")
 	public TurnoPaciente asignarTurno(
-				@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
-				@ParameterLayout(named = "Doctor") final Doctor doctor,
-				@ParameterLayout(named = "Agenda Doctor") final AgendaDoctor agendaDoctor,
-				@ParameterLayout(named = "Paciente") final Paciente paciente,
-				@ParameterLayout(named = "Motivo de Consulta") final String motivoConsulta) {
+			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
+			@ParameterLayout(named = "Doctor") final Doctor doctor,
+			@ParameterLayout(named = "Horario") final AgendaDoctor agendaDoctor,
+			@ParameterLayout(named = "Paciente") final Paciente paciente,
+			@ParameterLayout(named = "Motivo de Consulta") final String motivoConsulta) {
 
-				
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
 
 		turno.getEstado().solicitarTurno(doctor, paciente);
-		turno.setHorarioTurno(agendaDoctor.getDia());
-		agendaDoctor.setEstado(turno.getNombreDeEstado());
-		turno.setMensajeAPaciente(mensajeDia +fecha.format(agendaDoctor.getDia())
-		+ mensajeDoctor + doctor.getApellido() +" "+ doctor.getNombre());
+		turno.setHorarioTurno(agendaDoctor);
+		agendaDoctor.setEstado(turno.getEstadoTurno());
+		turno.setMensajeAPaciente(mensajeDia
+				+ fecha.format(agendaDoctor.getDia()) + mensajeDoctor
+				+ doctor.getApellido() + " " + doctor.getNombre());
 		EnviarEmail(paciente, turno);
 		turno.setMotivoConsulta(motivoConsulta);
 		paciente.getListaTurnos().add(turno);
@@ -103,16 +102,17 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	public List<TurnoPaciente> listarTurnosPaciente() {
 		return container.allInstances(TurnoPaciente.class);
 	}
+
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	public void EnviarEmail(Paciente paciente,TurnoPaciente turno)
-	{
-		if(paciente.getCorreo().contains("@"))
-		{
-		ArrayList<String> to = new ArrayList<String>();
-		to.add(paciente.getCorreo());
-		
-		email.send(to, null, null, "Adamantium le Recuenda su Turno", turno.getMensajeAPaciente(), (javax.activation.DataSource[])null);
-		container.informUser("se ha enviado un correo");
+	public void EnviarEmail(Paciente paciente, TurnoPaciente turno) {
+		if (paciente.getCorreo().contains("@")) {
+			ArrayList<String> to = new ArrayList<String>();
+			to.add(paciente.getCorreo());
+
+			email.send(to, null, null, "Adamantium le Recuenda su Turno",
+					turno.getMensajeAPaciente(),
+					(javax.activation.DataSource[]) null);
+			container.informUser("se ha enviado un correo");
 		}
 	}
 

@@ -31,10 +31,6 @@ public class TurnoPaciente {
 						+ this.paciente.getNombre());
 	}
 
-	// public TranslatableString title() {
-	// return TranslatableString.tr("{nombre}", "nombre", "Turno paciente");
-	// }
-
 	public TurnoPaciente() {
 		this.disponible = new Disponible(this);
 		this.solicitado = new Solicitado(this);
@@ -84,7 +80,7 @@ public class TurnoPaciente {
 
 	// }}
 
-	// {{ IEstadoTurno (property)
+	// {{ Estado (property)
 	private IEstadoTurno estado;
 
 	@PropertyLayout(hidden = Where.EVERYWHERE)
@@ -112,16 +108,15 @@ public class TurnoPaciente {
 	}
 
 	// {{ HorarioTurno (property)
-	private Date horarioTurno;
+	private AgendaDoctor horarioTurno;
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
-	@Property(editing = Editing.DISABLED)
-	public Date getHorarioTurno() {
+	public AgendaDoctor getHorarioTurno() {
 		return horarioTurno;
 	}
 
-	public void setHorarioTurno(final Date horarioTurno) {
+	public void setHorarioTurno(final AgendaDoctor horarioTurno) {
 		this.horarioTurno = horarioTurno;
 	}
 
@@ -132,6 +127,7 @@ public class TurnoPaciente {
 
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "false")
+	@PropertyLayout(multiLine = 2)
 	@Property(editing = Editing.DISABLED)
 	public String getMensajeAPaciente() {
 		return mensajeAPaciente;
@@ -143,39 +139,37 @@ public class TurnoPaciente {
 
 	// }}
 
-	// AgendaDoctor agenda = new AgendaDoctor();
-
 	public TurnoPaciente disponerTurno() {
 		getEstado().disponerTurno();
-		// agenda.setEstado("Disponible");
+		horarioTurno.setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente solicitarTurno(Doctor doctor, Paciente paciente) {
 		getEstado().solicitarTurno(doctor, paciente);
-		// agenda.setEstado("Solicitado");
+		horarioTurno.setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente aceptarTurno() {
 		getEstado().aceptarTurno();
-		// agenda.setEstado("Aceptado");
+		horarioTurno.setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente atenderTurno() {
 		getEstado().atenderTurno();
-		// agenda.setEstado("Atendido");
+		horarioTurno.setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente cancelarTurno() {
 		getEstado().cancelarTurno();
-		// agenda.setEstado("Cancelado");
+		horarioTurno.setEstado(getEstadoTurno());
 		return this;
 
 	}
@@ -259,28 +253,21 @@ public class TurnoPaciente {
 	}
 
 	// }}
-	
+
 	// {{ MotivoConsulta (property)
-		private String motivoConsulta;
+	private String motivoConsulta;
 
-		@MemberOrder(sequence = "6")
-		@Column(allowsNull = "false")
-		public String getMotivoConsulta() {
-			return motivoConsulta;
-		}
+	@MemberOrder(sequence = "6")
+	@Column(allowsNull = "false")
+	public String getMotivoConsulta() {
+		return motivoConsulta;
+	}
 
-		public void setMotivoConsulta(final String motivoConsulta) {
-			this.motivoConsulta = motivoConsulta;
-		}
+	public void setMotivoConsulta(final String motivoConsulta) {
+		this.motivoConsulta = motivoConsulta;
+	}
 
-		// }}
-	// AgendaDoctor agenda = new AgendaDoctor();
-	//
-	// public void actualizarEstadoAgenda() {
-	// agenda.setEstado(getNombreDeEstado());
-	// }
-
-	public String getNombreDeEstado() {
+	public String getEstadoTurno() {
 		return this.getEstado().getClass().getSimpleName();
 	}
 
