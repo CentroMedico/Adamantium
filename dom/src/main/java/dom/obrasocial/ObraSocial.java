@@ -99,28 +99,28 @@ public class ObraSocial {
 		}
 	}
 
-	// {{ CoberturaMedica (property)
-	private String coberturaMedica;
+	// {{ NombreCorto (property)
+	private String nombreCorto;
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "false")
 	/**
-	 * Pemite obtener la cobertura de Obra Social
+	 * Pemite obtener el nombreCortode Obra Social
 	 * 
 	 * @return nombre String
 	 */
-	public String getCoberturaMedica() {
-		return coberturaMedica;
+	public String getNombreCorto() {
+		return nombreCorto;
 	}
 
 	/**
-	 * Setea cobertura de la obra social que se va crear.
+	 * Setea nombreCorto de la obra social que se va crear.
 	 * 
-	 * @param coberturamedica
-	 *            coberturamedica
+	 * @param nombreCorto
+	 *            nombreCorto
 	 */
-	public void setCoberturaMedica(final String coberturaMedica) {
-		this.coberturaMedica = coberturaMedica;
+	public void setNombreCorto(final String nombreCorto) {
+		this.nombreCorto = nombreCorto;
 	}
 
 	// }}
@@ -131,7 +131,7 @@ public class ObraSocial {
 	 * @param cob
 	 * @return String
 	 */
-	public String validateCoberturaMedica(String cob) {
+	public String validateNombreCorto(String cob) {
 
 		if (cob.matches("[a-z, A-Z,0-9,-]+") == false) {
 			return "Datos erroneos, vuelva a intentarlo";

@@ -220,7 +220,40 @@ public class Paciente extends Persona {
 	}
 
 	// }}
+	
+	
+	//{{ NumerodeCarnet (property)
+	private String numerodeCarnet;
+	
+	@MemberOrder(sequence ="18")
+	@Column(allowsNull = "true")
+	public String getNumerodeCarnet(){
+		return numerodeCarnet;
+	}
+	
+	public void setNumerodeCarnet(final String numerodeCarnet)
+	{
+		this.numerodeCarnet=numerodeCarnet;
+	}
+	//}}
+	
+	//}}
 
+//	{{ NumerodePlan (property)
+	private String numerodePlan;
+	
+	@MemberOrder(sequence ="19")
+	@Column(allowsNull = "true")
+	public String getNumerodePlan(){
+		return numerodePlan;
+	}
+	
+	public void setNumerodePlan(final String numerodePlan)
+	{
+		this.numerodePlan=numerodePlan;
+	}
+	
+	//}}
 	// {{ ListaTurnos (property)
 	private List<TurnoPaciente> listaTurnos = new ArrayList<TurnoPaciente>();
 

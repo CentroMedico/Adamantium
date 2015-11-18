@@ -108,7 +108,9 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
-			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial) {
+			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
+			@ParameterLayout(named="Numero de Carnet")@Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
+			@ParameterLayout(named="Numero de Plan")@Parameter(optionality = Optionality.OPTIONAL)final String numPlan) {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
 		// paciente.setLegajo(legajo);
@@ -130,6 +132,12 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setGrupoSanguineo(grupoSanguineo);
 		paciente.setFechaAlta(LocalDate.now());
 		paciente.setObraSocial(obraSocial);
+		if(obraSocial != null)
+		{
+			paciente.setNumerodeCarnet(numCarnet);
+			paciente.setNumerodePlan(numPlan);
+		}
+		
 		persist(paciente);
 		container.flush();
 		return paciente;
@@ -215,7 +223,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
 			final String direccion, final String correo, final String telefono,
-			final GrupoSanguineoEnum grupoSanguineo, final ObraSocial obraSocial) {
+			final GrupoSanguineoEnum grupoSanguineo, final ObraSocial obraSocial,final String numCarnet,final String numPlan) {
 
 		final Paciente miPaciente = container.firstMatch(QueryDefault.create(
 		// Paciente.class, "buscarDuplicados", "documento", documento,

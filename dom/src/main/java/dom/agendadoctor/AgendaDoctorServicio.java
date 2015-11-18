@@ -114,6 +114,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 				agenda.setDia(fecha);
 				agenda.setDoctor(doctor);
+				agenda.setEstado(turno.getEstadoTurno());
 				doctor.getListaAgenda().add(agenda);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();
@@ -153,11 +154,11 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 				"traerTurnos", Turno));
 	}
 
-	@MemberOrder(name = "Doctor", sequence = "50")
+	@MemberOrder(name = "Doctor", sequence = "105")
 	public List<AgendaDoctor> listarAgenda() {
 		return container.allInstances(AgendaDoctor.class);
 	}
-
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 
