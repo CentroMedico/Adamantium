@@ -158,7 +158,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 	public List<AgendaDoctor> listarAgenda() {
 		return container.allInstances(AgendaDoctor.class);
 	}
-	
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 

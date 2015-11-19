@@ -16,10 +16,14 @@
 package dom.recepcionista;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.estado.EstadoEnum;
@@ -44,9 +48,9 @@ import dom.persona.Persona;
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
-		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.recepcionista.Recepcionista "
-				+ " WHERE documento ==:documento || legajo == :legajo") })
+		@javax.jdo.annotations.Query(name = "buscarDocDuplicados", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.paciente.Paciente "
+				+ " WHERE documento ==:documento") })
 @DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -81,6 +85,8 @@ public class Recepcionista extends Persona {
 	 */
 	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "false")
+	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence = "numeroLegajo")
+	@Property(editing = Editing.DISABLED)
 	public int getLegajo() {
 		return legajo;
 	}

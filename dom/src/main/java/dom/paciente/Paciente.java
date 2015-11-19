@@ -80,14 +80,11 @@ import dom.turnopaciente.TurnoPacienteServicio;
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
-		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.paciente.Paciente "
-				+ " WHERE documento ==:documento || legajo == :legajo"),
 		@javax.jdo.annotations.Query(name = "buscarDocDuplicados", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.paciente.Paciente "
 				+ " WHERE documento ==:documento"),
 		@javax.jdo.annotations.Query(name = "traerPaciente", language = "JDOQL", value = "SELECT "
-		+ " FROMdom.paciente.Paciente "),
+				+ " FROMdom.paciente.Paciente "),
 
 })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
@@ -220,40 +217,38 @@ public class Paciente extends Persona {
 	}
 
 	// }}
-	
-	
-	//{{ NumerodeCarnet (property)
+
+	// {{ NumerodeCarnet (property)
 	private String numerodeCarnet;
-	
-	@MemberOrder(sequence ="18")
+
+	@MemberOrder(sequence = "18")
 	@Column(allowsNull = "true")
-	public String getNumerodeCarnet(){
+	public String getNumerodeCarnet() {
 		return numerodeCarnet;
 	}
-	
-	public void setNumerodeCarnet(final String numerodeCarnet)
-	{
-		this.numerodeCarnet=numerodeCarnet;
-	}
-	//}}
-	
-	//}}
 
-//	{{ NumerodePlan (property)
+	public void setNumerodeCarnet(final String numerodeCarnet) {
+		this.numerodeCarnet = numerodeCarnet;
+	}
+
+	// }}
+
+	// }}
+
+	// {{ NumerodePlan (property)
 	private String numerodePlan;
-	
-	@MemberOrder(sequence ="19")
+
+	@MemberOrder(sequence = "19")
 	@Column(allowsNull = "true")
-	public String getNumerodePlan(){
+	public String getNumerodePlan() {
 		return numerodePlan;
 	}
-	
-	public void setNumerodePlan(final String numerodePlan)
-	{
-		this.numerodePlan=numerodePlan;
+
+	public void setNumerodePlan(final String numerodePlan) {
+		this.numerodePlan = numerodePlan;
 	}
-	
-	//}}
+
+	// }}
 	// {{ ListaTurnos (property)
 	private List<TurnoPaciente> listaTurnos = new ArrayList<TurnoPaciente>();
 
@@ -472,8 +467,7 @@ public class Paciente extends Persona {
 	}
 
 	// }}
-	
-	
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

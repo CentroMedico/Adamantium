@@ -1,4 +1,4 @@
-package dom.doctor.graficotorta;
+package dom.paciente.graficotorta;
 
 import java.util.List;
 import java.util.Map;
@@ -11,25 +11,25 @@ import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 
 import com.google.common.collect.Maps;
 
-import dom.doctor.Doctor;
 import dom.estado.EstadoEnum;
+import dom.paciente.Paciente;
 
-@DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
-@DomainService(repositoryFor = Doctor.class)
-public class Consulta {
+@DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
+@DomainService(repositoryFor = Paciente.class)
+public class ConsultaPaciente {
 
-	public WickedChart graficoTortaActivos() {
+	public WickedChart graficoTortaPacientesActivos() {
 		Map<EstadoEnum, AtomicInteger> mapeo = Maps.newTreeMap();
-		List<Doctor> lista = container.allInstances(Doctor.class);
-		for (Doctor a : lista) {
-			AtomicInteger integer = mapeo.get(a.getEstado());
+		List<Paciente> lista = container.allInstances(Paciente.class);
+		for (Paciente p : lista) {
+			AtomicInteger integer = mapeo.get(p.getEstado());
 			if (integer == null) {
 				integer = new AtomicInteger();
-				mapeo.put(a.getEstado(), integer);
+				mapeo.put(p.getEstado(), integer);
 			}
 			integer.incrementAndGet();
 		}
-		return new WickedChart(new GraficoTortaActivos(mapeo));
+		return new WickedChart(new GraficoTortaPacientesActivos(mapeo));
 
 	}
 

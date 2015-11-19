@@ -1,4 +1,4 @@
-package dom.doctor.graficotorta;
+package dom.paciente.graficotorta;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,16 +23,16 @@ import com.googlecode.wickedcharts.highcharts.options.series.Series;
 
 import dom.estado.EstadoEnum;
 
-public class GraficoTortaActivos extends Options {
+public class GraficoTortaPacientesActivos extends Options {
 
 	private static final long serialVersionUID = 1L;
 
-	public GraficoTortaActivos(Map<EstadoEnum, AtomicInteger> a) {
+	public GraficoTortaPacientesActivos(Map<EstadoEnum, AtomicInteger> a) {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
 
-		setTitle(new Title("Grafico Doctores Activos"));
+		setTitle(new Title("Grafico Pacientes Activos"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));

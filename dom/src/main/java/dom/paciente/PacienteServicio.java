@@ -95,7 +95,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Paciente", sequence = "5.1")
 	@ActionLayout(cssClass = "boton")
 	public Paciente crearPaciente(
-			// @ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
@@ -109,11 +108,10 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
 			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
-			@ParameterLayout(named="Numero de Carnet")@Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
-			@ParameterLayout(named="Numero de Plan")@Parameter(optionality = Optionality.OPTIONAL)final String numPlan) {
+			@ParameterLayout(named = "Numero de Carnet") @Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
+			@ParameterLayout(named = "Numero de Plan") @Parameter(optionality = Optionality.OPTIONAL) final String numPlan) {
 
 		final Paciente paciente = newTransientInstance(Paciente.class);
-		// paciente.setLegajo(legajo);
 		paciente.setApellido(apellido.substring(0, 1).toUpperCase()
 				+ apellido.substring(1));
 		paciente.setNombre(nombre.substring(0, 1).toUpperCase()
@@ -132,12 +130,11 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setGrupoSanguineo(grupoSanguineo);
 		paciente.setFechaAlta(LocalDate.now());
 		paciente.setObraSocial(obraSocial);
-		if(obraSocial != null)
-		{
+		if (obraSocial != null) {
 			paciente.setNumerodeCarnet(numCarnet);
 			paciente.setNumerodePlan(numPlan);
 		}
-		
+
 		persist(paciente);
 		container.flush();
 		return paciente;
@@ -202,10 +199,9 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * Choice8 devuelve una lista de ciudades dependiendo cual provincia se
 	 * selecciono previamente.
 	 */
-	public List<Ciudad> choices7CrearPaciente(
-			// final int legajo,
-			final String apellido, final String nombre,
-			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+	public List<Ciudad> choices7CrearPaciente(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincias) {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
@@ -216,29 +212,23 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * Valida
 	 */
 
-	public String validateCrearPaciente(
-			// final int legajo,
-			final String apellido, final String nombre,
-			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+	public String validateCrearPaciente(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
 			final String direccion, final String correo, final String telefono,
-			final GrupoSanguineoEnum grupoSanguineo, final ObraSocial obraSocial,final String numCarnet,final String numPlan) {
+			final GrupoSanguineoEnum grupoSanguineo,
+			final ObraSocial obraSocial, final String numCarnet,
+			final String numPlan) {
 
 		final Paciente miPaciente = container.firstMatch(QueryDefault.create(
-		// Paciente.class, "buscarDuplicados", "documento", documento,
-		// "legajo", legajo));
 				Paciente.class, "buscarDocDuplicados", "documento", documento));
 		if (miPaciente != null) {
 			if (miPaciente.getDocumento().equals(documento)) {
 				return "Ya existe un Paciente con este numero de documento: "
 						+ documento;
 			}
-			// else {
-			// return "Ya existe un Paciente con este numero de legajo: "
-			// + legajo;
-
-			// }
 		}
 		if (fechaNacimiento.isAfter(fecha_actual))
 			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
@@ -247,19 +237,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		if (validaMayorCien(fechaNacimiento) == false)
 			return "El paciente no puede ser mayor a 100 años";
 		return "";
-
-		// if (firstMatch(Persona.class, new Predicate<Persona>() {
-		//
-		// @Override
-		// public boolean apply(Persona _persona) {
-		// // TODO Auto-generated method stub
-		// return _persona.getUsuario().getNombre().equals(_nombreUsuario);
-		// }
-		// }) != null)
-		// return "Ya existe el nombre de usuario!";
-		// return _telefono == null && _celular == null ?
-		// "Debe ingresar al menos un teléfono"
-		// : null;
 	}
 
 	/**
@@ -312,7 +289,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
-	
 
 	@MemberOrder(name = "Paciente", sequence = "5.1.2")
 	public Paciente buscarPaciente(
@@ -320,12 +296,14 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return paciente;
 	}
 
-	
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Paciente> autocompletarPaciente(final String paciente) {
-		return allMatches(QueryDefault.create(Paciente.class,
-				"traerPaciente", "nombre", paciente.substring(0, 1).toUpperCase()
-				+ paciente.substring(1,paciente.length())));
+		return allMatches(QueryDefault.create(
+				Paciente.class,
+				"traerPaciente",
+				"nombre",
+				paciente.substring(0, 1).toUpperCase()
+						+ paciente.substring(1, paciente.length())));
 	}
 
 	@javax.inject.Inject

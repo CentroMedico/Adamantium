@@ -85,7 +85,6 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Recepcionista", sequence = "3.1")
 	@ActionLayout(cssClass = "boton")
 	public Recepcionista crearRecepcionista(
-			@ParameterLayout(named = "Legajo") final int legajo,
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
 			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
@@ -113,7 +112,6 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 				+ direccion.substring(1));
 		recepcionista.setCorreo(correo);
 		recepcionista.setTelefono(telefono);
-		recepcionista.setLegajo(legajo);
 		recepcionista.setEstado(EstadoEnum.Activo);
 		recepcionista.setFechaAlta(LocalDate.now());
 		persist(recepcionista);
@@ -170,7 +168,7 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 */
 
-	public Provincia default7CrearRecepcionista() {
+	public Provincia default6CrearRecepcionista() {
 		return container.firstMatch(QueryDefault.create(Provincia.class,
 				"traerTodas"));
 
@@ -181,9 +179,9 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 */
 
-	public List<Ciudad> choices8CrearRecepcionista(final int legajo,
-			final String apellido, final String nombre,
-			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+	public List<Ciudad> choices7CrearRecepcionista(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincias) {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
@@ -194,23 +192,20 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 	 * Valida
 	 */
 
-	public String validateCrearRecepcionista(final int legajo,
-			final String apellido, final String nombre,
-			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
+	public String validateCrearRecepcionista(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
 			final String direccion, final String correo, final String telefono) {
 
 		final Recepcionista miRecepcionista = container.firstMatch(QueryDefault
-				.create(Recepcionista.class, "buscarDuplicados", "documento",
-						documento, "legajo", legajo));
+				.create(Recepcionista.class, "buscarDocDuplicados",
+						"documento", documento));
 		if (miRecepcionista != null) {
 			if (miRecepcionista.getDocumento().equals(documento)) {
 				return "Ya existe un/@ Recepcionista con este numero de documento: "
 						+ documento;
-			} else {
-				return "Ya existe un/@ Recepcionista con este numero de legajo: "
-						+ legajo;
 
 			}
 		}
@@ -221,19 +216,6 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		if (validaMayorCien(fechaNacimiento) == false)
 			return "Recepcionista mayor a 100 años";
 		return "";
-
-		// if (firstMatch(Persona.class, new Predicate<Persona>() {
-		//
-		// @Override
-		// public boolean apply(Persona _persona) {
-		// // TODO Auto-generated method stub
-		// return _persona.getUsuario().getNombre().equals(_nombreUsuario);
-		// }
-		// }) != null)
-		// return "Ya existe el nombre de usuario!";
-		// return _telefono == null && _celular == null ?
-		// "Debe ingresar al menos un teléfono"
-		// : null;
 	}
 
 	/**
