@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -29,11 +28,9 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.joda.time.DateTime;
 
 import dom.agendadoctor.AgendaDoctor;
 import dom.especialidad.EspecialidadEnum;
-import dom.estado.EstadoEnum;
 import dom.persona.Persona;
 
 /**
