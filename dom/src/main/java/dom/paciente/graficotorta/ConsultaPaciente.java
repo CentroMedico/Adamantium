@@ -33,6 +33,21 @@ public class ConsultaPaciente {
 
 	}
 
+	public WickedChart graficoTortaPacientesEdad() {
+		Map<EdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
+		List<Paciente> lista = container.allInstances(Paciente.class);
+		for (Paciente p : lista) {
+			AtomicInteger integer = mapeo.get(p.getMayoriaEdad());
+			if (integer == null) {
+				integer = new AtomicInteger();
+				mapeo.put(p.getMayoriaEdad(), integer);
+			}
+			integer.incrementAndGet();
+		}
+		return new WickedChart(new GraficoTortaPacientesEdad(mapeo));
+
+	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

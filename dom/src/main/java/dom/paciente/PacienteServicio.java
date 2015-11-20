@@ -40,6 +40,7 @@ import dom.ciudadprovincia.Provincia;
 import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.obrasocial.ObraSocial;
+import dom.paciente.graficotorta.EdadEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 
@@ -134,6 +135,10 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			paciente.setNumerodeCarnet(numCarnet);
 			paciente.setNumerodePlan(numPlan);
 		}
+		if (getDiasNacimiento_Hoy(fechaNacimiento) <= 6570) {
+			paciente.setMayoriaEdad(EdadEnum.Menor);
+		} else
+			paciente.setMayoriaEdad(EdadEnum.Mayor);
 
 		persist(paciente);
 		container.flush();

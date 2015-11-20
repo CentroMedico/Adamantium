@@ -19,7 +19,7 @@ public class GraficoPaciente implements Serializable {
 	}
 
 	public String title() {
-		return "Pacientes Activos / Inactivos";
+		return "Grafico Pacientes";
 	}
 
 	@Programmatic

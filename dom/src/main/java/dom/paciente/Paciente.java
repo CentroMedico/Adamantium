@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
@@ -36,21 +35,15 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import dom.doctor.Doctor;
-import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
-import dom.historiaclinica.AdicionalesPaciente;
-import dom.historiaclinica.AntecedentesFamiliares;
-import dom.historiaclinica.AntecedentesPersonales;
-import dom.historiaclinica.ExamenFisico;
 import dom.historiaclinica.IndicacionesMedicas;
 import dom.historiaclinica.Receta;
 import dom.obrasocial.ObraSocial;
+import dom.paciente.graficotorta.EdadEnum;
 import dom.persona.Persona;
 import dom.turnopaciente.TurnoPaciente;
 import dom.turnopaciente.TurnoPacienteServicio;
@@ -464,6 +457,22 @@ public class Paciente extends Persona {
 	 */
 	public void setListaReceta(final List<Receta> listaReceta) {
 		this.listaReceta = listaReceta;
+	}
+
+	// }}
+
+	// {{ MayoriaEdad (property)
+	private EdadEnum mayoriaEdad;
+
+	@MemberOrder(sequence = "21")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
+	public EdadEnum getMayoriaEdad() {
+		return mayoriaEdad;
+	}
+
+	public void setMayoriaEdad(final EdadEnum mayoriaEdad) {
+		this.mayoriaEdad = mayoriaEdad;
 	}
 
 	// }}
