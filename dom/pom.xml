@@ -96,7 +96,11 @@
 			<artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
 			<version>1.8.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>1.8.7</version>
+		</dependency>
 		<dependency>
 			<groupId>org.isisaddons.wicket.wickedcharts</groupId>
 			<artifactId>isis-wicket-wickedcharts-cpt</artifactId>
