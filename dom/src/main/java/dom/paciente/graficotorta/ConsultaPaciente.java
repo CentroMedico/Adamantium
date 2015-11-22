@@ -33,8 +33,8 @@ public class ConsultaPaciente {
 
 	}
 
-	public WickedChart graficoTortaPacientesEdad() {
-		Map<EdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
+	public WickedChart graficoTortaPacientesMayoriaEdad() {
+		Map<MayoriaEdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
 		List<Paciente> lista = container.allInstances(Paciente.class);
 		for (Paciente p : lista) {
 			AtomicInteger integer = mapeo.get(p.getMayoriaEdad());
@@ -44,7 +44,37 @@ public class ConsultaPaciente {
 			}
 			integer.incrementAndGet();
 		}
-		return new WickedChart(new GraficoTortaPacientesEdad(mapeo));
+		return new WickedChart(new GraficoTortaPacientesMayoriaEdad(mapeo));
+
+	}
+
+	public WickedChart graficoTortaPacientesRangoEdad() {
+		Map<RangoEdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
+		List<Paciente> lista = container.allInstances(Paciente.class);
+		for (Paciente p : lista) {
+			AtomicInteger integer = mapeo.get(p.getRangoEdad());
+			if (integer == null) {
+				integer = new AtomicInteger();
+				mapeo.put(p.getRangoEdad(), integer);
+			}
+			integer.incrementAndGet();
+		}
+		return new WickedChart(new GraficoTortaPacientesRangoEdad(mapeo));
+
+	}
+
+	public WickedChart graficoBarrasPacientesRangoEdad() {
+		Map<RangoEdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
+		List<Paciente> lista = container.allInstances(Paciente.class);
+		for (Paciente p : lista) {
+			AtomicInteger integer = mapeo.get(p.getRangoEdad());
+			if (integer == null) {
+				integer = new AtomicInteger();
+				mapeo.put(p.getRangoEdad(), integer);
+			}
+			integer.incrementAndGet();
+		}
+		return new WickedChart(new GraficoBarrasPacientesRangoEdad(mapeo));
 
 	}
 

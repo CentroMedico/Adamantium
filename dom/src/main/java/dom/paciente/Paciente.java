@@ -43,7 +43,8 @@ import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.historiaclinica.IndicacionesMedicas;
 import dom.historiaclinica.Receta;
 import dom.obrasocial.ObraSocial;
-import dom.paciente.graficotorta.EdadEnum;
+import dom.paciente.graficotorta.MayoriaEdadEnum;
+import dom.paciente.graficotorta.RangoEdadEnum;
 import dom.persona.Persona;
 import dom.turnopaciente.TurnoPaciente;
 import dom.turnopaciente.TurnoPacienteServicio;
@@ -462,17 +463,33 @@ public class Paciente extends Persona {
 	// }}
 
 	// {{ MayoriaEdad (property)
-	private EdadEnum mayoriaEdad;
+	private MayoriaEdadEnum mayoriaEdad;
 
 	@MemberOrder(sequence = "21")
 	@Column(allowsNull = "false")
 	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
-	public EdadEnum getMayoriaEdad() {
+	public MayoriaEdadEnum getMayoriaEdad() {
 		return mayoriaEdad;
 	}
 
-	public void setMayoriaEdad(final EdadEnum mayoriaEdad) {
+	public void setMayoriaEdad(final MayoriaEdadEnum mayoriaEdad) {
 		this.mayoriaEdad = mayoriaEdad;
+	}
+
+	// }}
+
+	// {{ RangoEdad (property)
+	private RangoEdadEnum rangoEdad;
+
+	@MemberOrder(sequence = "22")
+	@Column(allowsNull = "false")
+	// @Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
+	public RangoEdadEnum getRangoEdad() {
+		return rangoEdad;
+	}
+
+	public void setRangoEdad(final RangoEdadEnum rangoEdad) {
+		this.rangoEdad = rangoEdad;
 	}
 
 	// }}

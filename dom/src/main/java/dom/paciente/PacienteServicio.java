@@ -16,6 +16,7 @@
 package dom.paciente;
 
 import java.util.List;
+import java.util.Scanner;
 
 import javax.inject.Named;
 
@@ -40,7 +41,8 @@ import dom.ciudadprovincia.Provincia;
 import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.obrasocial.ObraSocial;
-import dom.paciente.graficotorta.EdadEnum;
+import dom.paciente.graficotorta.MayoriaEdadEnum;
+import dom.paciente.graficotorta.RangoEdadEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 
@@ -136,9 +138,29 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			paciente.setNumerodePlan(numPlan);
 		}
 		if (getDiasNacimiento_Hoy(fechaNacimiento) <= 6570) {
-			paciente.setMayoriaEdad(EdadEnum.Menor);
+			paciente.setMayoriaEdad(MayoriaEdadEnum.Menor);
 		} else
-			paciente.setMayoriaEdad(EdadEnum.Mayor);
+			paciente.setMayoriaEdad(MayoriaEdadEnum.Mayor);
+		if (getDiasNacimiento_Hoy(fechaNacimiento) <= 1825) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCinco);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 3650) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorDiez);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 7300) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorVeinte);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 10950) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorTreinta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 14600) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCuarenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 18250) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCincuenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 21900) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorSesenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 25550) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorSetenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 29200) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorOchenta);
+		} else
+			paciente.setRangoEdad(RangoEdadEnum.MayorOchenta);
 
 		persist(paciente);
 		container.flush();
