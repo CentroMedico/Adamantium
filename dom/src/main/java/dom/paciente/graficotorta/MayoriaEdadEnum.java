@@ -1,6 +1,6 @@
 package dom.paciente.graficotorta;
 
-public enum EdadEnum {
+public enum MayoriaEdadEnum {
 
 	Mayor, Menor;
 

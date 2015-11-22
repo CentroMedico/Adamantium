@@ -21,16 +21,15 @@ import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import com.googlecode.wickedcharts.highcharts.options.series.Series;
 
-public class GraficoTortaPacientesEdad extends Options {
-
+public class GraficoTortaPacientesRangoEdad extends Options {
 	private static final long serialVersionUID = 1L;
 
-	public GraficoTortaPacientesEdad(Map<EdadEnum, AtomicInteger> a) {
+	public GraficoTortaPacientesRangoEdad(Map<RangoEdadEnum, AtomicInteger> a) {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
 
-		setTitle(new Title("Grafico Pacientes Edad"));
+		setTitle(new Title("Grafico Pacientes Rango Edad"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));
@@ -45,8 +44,10 @@ public class GraficoTortaPacientesEdad extends Options {
 								.setFormatter(formato))));
 
 		Series<Point> series = new PointSeries().setType(SeriesType.PIE);
-		int i = 8;
-		for (Map.Entry<EdadEnum, AtomicInteger> entry : a.entrySet()) {
+		// int i = 8;
+		// int i = 100;
+		int i = 1;
+		for (Map.Entry<RangoEdadEnum, AtomicInteger> entry : a.entrySet()) {
 			series.addPoint(new Point(nombre(entry.getKey()), entry.getValue()
 					.get()).setColor(new RadialGradient().setCx(0.5).setCy(0.3)
 					.setR(0.7).addStop(0, new HighchartsColor(i))
@@ -56,12 +57,30 @@ public class GraficoTortaPacientesEdad extends Options {
 		addSeries(series);
 	}
 
-	private String nombre(EdadEnum edad) {
+	private String nombre(RangoEdadEnum edad) {
 		String salida = "";
-		if (edad == EdadEnum.Mayor)
-			salida = "Mayores de edad";
+		if (edad == RangoEdadEnum.MenorCinco)
+			salida = "Menores a 5 Años";
+		else if (edad == RangoEdadEnum.MenorDiez)
+			salida = "Menores a 10 años";
+		else if (edad == RangoEdadEnum.MenorVeinte)
+			salida = "Menores a 20 años";
+		else if (edad == RangoEdadEnum.MenorTreinta)
+			salida = "Menores a 30 años";
+		else if (edad == RangoEdadEnum.MenorCuarenta)
+			salida = "Menores a 40 años";
+		else if (edad == RangoEdadEnum.MenorCincuenta)
+			salida = "Menores a 50 años";
+		else if (edad == RangoEdadEnum.MenorSesenta)
+			salida = "Menores a 60 años";
+		else if (edad == RangoEdadEnum.MenorSetenta)
+			salida = "Menores a 70 años";
+		else if (edad == RangoEdadEnum.MenorOchenta)
+			salida = "Menores a 80 años";
 		else
-			salida = "Menores de edad";
+			// if (edad == RangoEdadEnum.MayorOchenta)
+			salida = "Mayores a 80 años";
+
 		return salida;
 	}
 }
