@@ -48,21 +48,6 @@ public class ConsultaPaciente {
 
 	}
 
-	public WickedChart graficoTortaPacientesRangoEdad() {
-		Map<RangoEdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
-		List<Paciente> lista = container.allInstances(Paciente.class);
-		for (Paciente p : lista) {
-			AtomicInteger integer = mapeo.get(p.getRangoEdad());
-			if (integer == null) {
-				integer = new AtomicInteger();
-				mapeo.put(p.getRangoEdad(), integer);
-			}
-			integer.incrementAndGet();
-		}
-		return new WickedChart(new GraficoTortaPacientesRangoEdad(mapeo));
-
-	}
-
 	public WickedChart graficoBarrasPacientesRangoEdad() {
 		Map<RangoEdadEnum, AtomicInteger> mapeo = Maps.newTreeMap();
 		List<Paciente> lista = container.allInstances(Paciente.class);

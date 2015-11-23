@@ -44,7 +44,9 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 								.setConnectorColor(new HexColor("#000000"))
 								.setFormatter(formato))));
 
-		Series<Point> series = new PointSeries().setType(SeriesType.PIE);
+		setChartOptions(new ChartOptions().setMarginTop(50).setMarginRight(50)
+				.setMarginBottom(100).setMarginLeft(80));
+		Series<Point> series = new PointSeries().setType(SeriesType.COLUMN);
 		int i = 1;
 		for (Map.Entry<RangoEdadEnum, AtomicInteger> entry : a.entrySet()) {
 			series.addPoint(new Point(nombre(entry.getKey()), entry.getValue()
