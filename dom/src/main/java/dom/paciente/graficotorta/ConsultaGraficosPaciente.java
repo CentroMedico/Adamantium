@@ -16,7 +16,7 @@ import dom.paciente.Paciente;
 
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
 @DomainService(repositoryFor = Paciente.class)
-public class ConsultaPaciente {
+public class ConsultaGraficosPaciente {
 
 	public WickedChart graficoTortaPacientesActivos() {
 		Map<EstadoEnum, AtomicInteger> mapeo = Maps.newTreeMap();

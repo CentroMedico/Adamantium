@@ -483,7 +483,7 @@ public class Paciente extends Persona {
 
 	@MemberOrder(sequence = "22")
 	@Column(allowsNull = "false")
-	// @Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
+	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
 	public RangoEdadEnum getRangoEdad() {
 		return rangoEdad;
 	}

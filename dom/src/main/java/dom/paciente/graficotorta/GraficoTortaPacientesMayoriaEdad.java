@@ -25,12 +25,14 @@ public class GraficoTortaPacientesMayoriaEdad extends Options {
 
 	private static final long serialVersionUID = 1L;
 
-	public GraficoTortaPacientesMayoriaEdad(Map<MayoriaEdadEnum, AtomicInteger> a) {
+	public GraficoTortaPacientesMayoriaEdad(
+			Map<MayoriaEdadEnum, AtomicInteger> a) {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
 
-		setTitle(new Title("Grafico Pacientes Mayoria Edad"));
+		setTitle(new Title(
+				"Gráfico de porcentaje por pacientes mayores/menores de edad"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));

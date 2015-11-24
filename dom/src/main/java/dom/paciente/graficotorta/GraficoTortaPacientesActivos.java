@@ -32,7 +32,7 @@ public class GraficoTortaPacientesActivos extends Options {
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
 
-		setTitle(new Title("Grafico Pacientes Activos"));
+		setTitle(new Title("Gráfico Porcentaje de pacientes activos/inactivos"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));

@@ -1,17 +1,29 @@
 package dom.paciente.graficotorta;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
+import org.apache.isis.viewer.wicket.model.models.EntityCollectionModel;
+import org.apache.isis.viewer.wicket.ui.components.collectioncontents.summary.CollectionContentsAsSummary.Summary;
+
+import com.google.common.collect.Lists;
+import com.googlecode.wickedcharts.highcharts.options.Axis;
 import com.googlecode.wickedcharts.highcharts.options.ChartOptions;
 import com.googlecode.wickedcharts.highcharts.options.Cursor;
 import com.googlecode.wickedcharts.highcharts.options.DataLabels;
+import com.googlecode.wickedcharts.highcharts.options.HorizontalAlignment;
+import com.googlecode.wickedcharts.highcharts.options.Legend;
+import com.googlecode.wickedcharts.highcharts.options.LegendLayout;
 import com.googlecode.wickedcharts.highcharts.options.Options;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptions;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptionsChoice;
 import com.googlecode.wickedcharts.highcharts.options.SeriesType;
 import com.googlecode.wickedcharts.highcharts.options.Title;
 import com.googlecode.wickedcharts.highcharts.options.Tooltip;
+import com.googlecode.wickedcharts.highcharts.options.VerticalAlignment;
 import com.googlecode.wickedcharts.highcharts.options.color.HexColor;
 import com.googlecode.wickedcharts.highcharts.options.color.HighchartsColor;
 import com.googlecode.wickedcharts.highcharts.options.color.NullColor;
@@ -20,6 +32,7 @@ import com.googlecode.wickedcharts.highcharts.options.functions.PercentageFormat
 import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import com.googlecode.wickedcharts.highcharts.options.series.Series;
+import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
 
 public class GraficoBarrasPacientesRangoEdad extends Options {
 
@@ -28,9 +41,12 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 	public GraficoBarrasPacientesRangoEdad(Map<RangoEdadEnum, AtomicInteger> a) {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
-				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
+				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE)
+				.setMarginTop(50).setMarginRight(50).setMarginBottom(100)
+				.setMarginLeft(80));
 
-		setTitle(new Title("Grafico Pacientes Rango Edad"));
+		setTitle(new Title(
+				"Gráfico de porcentaje por rango de edades de pacientes"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));
@@ -44,8 +60,6 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 								.setConnectorColor(new HexColor("#000000"))
 								.setFormatter(formato))));
 
-		setChartOptions(new ChartOptions().setMarginTop(50).setMarginRight(50)
-				.setMarginBottom(100).setMarginLeft(80));
 		Series<Point> series = new PointSeries().setType(SeriesType.COLUMN);
 		int i = 1;
 		for (Map.Entry<RangoEdadEnum, AtomicInteger> entry : a.entrySet()) {

@@ -16,7 +16,7 @@ import dom.recepcionista.Recepcionista;
 
 @DomainServiceLayout(named = "Recepcionista", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "50")
 @DomainService(repositoryFor = Recepcionista.class)
-public class ConsultaRecepcionista {
+public class ConsultaGraficosRecepcionista {
 
 	public WickedChart graficoTortaRecepcionistasActivos() {
 		Map<EstadoEnum, AtomicInteger> mapeo = Maps.newTreeMap();
