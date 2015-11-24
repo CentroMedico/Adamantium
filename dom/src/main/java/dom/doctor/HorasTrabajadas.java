@@ -4,9 +4,16 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 @PersistenceCapable
 public class HorasTrabajadas {
+
+	public TranslatableString title() {
+		return TranslatableString.tr("{nombre}", "nombre", "Horario doctor: "
+				+ doctor.getApellido() + ", " + doctor.getNombre());
+	}
+
 	// {{ Doctor (property)
 	private Doctor doctor;
 

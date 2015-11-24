@@ -2,8 +2,10 @@ package dom.doctor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
@@ -44,5 +46,13 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 		return formatoFecha.format(egreso);
 
 	}
+
+	@MemberOrder(name = "Doctor", sequence = "4.3")
+	public List<HorasTrabajadas> listarHorasTrabajadas() {
+		return container.allInstances(HorasTrabajadas.class);
+	}
+
+	@javax.inject.Inject
+	DomainObjectContainer container;
 
 }
