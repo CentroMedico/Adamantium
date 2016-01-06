@@ -25,27 +25,28 @@ import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-@DomainService(
-        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY // trick to suppress the actions from the top-level menu
+@DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY // trick to
+																// suppress the
+																// actions from
+																// the top-level
+																// menu
 )
 public class HomePageService {
 
-    //region > homePage (action)
+	// region > homePage (action)
 
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @HomePage
-    public HomePageViewModel homePage() {
-        return container.injectServicesInto(new HomePageViewModel());
-    }
+	@Action(semantics = SemanticsOf.SAFE)
+	@HomePage
+	public HomePageViewModel homePage() {
+		return container.injectServicesInto(new HomePageViewModel());
+	}
 
-    //endregion
+	// endregion
 
-    //region > injected services
+	// region > injected services
 
-    @javax.inject.Inject
-    DomainObjectContainer container;
+	@javax.inject.Inject
+	DomainObjectContainer container;
 
-    //endregion
+	// endregion
 }

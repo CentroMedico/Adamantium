@@ -1,29 +1,24 @@
 package dom.paciente.graficotorta;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
-import org.apache.isis.viewer.wicket.model.models.EntityCollectionModel;
-import org.apache.isis.viewer.wicket.ui.components.collectioncontents.summary.CollectionContentsAsSummary.Summary;
-
-import com.google.common.collect.Lists;
 import com.googlecode.wickedcharts.highcharts.options.Axis;
 import com.googlecode.wickedcharts.highcharts.options.ChartOptions;
+import com.googlecode.wickedcharts.highcharts.options.CssStyle;
 import com.googlecode.wickedcharts.highcharts.options.Cursor;
 import com.googlecode.wickedcharts.highcharts.options.DataLabels;
 import com.googlecode.wickedcharts.highcharts.options.HorizontalAlignment;
+import com.googlecode.wickedcharts.highcharts.options.Labels;
 import com.googlecode.wickedcharts.highcharts.options.Legend;
-import com.googlecode.wickedcharts.highcharts.options.LegendLayout;
 import com.googlecode.wickedcharts.highcharts.options.Options;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptions;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptionsChoice;
 import com.googlecode.wickedcharts.highcharts.options.SeriesType;
 import com.googlecode.wickedcharts.highcharts.options.Title;
 import com.googlecode.wickedcharts.highcharts.options.Tooltip;
-import com.googlecode.wickedcharts.highcharts.options.VerticalAlignment;
 import com.googlecode.wickedcharts.highcharts.options.color.HexColor;
 import com.googlecode.wickedcharts.highcharts.options.color.HighchartsColor;
 import com.googlecode.wickedcharts.highcharts.options.color.NullColor;
@@ -32,7 +27,6 @@ import com.googlecode.wickedcharts.highcharts.options.functions.PercentageFormat
 import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import com.googlecode.wickedcharts.highcharts.options.series.Series;
-import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
 
 public class GraficoBarrasPacientesRangoEdad extends Options {
 
@@ -42,8 +36,8 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE)
-				.setMarginTop(50).setMarginRight(50).setMarginBottom(100)
-				.setMarginLeft(80));
+				.setType(SeriesType.COLUMN).setMarginTop(50).setMarginRight(50)
+				.setMarginBottom(100).setMarginLeft(80));
 
 		setTitle(new Title(
 				"Gráfico de porcentaje por rango de edades de pacientes"));
@@ -51,14 +45,26 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));
 
-		setPlotOptions(new PlotOptionsChoice().setPie(new PlotOptions()
+		setPlotOptions(new PlotOptionsChoice().setColumn(new PlotOptions()
 				.setAllowPointSelect(Boolean.TRUE)
 				.setCursor(Cursor.POINTER)
 				.setDataLabels(
-						new DataLabels().setEnabled(Boolean.TRUE)
+						new DataLabels().setEnabled(Boolean.FALSE)
 								.setColor(new HexColor("#000000"))
 								.setConnectorColor(new HexColor("#000000"))
 								.setFormatter(formato))));
+
+		setLegend(new Legend(Boolean.FALSE));
+
+		List<String> labels = new ArrayList<String>();
+		setxAxis(new Axis().setCategories(labels).setLabels(
+				new Labels()
+						.setRotation(-45)
+						.setAlign(HorizontalAlignment.RIGHT)
+						.setStyle(
+								new CssStyle().setProperty("font-size", "13px")
+										.setProperty("font-family",
+												"Verdana, sans-serif"))));
 
 		Series<Point> series = new PointSeries().setType(SeriesType.COLUMN);
 		int i = 1;
@@ -70,6 +76,7 @@ public class GraficoBarrasPacientesRangoEdad extends Options {
 			i++;
 		}
 		addSeries(series);
+
 	}
 
 	private String nombre(RangoEdadEnum edad) {

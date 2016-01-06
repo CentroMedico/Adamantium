@@ -11,16 +11,10 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.query.QueryDefault;
-import org.joda.time.LocalDate;
 
-import dom.ciudadprovincia.Ciudad;
-import dom.ciudadprovincia.Provincia;
 import dom.doctor.Doctor;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
-import dom.tipodesexo.TipoDeSexoEnum;
-import dom.tipodocumento.TipoDocumentoEnum;
 import dom.vademecum.Vademecum;
 
 @DomainService(repositoryFor = AntecedentesPersonales.class)
@@ -40,8 +34,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public AdicionalesPaciente crearAdicionalesPaciente(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Estado Civil") final EstadoCivilEnum estadoCivil,
-			@ParameterLayout(named = "Tabaja ?", cssClass = "trabaja") final Boolean trabajo,
-			@ParameterLayout(named = "Tiene Obra Social", cssClass = "historiaClinica") final Boolean obraSocial,
+			@ParameterLayout(named = "Tabaja ?", cssClass = "trabaja") final boolean trabajo,
+			@ParameterLayout(named = "Tiene Obra Social", cssClass = "historiaClinica") final boolean obraSocial,
 			@ParameterLayout(named = "Educacion") final EducacionEnum educacion) {
 		final AdicionalesPaciente adicionalPaciente = newTransientInstance(AdicionalesPaciente.class);
 
@@ -50,7 +44,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		adicionalPaciente.setTrabajo(trabajo);
 		adicionalPaciente.setObraSocial(obraSocial);
 		adicionalPaciente.setEducacion(educacion);
-		// paciente.getListaAdicionalesPaciente().add(adicionalPaciente);
 		container.persistIfNotAlready(adicionalPaciente);
 		return adicionalPaciente;
 	}
@@ -114,7 +107,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentes.setITS(its);
 		antecedentes.setNeurologicos(neurologicas);
 		antecedentes.setTranfuciones(tranfuciones);
-		// paciente.getListaAntecedentesPersonales().add(antecedentes);
 		container.persistIfNotAlready(antecedentes);
 		return antecedentes;
 	}
@@ -157,7 +149,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentesfamiliares.setConsumoDrogas(consumoDrogas);
 		antecedentesfamiliares.setAbusoAlcohol(abusoAlcohol);
 		antecedentesfamiliares.setDepresion(depresion);
-		// paciente.getListaAntecedentesFamiliares().add(antecedentesfamiliares);
 		container.persistIfNotAlready(antecedentesfamiliares);
 		return antecedentesfamiliares;
 	}
@@ -208,7 +199,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		examen.setFrecuenciaRespiratoria(frecuenciaRespiratoria);
 		examen.setTensionArterial(tensionArterial);
 		examen.setEstadoGeneral(estadoGeneral);
-		// paciente.getListaExmanenFisico().add(examen);
 		container.persistIfNotAlready(examen);
 		return examen;
 

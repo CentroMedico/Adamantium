@@ -27,23 +27,25 @@ import org.apache.isis.applib.annotation.ViewModel;
 @ViewModel
 public class HomePageViewModel {
 
-    //region > title
-    public String title() {
-        return getObjects().size() + " objects";
-    }
-    //endregion
+	// region > title
+	public String title() {
+		return getObjects().size() + " objects";
+	}
 
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
-        return simpleObjects.listAll();
-    }
-    //endregion
+	// endregion
 
-    //region > injected services
+	// region > object (collection)
+	@org.apache.isis.applib.annotation.HomePage
+	public List<SimpleObject> getObjects() {
+		return simpleObjects.listAll();
+	}
 
-    @javax.inject.Inject
-    SimpleObjects simpleObjects;
+	// endregion
 
-    //endregion
+	// region > injected services
+
+	@javax.inject.Inject
+	SimpleObjects simpleObjects;
+
+	// endregion
 }
