@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
@@ -21,12 +22,14 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.Blob;
 
 
 import com.google.common.io.Resources;
 
 import dom.paciente.Paciente;
+import dom.vademecum.Vademecum;
 
 
 @DomainService(repositoryFor = Factura.class)
@@ -60,6 +63,21 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		return factura;
 	}
 
+	
+	
+	@MemberOrder(name = "Factura", sequence = "2.3")
+	public List<Factura> listarFactura() {
+		return container.allInstances(Factura.class);
+	}
+	
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public List<Factura> autocompleteFactura(final String factura) {
+		return allMatches(QueryDefault.create(Factura.class,
+				"traerFacturas", factura.toUpperCase()));
+	}
+	
+	
+	
 	/**
 	 * // * Obtiene una lista de todas las facturas // * // * @return List
 	 * <Factura> lista //
@@ -81,7 +99,7 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 	// @NotInServiceMenu
 	// @ActionSemantics(Of.SAFE)
 //	@ActionLayout(hidden = Where.EVERYWHERE)
-	@MemberOrder(sequence = "10")
+	@MemberOrder(sequence = "3.3")
 	public Blob imprimirFactura(final Factura _factura) throws Exception {
 
 		try (PDDocument pdfDocument = cargarPlantilla(_factura)) {
@@ -130,5 +148,6 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		}
 		return pdfDocument;
 	}
-
+	@javax.inject.Inject
+	DomainObjectContainer container;
 }

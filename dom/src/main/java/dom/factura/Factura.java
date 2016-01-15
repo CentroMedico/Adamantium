@@ -31,7 +31,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 		+ " FROM dom.factura.Factura"), })
 	@Sequence(name = "secuenciaNumeroFactura", strategy = SequenceStrategy.CONTIGUOUS)
 	@PersistenceCapable(identityType = IdentityType.DATASTORE)
-	@DomainObject(autoCompleteRepository =FacturaServicio.class)
+	@DomainObject(autoCompleteRepository =FacturaServicio.class, autoCompleteAction ="autocompleteFactura")
 	public class Factura {
 		/**
 		 * Retorna el nombre del icono de una nueva Factura
