@@ -317,6 +317,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return meses.getDays();
 	}
 
+	@ActionLayout(hidden = Where.EVERYWHERE)
 	@MemberOrder(name = "Paciente", sequence = "5.1.2")
 	public Paciente buscarPaciente(
 			@ParameterLayout(named = "Buscar Paciente") Paciente paciente) {

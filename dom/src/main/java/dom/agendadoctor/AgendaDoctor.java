@@ -13,9 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -25,18 +23,14 @@ import dom.doctor.Doctor;
 @javax.jdo.annotations.Queries({
 
 		@javax.jdo.annotations.Query(name = "traerPorDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE doctor == :doctor ORDER BY dia"),
+				+ "FROM dom.agendadoctor.AgendaDoctor WHERE doctor == :doctor ORDER BY dia"),
 		@javax.jdo.annotations.Query(name = "traerTurnosDisponibles", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' "),
+				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' "),
 		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor"),
+				+ "FROM dom.agendadoctor.AgendaDoctor"),
 		@javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor ==: doctor ORDER BY dia")
-
-// @javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language
-// = "JDOQL", value = "SELECT "
-// +
-// "FROM dom.agendaDoctor.AgendaDoctor WHERE estado == 'Disponible' && WHERE doctor ==: doctor ORDER BY dia")
+				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor== :doctor"
+				+ "")
 
 })
 @PersistenceCapable
@@ -93,8 +87,8 @@ public class AgendaDoctor {
 	private Doctor doctor;
 
 	@MemberOrder(sequence = "2")
-	@Persistent(table = "lista_agenda", mappedBy = "listaAgenda")
-	@Join(column = "agenda_id")
+	// @Persistent(table = "lista_agenda", mappedBy = "listaAgenda")
+	// @Join(column = "agenda_id")
 	@Column(allowsNull = "false")
 	/**
 	 * Pemite obtener un doctor 

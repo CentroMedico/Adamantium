@@ -50,7 +50,7 @@ public class Disponible implements IEstadoTurno {
 
 	@Override
 	public void disponerTurno() {
-		turno.mostarMensajeUsuario("El turno ya se encuentra disponible");
+		turno.mostrarMensajeError("El turno ya se encuentra disponible");
 
 	}
 
@@ -64,19 +64,19 @@ public class Disponible implements IEstadoTurno {
 
 	@Override
 	public void aceptarTurno() {
-		turno.mostarMensajeUsuario("El turno ya se encuentra disponible, se debe solicitar antes de aceptar");
+		turno.mostrarMensajeError("El turno ya se encuentra disponible, se debe solicitar antes de aceptar");
 
 	}
 
 	@Override
 	public void atenderTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra disponible, se debe solicitar antes de atender");
+		turno.mostrarMensajeError("El turno se encuentra disponible, se debe solicitar antes de atender");
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra disponible, no se puede cancelar");
+		turno.mostrarMensajeError("El turno se encuentra disponible, no se puede cancelar");
 
 	}
 }

@@ -40,8 +40,6 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import dom.gruposanguineo.GrupoSanguineoEnum;
-import dom.historiaclinica.IndicacionesMedicas;
-import dom.historiaclinica.Receta;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.graficotorta.MayoriaEdadEnum;
 import dom.paciente.graficotorta.RangoEdadEnum;
@@ -272,200 +270,10 @@ public class Paciente extends Persona {
 
 	// }}
 
-	// LISTAS DE LA HISTORIA CLINICA //
-
-	// // {{ ListaAdicionalesPaciente (property)
-	// private List<AdicionalesPaciente> listaAdicionalesPaciente = new
-	// ArrayList<AdicionalesPaciente>();
-	//
-	// @MemberOrder(sequence = "15")
-	// @Persistent(table = "lista_adicionalesPaciente", mappedBy = "paciente")
-	// @Join(column = "paciente_id")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de adicionales paciente
-	// *
-	// * @return listaAdicionalesPaciente List<AdicionalesPaciente>
-	// */
-	// public List<AdicionalesPaciente> getListaAdicionalesPaciente() {
-	// return listaAdicionalesPaciente;
-	// }
-	//
-	// /**
-	// * Setea la lista de adicionales de paciente.
-	// *
-	// * @param List
-	// * <AdicionalesPaciente> listaAdicionalesPaciente
-	// * listaAdicionalesPaciente
-	// */
-	// public void setListaAdicionalesPaciente(
-	// final List<AdicionalesPaciente> listaAdicionalesPaciente) {
-	// this.listaAdicionalesPaciente = listaAdicionalesPaciente;
-	// }
-	//
-	// // }}
-	//
-	// // {{ ListaAntecedentesFamiliares (property)
-	// private List<AntecedentesFamiliares> listaAntecedentesFamiliares = new
-	// ArrayList<AntecedentesFamiliares>();
-	//
-	// @MemberOrder(sequence = "16")
-	// @Column(allowsNull = "false")
-	// @Persistent(table = "lista_antecedentesFamiliares", mappedBy =
-	// "paciente")
-	// @Join(column = "paciente_id")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de antecedentes familiares
-	// *
-	// * @return listaAntecedentesFamiliares List<AntecedentesFamiliares>
-	// */
-	// public List<AntecedentesFamiliares> getListaAntecedentesFamiliares() {
-	// return listaAntecedentesFamiliares;
-	// }
-	//
-	// /**
-	// * Setea la lista de antecedentes familiares.
-	// *
-	// * @param List
-	// * <AntecedentesFamiliares> listaAntecedentesFamiliares
-	// * listaAntecedentesFamiliares
-	// */
-	// public void setListaAntecedentesFamiliares(
-	// final List<AntecedentesFamiliares> listaAntecedentesFamiliares) {
-	// this.listaAntecedentesFamiliares = listaAntecedentesFamiliares;
-	// }
-	//
-	// // }}
-	//
-	// // {{ ListaAntecedentesPersonales (property)
-	// private List<AntecedentesPersonales> listaAntecedentesPersonales = new
-	// ArrayList<AntecedentesPersonales>();
-	//
-	// @MemberOrder(sequence = "17")
-	// @Column(allowsNull = "false")
-	// @Persistent(table = "lista_antecedentesPersonales", mappedBy =
-	// "paciente")
-	// @Join(column = "paciente_id")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de antecedentes personales
-	// *
-	// * @return listaAntecedentesPersonales List<AntecedentesPersonales>
-	// */
-	// public List<AntecedentesPersonales> getListaAntecedentesPersonales() {
-	// return listaAntecedentesPersonales;
-	// }
-	//
-	// /**
-	// * Setea la lista de antecedentes personales.
-	// *
-	// * @param List
-	// * <AntecedentesPersonales> listaAntecedentesPersonales
-	// * listaAntecedentesPersonales
-	// */
-	// public void setListaAntecedentesPersonales(
-	// final List<AntecedentesPersonales> listaAntecedentesPersonales) {
-	// this.listaAntecedentesPersonales = listaAntecedentesPersonales;
-	// }
-	//
-	// // }}
-	//
-	// // {{ ListaExamesFisico (property)
-	// private List<ExamenFisico> listaExamenFisico = new
-	// ArrayList<ExamenFisico>();
-	//
-	// @MemberOrder(sequence = "18")
-	// @Column(allowsNull = "false")
-	// @Persistent(table = "lista_examenFisico", mappedBy = "paciente")
-	// @Join(column = "paciente_id")
-	// @CollectionLayout(render = RenderType.EAGERLY)
-	// /**
-	// * Pemite obtener una lista de examenes fisicos
-	// *
-	// * @return listaExamenFisico List<ExamenFisico>
-	// */
-	// public List<ExamenFisico> getListaExmanenFisico() {
-	// return listaExamenFisico;
-	// }
-	//
-	// /**
-	// * Setea la lista de exmanes fisicos.
-	// *
-	// * @param List
-	// * <ExmaneFisico> listaExamenFisico listaExamenFisico
-	// */
-	// public void setListaExamenFisico(final List<ExamenFisico>
-	// listaExamenFisico) {
-	// this.listaExamenFisico = listaExamenFisico;
-	// }
-	//
-	// // }}
-
-	// {{ ListaIndicacionesMedicas (property)
-	private List<IndicacionesMedicas> listaIndicacionesMedicas = new ArrayList<IndicacionesMedicas>();
-
-	@MemberOrder(sequence = "19")
-	@Column(allowsNull = "false")
-	@Persistent(table = "lista_indicacionesMedicas", mappedBy = "paciente")
-	@Join(column = "paciente_id")
-	@CollectionLayout(render = RenderType.EAGERLY)
-	/**
-	 * Pemite obtener una lista de indiciaciones medicas
-	 *
-	 * @return listaIndicacionesMedicas List<IndicacionesMedicas>
-	 */
-	public List<IndicacionesMedicas> getListaIndicacionesMedicas() {
-		return listaIndicacionesMedicas;
-	}
-
-	/**
-	 * Setea la lista de indiciaciones medicas.
-	 *
-	 * @param List
-	 *            <IndicacionesMedicas> listaIndicacionesMedicas
-	 *            listaIndicacionesMedicas
-	 */
-	public void setListaIndicacionesMedicas(
-			final List<IndicacionesMedicas> listaIndicacionesMedicas) {
-		this.listaIndicacionesMedicas = listaIndicacionesMedicas;
-	}
-
-	// }}
-
-	// {{ ListaReceta (property)
-	private List<Receta> listaReceta = new ArrayList<Receta>();
-
-	@MemberOrder(sequence = "20")
-	@Column(allowsNull = "false")
-	@Persistent(table = "lista_receta", mappedBy = "paciente")
-	@Join(column = "paciente_id")
-	@CollectionLayout(render = RenderType.EAGERLY)
-	/**
-	 * Pemite obtener una lista de receta
-	 *
-	 * @return listaReceta List<Receta>
-	 */
-	public List<Receta> getListaReceta() {
-		return listaReceta;
-	}
-
-	/**
-	 * Setea la lista de receta.
-	 *
-	 * @param List
-	 *            <Receta> listaReceta listaReceta
-	 */
-	public void setListaReceta(final List<Receta> listaReceta) {
-		this.listaReceta = listaReceta;
-	}
-
-	// }}
-
 	// {{ MayoriaEdad (property)
 	private MayoriaEdadEnum mayoriaEdad;
 
-	@MemberOrder(sequence = "21")
+	@MemberOrder(sequence = "16")
 	@Column(allowsNull = "false")
 	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
 	public MayoriaEdadEnum getMayoriaEdad() {
@@ -481,7 +289,7 @@ public class Paciente extends Persona {
 	// {{ RangoEdad (property)
 	private RangoEdadEnum rangoEdad;
 
-	@MemberOrder(sequence = "22")
+	@MemberOrder(sequence = "17")
 	@Column(allowsNull = "false")
 	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
 	public RangoEdadEnum getRangoEdad() {

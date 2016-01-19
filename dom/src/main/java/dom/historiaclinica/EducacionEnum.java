@@ -12,28 +12,31 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package dom.historiaclinica;
+
 /**
-* Clase enumerada, de la cual se agrega estudios al Paciente.
-* 
-* @author Adamantium
-* @since 16/10/2015
-* @version 1.0.0
-*/
+ * Clase enumerada, de la cual se agrega estudios al Paciente.
+ * 
+ * @author Adamantium
+ * @since 16/10/2015
+ * @version 1.0.0
+ */
 
 public enum EducacionEnum {
 
-	Analfabeto("Analfabeto"),PrimariaIncompleto("Primaria Incompleto"),PrimariaCompleto("Primaria Completo"),
-	SecundarioIncompleto("Secundario Incompleto"),SecundarioCompleto("Secundaario Completo"),
-	TerciarioUniversitario("Terciario-Universitario");
-	
+	Analfabeto("Analfabeto"), PrimariaIncompleta("Primaria Incompleta"), PrimariaCompleta(
+			"Primaria Completa"), SecundarioIncompleto("Secundario Incompleto"), SecundarioCompleto(
+			"Secundario Completo"), TerciarioUniversitario(
+			"Terciario-Universitario");
+
 	private final String nombre;
 
 	public String getNombre() {
 		return nombre;
 	}
+
 	private EducacionEnum(String nom) {
 		nombre = nom;
 	}
@@ -41,5 +44,5 @@ public enum EducacionEnum {
 	@Override
 	public String toString() {
 		return this.nombre;
-}
+	}
 }

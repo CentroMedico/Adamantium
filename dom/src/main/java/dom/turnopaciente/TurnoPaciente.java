@@ -273,7 +273,7 @@ public class TurnoPaciente {
 
 	// MENSAJE DE ERROR EN CAMBIO DE ESTADOS
 
-	void mostarMensajeUsuario(final String msg) {
+	void mostrarMensajeError(final String msg) {
 		container.informUser(msg);
 	}
 

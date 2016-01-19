@@ -223,7 +223,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		receta.setMedicamento(medicamento);
 		receta.setMedicamento2(medicamento2);
 		receta.setDoctor(doctor);
-		paciente.getListaReceta().add(receta);
 		container.persistIfNotAlready(receta);
 		return receta;
 
@@ -247,7 +246,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		indicaciones.setMedicamento(medicamento);
 		indicaciones.setComotomarlo(comoTomarlo);
 		indicaciones.setDoctor(doctor);
-		paciente.getListaIndicacionesMedicas().add(indicaciones);
 		container.persistIfNotAlready(indicaciones);
 		return indicaciones;
 

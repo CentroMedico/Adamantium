@@ -50,13 +50,13 @@ public class Solicitado implements IEstadoTurno {
 
 	@Override
 	public void disponerTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra solicitado, se debe cancelar para poder disponer");
+		turno.mostrarMensajeError("El turno se encuentra solicitado, se debe cancelar para poder disponer");
 
 	}
 
 	@Override
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
-		turno.mostarMensajeUsuario("El turno ya se encuentra solicitado");
+		turno.mostrarMensajeError("El turno ya se encuentra solicitado");
 
 	}
 
@@ -67,7 +67,7 @@ public class Solicitado implements IEstadoTurno {
 
 	@Override
 	public void atenderTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra solicitado, se debe aceptar antes de atender");
+		turno.mostrarMensajeError("El turno se encuentra solicitado, se debe aceptar antes de atender");
 
 	}
 

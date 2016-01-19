@@ -25,12 +25,10 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.Blob;
 
-
 import com.google.common.io.Resources;
 
 import dom.paciente.Paciente;
 import dom.vademecum.Vademecum;
-
 
 @DomainService(repositoryFor = Factura.class)
 @DomainServiceLayout(named = "Factura", menuBar = DomainServiceLayout.MenuBar.SECONDARY, menuOrder = "10")
@@ -42,7 +40,9 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Factura crearFactura(@ParameterLayout(named = "Paciente") final Paciente paciente,
+	@ActionLayout(cssClass = "boton")
+	public Factura crearFactura(
+			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Cantidad") final int cant,
 			@ParameterLayout(named = "Precio") final Double precio) {
 		double precioTotal = 0;
@@ -63,27 +63,23 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		return factura;
 	}
 
-	
-	
-	@MemberOrder(name = "Factura", sequence = "2.3")
-	public List<Factura> listarFactura() {
-		return container.allInstances(Factura.class);
-	}
-	
+	// @MemberOrder(name = "Factura", sequence = "2.3")
+	// public List<Factura> listarFactura() {
+	// return container.allInstances(Factura.class);
+	// }
+
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Factura> autocompleteFactura(final String factura) {
-		return allMatches(QueryDefault.create(Factura.class,
-				"traerFacturas", factura.toUpperCase()));
+		return allMatches(QueryDefault.create(Factura.class, "traerFacturas",
+				factura.toUpperCase()));
 	}
-	
-	
-	
+
 	/**
 	 * // * Obtiene una lista de todas las facturas // * // * @return List
 	 * <Factura> lista //
 	 */
 	@MemberOrder(name = "Factura", sequence = "3.2")
-	public List<Factura> listar() {
+	public List<Factura> listarFactura() {
 		final List<Factura> lista = allInstances(Factura.class);
 		return lista;
 	}
@@ -92,13 +88,14 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	@PostConstruct
 	public void init() throws IOException {
-		pdfAsBytes = Resources.toByteArray(Resources.getResource(this.getClass(), "plantilla.pdf"));
+		pdfAsBytes = Resources.toByteArray(Resources.getResource(
+				this.getClass(), "plantilla.pdf"));
 	}
 
 	// @NotContributed(NotContributed.As.ASSOCIATION)
 	// @NotInServiceMenu
 	// @ActionSemantics(Of.SAFE)
-//	@ActionLayout(hidden = Where.EVERYWHERE)
+	// @ActionLayout(hidden = Where.EVERYWHERE)
 	@MemberOrder(sequence = "3.3")
 	public Blob imprimirFactura(final Factura _factura) throws Exception {
 
@@ -138,9 +135,9 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 			String txtDescripcion = "desc" + i;
 			String txtPrecio = "precio" + i;
 
-			pdfForm.getField(txtDescripcion).setValue(item.getCantidad() +" "+
-					item.getNombre() + " ");
-			
+			pdfForm.getField(txtDescripcion).setValue(
+					item.getCantidad() + " " + item.getNombre() + " ");
+
 			pdfForm.getField(txtPrecio).setValue(
 					new DecimalFormat("#.00").format(item.getPrecio()));
 
@@ -148,6 +145,7 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		}
 		return pdfDocument;
 	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

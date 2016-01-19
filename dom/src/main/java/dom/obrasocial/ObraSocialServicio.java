@@ -56,7 +56,7 @@ public class ObraSocialServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public ObraSocial crearObraSocial(
 			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
-			@ParameterLayout(named = "Nombr Abreviado") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaCobertura.COBERTURA) final String cobertura) {
+			@ParameterLayout(named = "Nombre Abreviado") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaCobertura.COBERTURA) final String cobertura) {
 		final ObraSocial obraSocial = newTransientInstance(ObraSocial.class);
 		obraSocial.setNombre(nombre.substring(0, 1).toUpperCase()
 				+ nombre.substring(1));

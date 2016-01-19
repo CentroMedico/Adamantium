@@ -66,7 +66,7 @@ public class ItemFactura {
 	 * 
 	 * @return precio double
 	 */
-//	@Named("Precio ($)")
+	// @Named("Precio ($)")
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "false")
 	public Double getPrecio() {

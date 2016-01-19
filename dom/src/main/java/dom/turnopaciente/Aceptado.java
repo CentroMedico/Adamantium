@@ -49,19 +49,19 @@ public class Aceptado implements IEstadoTurno {
 
 	@Override
 	public void disponerTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra aceptado, no se puede volver a disponer");
+		turno.mostrarMensajeError("El turno se encuentra aceptado, no se puede volver a disponer");
 
 	}
 
 	@Override
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
-		turno.mostarMensajeUsuario("El turno se encuentra aceptado, no se puede volver a solicitar");
+		turno.mostrarMensajeError("El turno se encuentra aceptado, no se puede volver a solicitar");
 
 	}
 
 	@Override
 	public void aceptarTurno() {
-		turno.mostarMensajeUsuario("El turno ya se encuentra aceptado");
+		turno.mostrarMensajeError("El turno ya se encuentra aceptado");
 	}
 
 	@Override

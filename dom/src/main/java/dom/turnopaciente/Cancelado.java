@@ -55,25 +55,25 @@ public class Cancelado implements IEstadoTurno {
 
 	@Override
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
-		turno.mostarMensajeUsuario("El turno se encuentra cancelado, se debe disponer antes de solicitar");
+		turno.mostrarMensajeError("El turno se encuentra cancelado, se debe disponer antes de solicitar");
 
 	}
 
 	@Override
 	public void aceptarTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra cancelado, no se puede aceptar");
+		turno.mostrarMensajeError("El turno se encuentra cancelado, no se puede aceptar");
 
 	}
 
 	@Override
 	public void atenderTurno() {
-		turno.mostarMensajeUsuario("El turno se encuentra cancelado, no se puede atender");
+		turno.mostrarMensajeError("El turno se encuentra cancelado, no se puede atender");
 
 	}
 
 	@Override
 	public void cancelarTurno() {
-		turno.mostarMensajeUsuario("El turno ya se encuentra cancelado");
+		turno.mostrarMensajeError("El turno ya se encuentra cancelado");
 
 	}
 

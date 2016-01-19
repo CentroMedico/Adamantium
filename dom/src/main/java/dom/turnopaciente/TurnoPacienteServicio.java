@@ -68,11 +68,11 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
-	public List<AgendaDoctor> choices2AsignarTurno(
-			final EspecialidadEnum especialidad, Doctor doctor) {
-		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-				"traerTurnosDisponibles"));
-	}
+	// public List<AgendaDoctor> choices2AsignarTurno(
+	// final EspecialidadEnum especialidad, Doctor doctor) {
+	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+	// "traerTurnosDisponibles"));
+	// }
 
 	// public List<AgendaDoctor> choices2AsignarTurno(
 	// final EspecialidadEnum especialidad, Doctor doctor) {
@@ -80,11 +80,11 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	// "traerPorDoctor", "doctor", doctor));
 	// }
 
-	// public List<AgendaDoctor> choices2AsignarTurno(
-	// final EspecialidadEnum especialidad, Doctor doctor) {
-	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-	// "traerTurnosDisponiblesDoctor", "doctor", doctor));
-	// }
+	public List<AgendaDoctor> choices2AsignarTurno(
+			final EspecialidadEnum especialidad, Doctor doctor) {
+		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerTurnosDisponiblesDoctor", "doctor", doctor));
+	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
 	public List<Paciente> buscarPaciente(String paciente) {

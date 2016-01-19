@@ -25,8 +25,11 @@ import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.agendadoctor.AgendaDoctor;
@@ -94,6 +97,7 @@ public class Doctor extends Persona {
 	 * @return matricula String
 	 */
 	@MemberOrder(sequence = "0")
+	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
 	public String getMatricula() {
 		return matricula;
@@ -153,8 +157,8 @@ public class Doctor extends Persona {
 
 	@MemberOrder(sequence = "15")
 	@Column(allowsNull = "false")
-	@Persistent(table = "lista_agenda", mappedBy = "doctor")
-	@Join(column = "doctor_id")
+	// @Persistent(table = "lista_agenda", mappedBy = "doctor")
+	// @Join(column = "doctor_id")
 	@CollectionLayout(render = RenderType.EAGERLY)
 	/**
 	 * Pemite obtener una lista de agenda

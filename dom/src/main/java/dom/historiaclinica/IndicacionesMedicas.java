@@ -19,13 +19,9 @@ package dom.historiaclinica;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.MultiLine;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -59,7 +55,6 @@ public class IndicacionesMedicas {
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	@Persistent(table = "lista_indicacionesMedicas", mappedBy = "listaIndicacionesMedicas")
 	@Join(column = "indicacionesMedicas_id")
 	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
