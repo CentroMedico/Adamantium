@@ -16,9 +16,7 @@ limitations under the License.
 package dom.historiaclinica;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -53,9 +51,6 @@ public class AdicionalesPaciente {
 
 	@MemberOrder(sequence = "0")
 	@Column(allowsNull = "true")
-	// @Persistent(table = "lista_adicionalesPaciente", mappedBy =
-	// "listaAdicionalesPaciente")
-	// @Join(column = "adicionalesPaciente_id")
 	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;

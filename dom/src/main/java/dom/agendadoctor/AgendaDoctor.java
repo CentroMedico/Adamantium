@@ -29,10 +29,7 @@ import dom.doctor.Doctor;
 		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.agendadoctor.AgendaDoctor"),
 		@javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor== :doctor"
-				+ "")
-
-})
+				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor== :doctor ORDER BY dia") })
 @PersistenceCapable
 public class AgendaDoctor {
 
@@ -49,8 +46,9 @@ public class AgendaDoctor {
 	/**
 	 * Obtiene el nombre del icono.
 	 */
+
 	public String iconName() {
-		return "turnos";
+		return "calendario";
 	}
 
 	/**

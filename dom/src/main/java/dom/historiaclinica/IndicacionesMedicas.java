@@ -17,7 +17,6 @@ limitations under the License.
 package dom.historiaclinica;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.Editing;
@@ -55,7 +54,6 @@ public class IndicacionesMedicas {
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	@Join(column = "indicacionesMedicas_id")
 	@Property(editing = Editing.DISABLED)
 	public Paciente getPaciente() {
 		return paciente;

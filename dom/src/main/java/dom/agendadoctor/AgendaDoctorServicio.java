@@ -47,7 +47,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 	}
 
 	public String iconName() {
-		return "turnos";
+		return "calendario";
 	}
 
 	TurnoPaciente turno = new TurnoPaciente();

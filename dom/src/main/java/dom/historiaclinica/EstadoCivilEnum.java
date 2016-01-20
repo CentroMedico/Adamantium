@@ -2,7 +2,8 @@ package dom.historiaclinica;
 
 public enum EstadoCivilEnum {
 
-	Soltero("Soltero"),Casado("Casado"),UnionEstable("Union Estable"),Separado("Separado"),Divorsiado("Divorsiado") ;
+	Soltero("Soltero"), Casado("Casado"), UnionEstable("Union Estable"), Separado(
+			"Separado"), Divorciado("Divorciado");
 
 	private final String nombre;
 

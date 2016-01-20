@@ -30,6 +30,10 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	String mensajeDia = "Su turno es el: ";
 	String mensajeDoctor = ", con el doctor: ";
 	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
+	
+	public String iconName() {
+		return "calendario";
+	}
 
 	@ActionLayout(cssClass = "boton")
 	public TurnoPaciente asignarTurno(
@@ -47,6 +51,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		turno.setMensajeAPaciente(mensajeDia
 				+ fecha.format(agendaDoctor.getDia()) + mensajeDoctor
 				+ doctor.getApellido() + " " + doctor.getNombre());
+		turno.setEstado2(turno.getEstadoTurno());
 		EnviarEmail(paciente, turno);
 		turno.setMotivoConsulta(motivoConsulta);
 		paciente.getListaTurnos().add(turno);

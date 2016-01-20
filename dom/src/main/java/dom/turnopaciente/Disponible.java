@@ -60,6 +60,8 @@ public class Disponible implements IEstadoTurno {
 		this.getTurno().setPaciente(paciente);
 		// paciente.addListaTurnos(turno);
 		this.getTurno().setEstado(this.getTurno().getSolicitado());
+		turno.setEstado2((this.getTurno().getSolicitado().getClass()
+				.getSimpleName()));
 	}
 
 	@Override

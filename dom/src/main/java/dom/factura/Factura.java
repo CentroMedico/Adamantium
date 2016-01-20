@@ -16,18 +16,13 @@ import javax.jdo.annotations.SequenceStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Title;
-import org.apache.isis.applib.annotation.TypicalLength;
 
 import dom.paciente.Paciente;
-
-import org.apache.isis.applib.annotation.Render.Type;
+import dom.turnopaciente.TurnoPaciente;
 
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerFacturas", language = "JDOQL", value = "SELECT "
 		+ " FROM dom.factura.Factura"), })
@@ -179,6 +174,21 @@ public class Factura {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
+
+	// {{ Turno (property)
+	private TurnoPaciente turno;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "false")
+	public TurnoPaciente getTurno() {
+		return turno;
+	}
+
+	public void setTurno(final TurnoPaciente turno) {
+		this.turno = turno;
+	}
+
+	// }}
 
 	@SuppressWarnings("unused")
 	@Inject

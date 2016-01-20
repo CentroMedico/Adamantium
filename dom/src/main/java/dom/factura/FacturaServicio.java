@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -19,7 +20,6 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
@@ -27,8 +27,10 @@ import org.apache.isis.applib.value.Blob;
 
 import com.google.common.io.Resources;
 
+import dom.agendadoctor.AgendaDoctor;
+import dom.especialidad.EspecialidadEnum;
 import dom.paciente.Paciente;
-import dom.vademecum.Vademecum;
+import dom.turnopaciente.TurnoPaciente;
 
 @DomainService(repositoryFor = Factura.class)
 @DomainServiceLayout(named = "Factura", menuBar = DomainServiceLayout.MenuBar.SECONDARY, menuOrder = "10")
@@ -44,7 +46,8 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 	public Factura crearFactura(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Cantidad") final int cant,
-			@ParameterLayout(named = "Precio") final Double precio) {
+			@ParameterLayout(named = "Precio") final Double precio,
+			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		double precioTotal = 0;
 		String nomb = "Coseguro-Atencion";
 		final Factura factura = newTransientInstance(Factura.class);
@@ -59,8 +62,15 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		factura.addToItems(item);
 		factura.setTotal(precioTotal);
 		factura.setFechaHora(new Date());
+		factura.setTurno(turno);
 		persist(factura);
 		return factura;
+	}
+
+	public List<TurnoPaciente> choices3CrearFactura(final Paciente paciente,
+			final int cant, final Double precio) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
 	// @MemberOrder(name = "Factura", sequence = "2.3")

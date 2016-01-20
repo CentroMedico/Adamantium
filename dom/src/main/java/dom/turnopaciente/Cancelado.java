@@ -51,6 +51,8 @@ public class Cancelado implements IEstadoTurno {
 	@Override
 	public void disponerTurno() {
 		this.getTurno().setEstado(this.getTurno().getDisponible());
+		turno.setEstado2((this.getTurno().getDisponible().getClass()
+				.getSimpleName()));
 	}
 
 	@Override

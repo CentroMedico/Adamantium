@@ -67,11 +67,15 @@ public class Aceptado implements IEstadoTurno {
 	@Override
 	public void atenderTurno() {
 		this.getTurno().setEstado(this.getTurno().getAtendido());
+		turno.setEstado2((this.getTurno().getAtendido().getClass()
+				.getSimpleName()));
 	}
 
 	@Override
 	public void cancelarTurno() {
 		this.getTurno().setEstado(this.getTurno().getCancelado());
+		turno.setEstado2((this.getTurno().getCancelado().getClass()
+				.getSimpleName()));
 	}
 
 }

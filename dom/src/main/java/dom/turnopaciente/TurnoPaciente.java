@@ -6,8 +6,6 @@ import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import java.util.Date;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -20,8 +18,14 @@ import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
 
-@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
-		+ "FROM dom.turnopaciente.TurnoPaciente "), })
+@javax.jdo.annotations.Queries({
+
+		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente "),
+		@javax.jdo.annotations.Query(name = "traerAtendidosPorPaciente", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido' && paciente== :paciente"),
+		@javax.jdo.annotations.Query(name = "traerAtendidos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido'") })
 @PersistenceCapable
 public class TurnoPaciente {
 
@@ -39,6 +43,10 @@ public class TurnoPaciente {
 		this.cancelado = new Cancelado(this);
 
 		this.setEstado(this.getDisponible());
+	}
+
+	public String iconName() {
+		return "calendario";
 	}
 
 	// {{ Paciente (property)
@@ -276,6 +284,22 @@ public class TurnoPaciente {
 	void mostrarMensajeError(final String msg) {
 		container.informUser(msg);
 	}
+
+	// {{ Estado2 (property)
+	private String estado2;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "false")
+	@Property(hidden = Where.EVERYWHERE)
+	public String getEstado2() {
+		return estado2;
+	}
+
+	public void setEstado2(final String estado2) {
+		this.estado2 = estado2;
+	}
+
+	// }}
 
 	@javax.inject.Inject
 	private DomainObjectContainer container;

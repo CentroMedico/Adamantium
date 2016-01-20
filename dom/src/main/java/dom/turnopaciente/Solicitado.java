@@ -63,6 +63,8 @@ public class Solicitado implements IEstadoTurno {
 	@Override
 	public void aceptarTurno() {
 		this.getTurno().setEstado(this.getTurno().getAceptado());
+		turno.setEstado2((this.getTurno().getAceptado().getClass()
+				.getSimpleName()));
 	}
 
 	@Override
@@ -74,6 +76,8 @@ public class Solicitado implements IEstadoTurno {
 	@Override
 	public void cancelarTurno() {
 		this.getTurno().setEstado(this.getTurno().getCancelado());
+		turno.setEstado2((this.getTurno().getCancelado().getClass()
+				.getSimpleName()));
 
 	}
 
