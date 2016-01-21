@@ -16,12 +16,25 @@
 
 package dom.agendadoctor;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.inject.Named;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -33,8 +46,11 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.value.Blob;
 
 import dom.doctor.Doctor;
+import dom.reportes.AgendaDataSource;
+import dom.reportes.ReporteAgenda;
 import dom.turnopaciente.TurnoPaciente;
 
 @DomainService(repositoryFor = AgendaDoctor.class)
@@ -157,6 +173,75 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Doctor", sequence = "105")
 	public List<AgendaDoctor> listarAgenda() {
 		return container.allInstances(AgendaDoctor.class);
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "106")
+	@ActionLayout(named = "Listar Agenda por Doctor")
+	public List<AgendaDoctor> listaDoctor(final Doctor doc) {
+		return allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerPorDoctor", "doctor", doc));
+
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "107")
+	@ActionLayout(named = "Exportar Agenda")
+	public Blob downloadAll(final Doctor doc) throws JRException, IOException {
+		AgendaDataSource datasource = new AgendaDataSource();
+		// DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
+		for (AgendaDoctor a : listaDoctor(doc)) {
+
+			ReporteAgenda agenda = new ReporteAgenda();
+			agenda.setDia(df.format(a.getDia()));
+			agenda.setDoctor(a.getDoctor().getApellido() + "-"
+					+ a.getDoctor().getNombre());
+			agenda.setEstado(a.getEstado());
+
+			datasource.addParticipante(agenda);
+		}
+		File file = new File("Agenda.jrxml");
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		JasperDesign jd = JRXmlLoader.load(input);
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,"/tmp/salida.pdf");
+		File archivo = new File("/tmp/salida.pdf");
+		
+		
+		byte[] fileContent = new byte[(int) archivo.length()];
+		
+		if (!(archivo.exists()))
+		{
+		try {
+			archivo.createNewFile();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			return new Blob(doc.getApellido()+" - "+doc.getNombre()+".pdf", "application/pdf", fileContent);
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+
 	}
 
 	@javax.inject.Inject

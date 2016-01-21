@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-01-21T00:18:29 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Agenda" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9ea9f2e-89cb-4043-9cbb-945dcad1dadc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="dia" class="java.lang.String"/>
+	<field name="Doctor" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="210" y="10" width="612" height="110" forecolor="#182AED" uuid="21859873-0d82-4c7a-b512-3d4ea17ed7e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Serif" size="35" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ADAMANTIUM 
+Centro Medico Especializado]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="200" height="150" forecolor="#FFFFFF" backcolor="#DEDEDE" uuid="90f15953-82fb-4b2b-9b06-5a985deaecd4"/>
+				<imageExpression><![CDATA["/home/ebrunetta/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement x="680" y="10" width="100" height="30" uuid="f28efb43-9aba-4ce6-98c9-da83e3629082"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="0" width="670" height="52" forecolor="#213ECF" uuid="fc123f9d-3130-42c1-874c-34bb2a63c334"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="30"/>
+				</textElement>
+				<text><![CDATA[Reporte de Agenda Medica]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="52" splitType="Stretch">
+			<rectangle radius="3">
+				<reportElement x="-20" y="2" width="842" height="42" backcolor="#CFCFCF" uuid="baa9f1fd-0e35-4bad-8935-29a17280bd09"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="210" y="1" width="100" height="43" forecolor="#000000" uuid="e7a5c899-f653-46c2-a5e6-b957512b8347"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Doctor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="1" width="100" height="43" forecolor="#000000" uuid="1d349205-d597-4f0f-ac27-66d5e55a64df"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Estado del
+Turno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="1" width="100" height="43" forecolor="#000000" uuid="54a66b14-f7b3-459f-965e-7927464dd4ac"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Dia]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="100" height="17" uuid="3df67a51-2cbd-406a-bee2-d73aec18b3cf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="17" uuid="4d10a6ca-b326-431b-bb35-2960a9640572"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Doctor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="650" y="0" width="100" height="17" uuid="353c74c8-18ea-485d-85f2-8fccc316c050"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="49" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="1" y="0" width="800" height="15" forecolor="#808080" backcolor="#FFFFFF" uuid="2ad34a7c-43a2-4c6b-be4b-bb769174779b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Serif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
