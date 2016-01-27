@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-01-26T20:28:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indicaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="addba0ec-f27c-4279-b7b8-4a092d263e21">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="doctor" class="java.lang.String">
+		<fieldDescription><![CDATA[doctor]]></fieldDescription>
+	</field>
+	<field name="comotomarlo" class="java.lang.String">
+		<fieldDescription><![CDATA[comotomarlo]]></fieldDescription>
+	</field>
+	<field name="paciente" class="java.lang.String">
+		<fieldDescription><![CDATA[paciente]]></fieldDescription>
+	</field>
+	<field name="medicamento" class="java.lang.String">
+		<fieldDescription><![CDATA[medicamento]]></fieldDescription>
+	</field>
+	<field name="matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[doctor.getMatricula()]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="110" y="0" width="450" height="80" forecolor="#182AED" uuid="20573d27-4eea-4be7-9e77-f8c7fafe8e9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Serif" size="22" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ADAMANTIUM 
+Centro Medico Especializado]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="110" height="80" forecolor="#FFFFFF" backcolor="#DEDEDE" uuid="4dd8b47f-6939-4b10-80be-6836afd4dd10"/>
+				<imageExpression><![CDATA["/home/ebrunetta/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="560" height="29" uuid="25e8af72-2417-485b-bea2-0205513a5c13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Indicaciones Medicas]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="10" width="170" height="20" uuid="60bd74ea-761c-4657-88cd-11bb2d23638b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{paciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="80" height="20" uuid="d5e8766f-6d2d-414c-8cd0-bca6bcce1da6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="13" width="150" height="15" uuid="dd7a5fd0-d7ed-45c5-9cf0-f790ae3fee37"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="120" height="30" uuid="2d8bd718-fe9e-4bfc-8461-d6dd11714e4b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Medicamento: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="0" width="440" height="30" uuid="3e00d9c0-01e6-48c0-abfe-46b16cc0633d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="47" width="103" height="30" uuid="bb7e5cda-cbf7-46a0-a3f7-5a154d744734"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Indicaciones: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="50" width="450" height="78" uuid="059eda35-046f-4690-bf54-90ba15c8e5ea"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comotomarlo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="310" y="0" width="80" height="30" uuid="53cb56c5-6673-4d3c-b28e-65c9e33c3bde"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Doctor: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="0" width="170" height="30" uuid="f5d47e99-3756-4804-ab2a-f029425d97e2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doctor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="54" width="170" height="30" uuid="5fe669a6-8a7d-4a62-9692-135fefe603dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[.............................................
+            Firma]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="-20" y="0" width="595" height="15" forecolor="#808080" backcolor="#FFFFFF" uuid="5ad5f011-56e7-4d0b-882b-126110571c15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Serif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

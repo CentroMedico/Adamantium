@@ -28,7 +28,10 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
 import dom.vademecum.Vademecum;
+@javax.jdo.annotations.Queries({
 
+	@javax.jdo.annotations.Query(name = "traerPorPaciente", language = "JDOQL", value = "SELECT "
+			+ "FROM dom.historiaclinica.IndicacionesMedicas WHERE paciente == :paciente ")})
 @PersistenceCapable
 public class IndicacionesMedicas {
 	/**

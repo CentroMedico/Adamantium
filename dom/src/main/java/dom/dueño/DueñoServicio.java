@@ -15,6 +15,11 @@
  */
 package dom.dueño;
 
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -29,11 +34,15 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
 import com.google.common.base.Predicate;
 
 import dom.ciudadprovincia.Ciudad;
 import dom.ciudadprovincia.Provincia;
+import dom.doctor.Doctor;
 import dom.estado.EstadoEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
@@ -277,6 +286,45 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
+	// Generar Tarjeta de ingreso
+		@MemberOrder(name = "Dueño", sequence = "5.1")
+		@ActionLayout(cssClass = "boton")
+		public String crearTarjetaDeIngreso(@ParameterLayout(named = "Doctor: ") final Doctor doc)
+		{
+			String doctor=doc.getApellido()+" "+doc.getNombre()+" "+doc.getMatricula();
+			try {
+				// Create the barcode bean
+				Code39Bean bean = new Code39Bean();
+				final int dpi = 150;
+				// Configure the barcode generator
+				bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); // makes the narrow
+				// bar
+				// width exactly
+				// one pixel
+				bean.setWideFactor(3);
+				bean.doQuietZone(false);
+				// Open output file
+				File outputFile = new File(doc.getApellido()+".jpg");
+				OutputStream out = new FileOutputStream(outputFile);
+				try {
+					// Set up the canvas provider for monochrome JPEG output
+					BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi,
+							BufferedImage.TYPE_BYTE_BINARY, false, 0);
+					// Generate the barcode
+					bean.generateBarcode(canvas, doctor);
+					// Signal end of generation
+					canvas.finish();
+				} finally {
+					out.close();
+				}
+				container.informUser("Tarjeta Creada Correctamente!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return  ("Tarjeta Creada Correctamente para el Doctor: "+doc.getApellido()+" "+doc.getNombre());
+				
+		}
+
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

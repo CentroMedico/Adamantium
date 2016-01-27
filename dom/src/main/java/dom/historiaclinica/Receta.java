@@ -28,7 +28,10 @@ import dom.doctor.Doctor;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
 import dom.vademecum.Vademecum;
+@javax.jdo.annotations.Queries({
 
+	@javax.jdo.annotations.Query(name = "traerRecetaPorPaciente", language = "JDOQL", value = "SELECT "
+			+ "FROM dom.historiaclinica.Receta WHERE paciente == :paciente ")})
 @PersistenceCapable
 public class Receta {
 	/**

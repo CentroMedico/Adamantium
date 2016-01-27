@@ -1,11 +1,23 @@
 package dom.turnopaciente;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -72,19 +84,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 				"traerPorEspecialidad", "especialidad", especialidad));
 
 	}
-
-	// public List<AgendaDoctor> choices2AsignarTurno(
-	// final EspecialidadEnum especialidad, Doctor doctor) {
-	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-	// "traerTurnosDisponibles"));
-	// }
-
-	// public List<AgendaDoctor> choices2AsignarTurno(
-	// final EspecialidadEnum especialidad, Doctor doctor) {
-	// return container.allMatches(QueryDefault.create(AgendaDoctor.class,
-	// "traerPorDoctor", "doctor", doctor));
-	// }
-
 	public List<AgendaDoctor> choices2AsignarTurno(
 			final EspecialidadEnum especialidad, Doctor doctor) {
 		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
@@ -120,6 +119,35 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 			container.informUser("se ha enviado un correo");
 		}
 	}
+
+//	@ActionLayout(hidden = Where.EVERYWHERE)
+//	public TurnoPacienteServicio EnviarSMS(Paciente paciente, TurnoPaciente turno)
+//	{
+//			
+//	String url = "http://servicio.smsmasivos.com.ar/enviar_sms.asp?api=1&relogin=1&usuario=SMSDEMO77832&clave=SMSDEMO77832666&tos=" 
+//+ paciente.getTelefono() + "" + turno.getMensajeAPaciente();
+//
+//	HttpClient client = HttpClientBuilder.create().build();
+//	HttpPost post = new HttpPost(url);
+//	
+//	container.informUser("El SMS a sido enviado correctamente al cliente");
+//	try {
+//		HttpResponse response = client.execute(post);
+//	} catch (ClientProtocolException e) {
+//		e.printStackTrace();
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	}
+//	
+//				
+//return this;
+//}	
+	
+	/*
+	 * EnviarMensajes
+	 * Enviamos un solo mensaje
+	 */   
+	
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

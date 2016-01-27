@@ -102,9 +102,9 @@
 			<version>1.8.7</version>
 		</dependency>
 		<dependency>
-			<groupId>org.isisaddons.wicket.wickedcharts</groupId>
-			<artifactId>isis-wicket-wickedcharts-cpt</artifactId>
-			<version>1.9.0</version>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.3m</version>
 		</dependency>
 
 		<dependency>
@@ -147,10 +147,19 @@
 			<version>3.13</version>
 		</dependency>
 		<dependency>
+			<groupId>net.sf.barcode4j</groupId>
+			<artifactId>barcode4j</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
 			<version>0.3m</version>
 		</dependency>
+		<dependency>
+        	<groupId>org.apache.httpcomponents</groupId>
+        	<artifactId>httpclient</artifactId>
+        </dependency>
 	</dependencies>
 
 	<profiles>

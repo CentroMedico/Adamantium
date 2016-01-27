@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-01-25T20:52:04 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistoriaClinica" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fe43e6a-45d3-4802-8e6e-cbed987c6793">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="antecedentes" class="java.lang.String">
+		<fieldDescription><![CDATA[antecedentes]]></fieldDescription>
+	</field>
+	<field name="consumodeDrogas" class="java.lang.String">
+		<fieldDescription><![CDATA[consumodeDrogas]]></fieldDescription>
+	</field>
+	<field name="oncologicas" class="java.lang.String">
+		<fieldDescription><![CDATA[oncologicas]]></fieldDescription>
+	</field>
+	<field name="genitales" class="java.lang.String">
+		<fieldDescription><![CDATA[genitales]]></fieldDescription>
+	</field>
+	<field name="transfuciones" class="java.lang.String">
+		<fieldDescription><![CDATA[transfuciones]]></fieldDescription>
+	</field>
+	<field name="peso" class="java.lang.String">
+		<fieldDescription><![CDATA[peso]]></fieldDescription>
+	</field>
+	<field name="tomaporlaMañana" class="java.lang.String">
+		<fieldDescription><![CDATA[tomaporlaMañana]]></fieldDescription>
+	</field>
+	<field name="its" class="java.lang.String">
+		<fieldDescription><![CDATA[its]]></fieldDescription>
+	</field>
+	<field name="cardiopatias" class="java.lang.String">
+		<fieldDescription><![CDATA[cardiopatias]]></fieldDescription>
+	</field>
+	<field name="coronaria" class="java.lang.String">
+		<fieldDescription><![CDATA[coronaria]]></fieldDescription>
+	</field>
+	<field name="depresion" class="java.lang.String">
+		<fieldDescription><![CDATA[depresion]]></fieldDescription>
+	</field>
+	<field name="utilizalentes" class="java.lang.String">
+		<fieldDescription><![CDATA[utilizalentes]]></fieldDescription>
+	</field>
+	<field name="pulmones" class="java.lang.String">
+		<fieldDescription><![CDATA[pulmones]]></fieldDescription>
+	</field>
+	<field name="tipoActividad" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoActividad]]></fieldDescription>
+	</field>
+	<field name="acv1" class="java.lang.String">
+		<fieldDescription><![CDATA[acv1]]></fieldDescription>
+	</field>
+	<field name="tbc" class="java.lang.String">
+		<fieldDescription><![CDATA[tbc]]></fieldDescription>
+	</field>
+	<field name="altura" class="java.lang.String">
+		<fieldDescription><![CDATA[altura]]></fieldDescription>
+	</field>
+	<field name="obraSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[obraSocial]]></fieldDescription>
+	</field>
+	<field name="corazon" class="java.lang.String">
+		<fieldDescription><![CDATA[corazon]]></fieldDescription>
+	</field>
+	<field name="temperaturaCorporal" class="java.lang.String">
+		<fieldDescription><![CDATA[temperaturaCorporal]]></fieldDescription>
+	</field>
+	<field name="edadqueempezo" class="java.lang.String">
+		<fieldDescription><![CDATA[edadqueempezo]]></fieldDescription>
+	</field>
+	<field name="abdomen" class="java.lang.String">
+		<fieldDescription><![CDATA[abdomen]]></fieldDescription>
+	</field>
+	<field name="abusodeAlchool" class="java.lang.String">
+		<fieldDescription><![CDATA[abusodeAlchool]]></fieldDescription>
+	</field>
+	<field name="tabaquismo" class="java.lang.String">
+		<fieldDescription><![CDATA[tabaquismo]]></fieldDescription>
+	</field>
+	<field name="cancerdeColon" class="java.lang.String">
+		<fieldDescription><![CDATA[cancerdeColon]]></fieldDescription>
+	</field>
+	<field name="frecuenciaRespiratoria" class="java.lang.String">
+		<fieldDescription><![CDATA[frecuenciaRespiratoria]]></fieldDescription>
+	</field>
+	<field name="dentadura" class="java.lang.String">
+		<fieldDescription><![CDATA[dentadura]]></fieldDescription>
+	</field>
+	<field name="hta1" class="java.lang.String">
+		<fieldDescription><![CDATA[hta1]]></fieldDescription>
+	</field>
+	<field name="hta" class="java.lang.String">
+		<fieldDescription><![CDATA[hta]]></fieldDescription>
+	</field>
+	<field name="piel" class="java.lang.String">
+		<fieldDescription><![CDATA[piel]]></fieldDescription>
+	</field>
+	<field name="paciente" class="java.lang.String">
+		<fieldDescription><![CDATA[paciente]]></fieldDescription>
+	</field>
+	<field name="tipoDrogas" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoDrogas]]></fieldDescription>
+	</field>
+	<field name="cancerdeMama" class="java.lang.String">
+		<fieldDescription><![CDATA[cancerdeMama]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="diabetes1" class="java.lang.String">
+		<fieldDescription><![CDATA[diabetes1]]></fieldDescription>
+	</field>
+	<field name="frecuenciaCardiaca" class="java.lang.String">
+		<fieldDescription><![CDATA[frecuenciaCardiaca]]></fieldDescription>
+	</field>
+	<field name="reumatica" class="java.lang.String">
+		<fieldDescription><![CDATA[reumatica]]></fieldDescription>
+	</field>
+	<field name="estadoGeneral" class="java.lang.String">
+		<fieldDescription><![CDATA[estadoGeneral]]></fieldDescription>
+	</field>
+	<field name="oidos" class="java.lang.String">
+		<fieldDescription><![CDATA[oidos]]></fieldDescription>
+	</field>
+	<field name="mamas" class="java.lang.String">
+		<fieldDescription><![CDATA[mamas]]></fieldDescription>
+	</field>
+	<field name="estadoCivil" class="java.lang.String">
+		<fieldDescription><![CDATA[estadoCivil]]></fieldDescription>
+	</field>
+	<field name="chagas" class="java.lang.String">
+		<fieldDescription><![CDATA[chagas]]></fieldDescription>
+	</field>
+	<field name="alergias" class="java.lang.String">
+		<fieldDescription><![CDATA[alergias]]></fieldDescription>
+	</field>
+	<field name="cantidaddeCigarrillos" class="java.lang.String">
+		<fieldDescription><![CDATA[cantidaddeCigarrillos]]></fieldDescription>
+	</field>
+	<field name="neurologicas" class="java.lang.String">
+		<fieldDescription><![CDATA[neurologicas]]></fieldDescription>
+	</field>
+	<field name="educacion" class="java.lang.String">
+		<fieldDescription><![CDATA[educacion]]></fieldDescription>
+	</field>
+	<field name="criticas" class="java.lang.String">
+		<fieldDescription><![CDATA[criticas]]></fieldDescription>
+	</field>
+	<field name="diabetes" class="java.lang.String">
+		<fieldDescription><![CDATA[diabetes]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

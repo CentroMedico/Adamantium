@@ -8,10 +8,10 @@ import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFix
 
 public class InitialRole extends AbstractRoleAndPermissionsFixtureScript {
 
-	public static final String ROLE_NAME = "Rol-Inicial";
+	public static final String ROLE_NAME = "isis-module-security-regular-user";
 
 	public InitialRole() {
-		super(ROLE_NAME, "Solo Acceso a la Aplicación");
+		super(ROLE_NAME, "Pacientes");
 	}
 
 	@Override

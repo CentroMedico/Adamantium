@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-01-21T00:18:29 -->
+<!-- 2016-01-25T20:48:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Agenda" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9ea9f2e-89cb-4043-9cbb-945dcad1dadc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
@@ -55,7 +55,7 @@ Centro Medico Especializado]]></text>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="210" y="1" width="100" height="43" forecolor="#000000" uuid="e7a5c899-f653-46c2-a5e6-b957512b8347"/>
+				<reportElement x="210" y="1" width="270" height="43" forecolor="#000000" uuid="e7a5c899-f653-46c2-a5e6-b957512b8347"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -82,7 +82,7 @@ Centro Medico Especializado]]></text>
 Turno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-1" y="1" width="100" height="43" forecolor="#000000" uuid="54a66b14-f7b3-459f-965e-7927464dd4ac"/>
+				<reportElement x="-1" y="1" width="181" height="43" forecolor="#000000" uuid="54a66b14-f7b3-459f-965e-7927464dd4ac"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -99,14 +99,14 @@ Turno]]></text>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="20" y="0" width="100" height="17" uuid="3df67a51-2cbd-406a-bee2-d73aec18b3cf"/>
+				<reportElement x="20" y="0" width="160" height="17" uuid="3df67a51-2cbd-406a-bee2-d73aec18b3cf"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="240" y="0" width="100" height="17" uuid="4d10a6ca-b326-431b-bb35-2960a9640572"/>
+				<reportElement x="240" y="0" width="240" height="17" uuid="4d10a6ca-b326-431b-bb35-2960a9640572"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>

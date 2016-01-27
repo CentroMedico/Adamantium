@@ -328,7 +328,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
+		
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5.1</version>
+			</dependency>
 
 			<!-- this project's own modules -->
 			<dependency>
