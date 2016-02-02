@@ -105,6 +105,12 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		return "Agenda de doctor creada correctamente";
 	}
 
+	public List<Doctor> choices0CrearAgendaQuincenal() {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
+	}
+
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "51")
 	@ActionLayout(cssClass = "boton")
@@ -140,6 +146,12 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		}
 
 		return "Agenda de doctor creada correctamente";
+	}
+
+	public List<Doctor> choices0CrearAgendaMensual() {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
@@ -211,21 +223,20 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		JasperReport reporte = JasperCompileManager.compileReport(jd);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
 				datasource);
-		JasperExportManager.exportReportToPdfFile(jasperPrint,"/tmp/salida.pdf");
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
 		File archivo = new File("/tmp/salida.pdf");
-		
-		
+
 		byte[] fileContent = new byte[(int) archivo.length()];
-		
-		if (!(archivo.exists()))
-		{
-		try {
-			archivo.createNewFile();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
+
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+
 		}
 		try {
 			FileInputStream fileInputStream = new FileInputStream(archivo);
@@ -236,7 +247,8 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 			e.printStackTrace();
 		}
 		try {
-			return new Blob(doc.getApellido()+" - "+doc.getNombre()+".pdf", "application/pdf", fileContent);
+			return new Blob(doc.getApellido() + " - " + doc.getNombre()
+					+ ".pdf", "application/pdf", fileContent);
 		} catch (Exception e) {
 			byte[] result = new String("error en crear archivo").getBytes();
 			return new Blob("error.txt", "text/plain", result);

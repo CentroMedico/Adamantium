@@ -55,7 +55,8 @@ import dom.persona.Persona;
 
 		@javax.jdo.annotations.Query(name = "traerPorEspecialidad", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor where especialidad == :especialidad"),
-
+		@javax.jdo.annotations.Query(name = "traerActivosPorEspecialidad", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor where especialidad == :especialidad && estado== 'Activo'"),
 		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
@@ -64,7 +65,9 @@ import dom.persona.Persona;
 		@javax.jdo.annotations.Query(name = "traerPorProvincia", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor where provincia == :provincia"),
 		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.doctor.Doctor " + " WHERE documento ==:documento")
+				+ "FROM dom.doctor.Doctor " + " WHERE documento ==:documento"),
+		@javax.jdo.annotations.Query(name = "traerActivos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor where estado== 'Activo'")
 
 })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")

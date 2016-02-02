@@ -24,7 +24,7 @@ Centro Medico Especializado]]></text>
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="200" height="150" forecolor="#FFFFFF" backcolor="#DEDEDE" uuid="90f15953-82fb-4b2b-9b06-5a985deaecd4"/>
-				<imageExpression><![CDATA["/home/ebrunetta/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
+				<imageExpression><![CDATA["/home/luciano/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

@@ -42,7 +42,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	String mensajeDia = "Su turno es el: ";
 	String mensajeDoctor = ", con el doctor: ";
 	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
-	
+
 	public String iconName() {
 		return "calendario";
 	}
@@ -78,12 +78,21 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	// public List<Doctor> choices1AsignarTurno(final EspecialidadEnum
+	// especialidad) {
+	//
+	// return container.allMatches(QueryDefault.create(Doctor.class,
+	// "traerPorEspecialidad", "especialidad", especialidad));
+	//
+	// }
+
 	public List<Doctor> choices1AsignarTurno(final EspecialidadEnum especialidad) {
 
 		return container.allMatches(QueryDefault.create(Doctor.class,
-				"traerPorEspecialidad", "especialidad", especialidad));
+				"traerActivosPorEspecialidad", "especialidad", especialidad));
 
 	}
+
 	public List<AgendaDoctor> choices2AsignarTurno(
 			final EspecialidadEnum especialidad, Doctor doctor) {
 		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
@@ -120,34 +129,34 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		}
 	}
 
-//	@ActionLayout(hidden = Where.EVERYWHERE)
-//	public TurnoPacienteServicio EnviarSMS(Paciente paciente, TurnoPaciente turno)
-//	{
-//			
-//	String url = "http://servicio.smsmasivos.com.ar/enviar_sms.asp?api=1&relogin=1&usuario=SMSDEMO77832&clave=SMSDEMO77832666&tos=" 
-//+ paciente.getTelefono() + "" + turno.getMensajeAPaciente();
-//
-//	HttpClient client = HttpClientBuilder.create().build();
-//	HttpPost post = new HttpPost(url);
-//	
-//	container.informUser("El SMS a sido enviado correctamente al cliente");
-//	try {
-//		HttpResponse response = client.execute(post);
-//	} catch (ClientProtocolException e) {
-//		e.printStackTrace();
-//	} catch (IOException e) {
-//		e.printStackTrace();
-//	}
-//	
-//				
-//return this;
-//}	
-	
+	// @ActionLayout(hidden = Where.EVERYWHERE)
+	// public TurnoPacienteServicio EnviarSMS(Paciente paciente, TurnoPaciente
+	// turno)
+	// {
+	//
+	// String url =
+	// "http://servicio.smsmasivos.com.ar/enviar_sms.asp?api=1&relogin=1&usuario=SMSDEMO77832&clave=SMSDEMO77832666&tos="
+	// + paciente.getTelefono() + "" + turno.getMensajeAPaciente();
+	//
+	// HttpClient client = HttpClientBuilder.create().build();
+	// HttpPost post = new HttpPost(url);
+	//
+	// container.informUser("El SMS a sido enviado correctamente al cliente");
+	// try {
+	// HttpResponse response = client.execute(post);
+	// } catch (ClientProtocolException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	//
+	// return this;
+	// }
+
 	/*
-	 * EnviarMensajes
-	 * Enviamos un solo mensaje
-	 */   
-	
+	 * EnviarMensajes Enviamos un solo mensaje
+	 */
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

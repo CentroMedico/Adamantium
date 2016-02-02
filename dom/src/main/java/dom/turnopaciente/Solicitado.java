@@ -51,7 +51,6 @@ public class Solicitado implements IEstadoTurno {
 	@Override
 	public void disponerTurno() {
 		turno.mostrarMensajeError("El turno se encuentra solicitado, se debe cancelar para poder disponer");
-
 	}
 
 	@Override

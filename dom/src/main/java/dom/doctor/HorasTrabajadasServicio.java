@@ -12,6 +12,11 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.query.QueryDefault;
+
+import dom.obrasocial.ObraSocial;
+import dom.paciente.Paciente;
+import dom.vademecum.Vademecum;
 
 @DomainService(repositoryFor = Doctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "7")
@@ -33,6 +38,13 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Doctor> choices0RegistrarIngreso() {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
+
+	}
+
 	@MemberOrder(name = "Doctor", sequence = "4.2")
 	@ActionLayout(cssClass = "boton")
 	public String registrarEgreso(
@@ -45,6 +57,13 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 		horas.setIngreso("Egreso: " + egreso);
 		persist(horas);
 		return formatoFecha.format(egreso);
+
+	}
+
+	public List<Doctor> choices0RegistrarEgreso() {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
 
 	}
 

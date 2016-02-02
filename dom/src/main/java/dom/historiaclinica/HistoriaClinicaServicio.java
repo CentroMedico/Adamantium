@@ -27,6 +27,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.Blob;
 
 import dom.doctor.Doctor;
+import dom.especialidad.EspecialidadEnum;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
 import dom.reportes.IndicacionesDataSource;
@@ -251,6 +252,15 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		return container.allInstances(Receta.class);
 	}
 
+	public List<Doctor> choices4CrearReceta(final Paciente paciente,
+			final ObraSocial obraSocial, final Vademecum medicamento,
+			final Vademecum medicamento2) {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
+
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "6")
 	@ActionLayout(cssClass = "boton")
 	public IndicacionesMedicas crearIndicacionesMedicas(
@@ -273,11 +283,21 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public List<IndicacionesMedicas> listarIndicacionesMedicas() {
 		return container.allInstances(IndicacionesMedicas.class);
 	}
-	
+
+	public List<Doctor> choices3CrearIndicacionesMedicas(
+			final Paciente paciente, final Vademecum medicamento,
+			final String comoTomarlo) {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
+
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "6.2")
 	@ActionLayout(named = "Listar Indicaciones por Paciente")
 	public List<IndicacionesMedicas> listaindicaciones(final Paciente paciente) {
-		return allMatches(QueryDefault.create(IndicacionesMedicas.class, "traerPorPaciente", "paciente", paciente));
+		return allMatches(QueryDefault.create(IndicacionesMedicas.class,
+				"traerPorPaciente", "paciente", paciente));
 
 	}
 
@@ -285,15 +305,18 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Historia Clinica", sequence = "10.1")
 	@ActionLayout(named = "Exportar Indicaciones Medicas")
-	public Blob downloadAll(final Paciente paciente) throws JRException, IOException {
+	public Blob downloadAll(final Paciente paciente) throws JRException,
+			IOException {
 		IndicacionesDataSource datasource = new IndicacionesDataSource();
 		for (IndicacionesMedicas a : listaindicaciones(paciente)) {
 			ReporteIndicaciones indicaciones = new ReporteIndicaciones();
-			indicaciones.setPaciente(a.getPaciente().getApellido() + " " + a.getPaciente().getNombre());
+			indicaciones.setPaciente(a.getPaciente().getApellido() + " "
+					+ a.getPaciente().getNombre());
 			indicaciones.setMedicamento(a.getMedicamento().getProducto());
 			indicaciones.setComotomarlo(a.getComotomarlo());
-			indicaciones.setDoctor(a.getDoctor().getApellido() + " " + a.getDoctor().getNombre());
-			//indicaciones.setMatricula(a.getDoctor().getMatricula().toString());
+			indicaciones.setDoctor(a.getDoctor().getApellido() + " "
+					+ a.getDoctor().getNombre());
+			// indicaciones.setMatricula(a.getDoctor().getMatricula().toString());
 			datasource.addParticipante(indicaciones);
 		}
 		File file = new File("Indicaciones.jrxml");
@@ -306,8 +329,10 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		}
 		JasperDesign jd = JRXmlLoader.load(input);
 		JasperReport reporte = JasperCompileManager.compileReport(jd);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, datasource);
-		JasperExportManager.exportReportToPdfFile(jasperPrint, "/tmp/salida.pdf");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
 		File archivo = new File("/tmp/salida.pdf");
 		byte[] fileContent = new byte[(int) archivo.length()];
 		if (!(archivo.exists())) {
@@ -327,7 +352,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			e.printStackTrace();
 		}
 		try {
-			return new Blob(paciente.getApellido() + " - " + paciente.getNombre() + ".pdf", "application/pdf",
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + ".pdf", "application/pdf",
 					fileContent);
 		} catch (Exception e) {
 			byte[] result = new String("error en crear archivo").getBytes();
@@ -335,28 +361,36 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		}
 
 	}
-	
+
 	@MemberOrder(name = "Historia Clinica", sequence = "5.3")
 	@ActionLayout(named = "Listar Receta por Paciente")
 	public List<Receta> listareceta(final Paciente paciente) {
-		return allMatches(QueryDefault.create(Receta.class, "traerRecetaPorPaciente", "paciente", paciente));
+		return allMatches(QueryDefault.create(Receta.class,
+				"traerRecetaPorPaciente", "paciente", paciente));
 
 	}
-	
-	
+
 	@MemberOrder(name = "Historia Clinica", sequence = "10.2")
 	@ActionLayout(named = "Exportar Receta")
-	public Blob downloadAll1(final Paciente paciente) throws JRException,IOException 
-	{
+	public Blob downloadAll1(final Paciente paciente) throws JRException,
+			IOException {
 		RecetaDataSource datasource = new RecetaDataSource();
 
 		for (Receta a : listareceta(paciente)) {
 			ReporteReceta receta = new ReporteReceta();
-			receta.setPaciente(a.getPaciente().getApellido()+" "+a.getPaciente().getNombre());
+			receta.setPaciente(a.getPaciente().getApellido() + " "
+					+ a.getPaciente().getNombre());
 			receta.setObraSocial(a.getObraSocial().getNombre());
-			receta.setMedicamento(a.getMedicamento().getProducto()+" "+a.getMedicamento().getPresentacion()+" "+a.getMedicamento().getTamaño()+" "+a.getMedicamento().getLaboratorio());
-			receta.setMedicamento1(a.getMedicamento2().getProducto()+" "+a.getMedicamento2().getPresentacion()+" "+a.getMedicamento2().getTamaño()+" "+a.getMedicamento2().getLaboratorio());
-			receta.setDoctor(a.getDoctor().getApellido() + " " + a.getDoctor().getNombre());
+			receta.setMedicamento(a.getMedicamento().getProducto() + " "
+					+ a.getMedicamento().getPresentacion() + " "
+					+ a.getMedicamento().getTamaño() + " "
+					+ a.getMedicamento().getLaboratorio());
+			receta.setMedicamento1(a.getMedicamento2().getProducto() + " "
+					+ a.getMedicamento2().getPresentacion() + " "
+					+ a.getMedicamento2().getTamaño() + " "
+					+ a.getMedicamento2().getLaboratorio());
+			receta.setDoctor(a.getDoctor().getApellido() + " "
+					+ a.getDoctor().getNombre());
 			datasource.addParticipante(receta);
 		}
 		File file = new File("Receta.jrxml");
@@ -394,15 +428,15 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			e.printStackTrace();
 		}
 		try {
-			return new Blob(paciente.getApellido() + " - " + paciente.getNombre()+" Receta"
-					+ ".pdf", "application/pdf", fileContent);
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + " Receta" + ".pdf",
+					"application/pdf", fileContent);
 		} catch (Exception e) {
 			byte[] result = new String("error en crear archivo").getBytes();
 			return new Blob("error.txt", "text/plain", result);
 		}
 	}
-	
-	
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }
