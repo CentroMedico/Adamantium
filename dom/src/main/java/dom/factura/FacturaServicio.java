@@ -67,6 +67,12 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 		return factura;
 	}
 
+	public List<Paciente> choices0CrearFactura(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	public List<TurnoPaciente> choices3CrearFactura(final Paciente paciente,
 			final int cant, final Double precio) {
 		return container.allMatches(QueryDefault.create(TurnoPaciente.class,

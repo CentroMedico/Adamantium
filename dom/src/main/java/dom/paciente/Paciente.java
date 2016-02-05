@@ -76,7 +76,9 @@ import dom.turnopaciente.TurnoPacienteServicio;
 				+ "FROM dom.paciente.Paciente "
 				+ " WHERE documento ==:documento"),
 		@javax.jdo.annotations.Query(name = "traerPaciente", language = "JDOQL", value = "SELECT "
-				+ " FROMdom.paciente.Paciente "),
+				+ " FROM dom.paciente.Paciente "),
+		@javax.jdo.annotations.Query(name = "traerPacientesActivos", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.paciente.Paciente WHERE estado == 'Activo'"),
 
 })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")

@@ -78,6 +78,14 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Paciente> choices3AsignarTurno(
+			final EspecialidadEnum especialidad, final Doctor doctor,
+			final AgendaDoctor agendaDoctor, final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	// public List<Doctor> choices1AsignarTurno(final EspecialidadEnum
 	// especialidad) {
 	//

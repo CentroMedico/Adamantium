@@ -28,8 +28,7 @@
 		<band height="105" splitType="Stretch">
 			<image>
 				<reportElement x="-10" y="0" width="130" height="100" uuid="4f4954f3-a45c-4dff-85a9-99c9fd29878f"/>
-				<imageExpression><![http://s2.postimg.org/pm4nw6b61/Adamantium.png]></imageExpression>
-				http://s2.postimg.org/pm4nw6b61/Adamantium.png
+				<imageExpression><![CDATA["/home/luciano/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
 				
 			</image>
 			<staticText>

@@ -67,6 +67,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		return adicionalPaciente;
 	}
 
+	public List<Paciente> choices0CrearAdicionalesPaciente(
+			final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "1.2")
 	public List<AdicionalesPaciente> listarAdicionalesPaciente() {
 		return container.allInstances(AdicionalesPaciente.class);
@@ -130,6 +137,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		return antecedentes;
 	}
 
+	public List<Paciente> choices0CrearAntecedentesPersonales(
+			final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "2.1")
 	public List<AntecedentesPersonales> listarAntecedentesPersonales() {
 		return container.allInstances(AntecedentesPersonales.class);
@@ -170,6 +184,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentesfamiliares.setDepresion(depresion);
 		container.persistIfNotAlready(antecedentesfamiliares);
 		return antecedentesfamiliares;
+	}
+
+	public List<Paciente> choices0CrearAntecedentesFamiliares(
+			final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "3.1")
@@ -223,6 +244,12 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Paciente> choices0CrearExamenFisico(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "4.1")
 	public List<ExamenFisico> listarExamenFisico() {
 		return container.allInstances(ExamenFisico.class);
@@ -245,6 +272,12 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		container.persistIfNotAlready(receta);
 		return receta;
 
+	}
+
+	public List<Paciente> choices0CrearReceta(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "5.1")
@@ -279,6 +312,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Paciente> choices0CrearIndicacionesMedicas(
+			final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "6.1")
 	public List<IndicacionesMedicas> listarIndicacionesMedicas() {
 		return container.allInstances(IndicacionesMedicas.class);
@@ -305,8 +345,10 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Historia Clinica", sequence = "10.1")
 	@ActionLayout(named = "Exportar Indicaciones Medicas")
-	public Blob downloadAll(final Paciente paciente) throws JRException,
-			IOException {
+	// public Blob downloadAll(final Paciente paciente) throws JRException,
+	// IOException {
+	public Blob downloadAll(final Paciente paciente,
+			IndicacionesMedicas indicacion) throws JRException, IOException {
 		IndicacionesDataSource datasource = new IndicacionesDataSource();
 		for (IndicacionesMedicas a : listaindicaciones(paciente)) {
 			ReporteIndicaciones indicaciones = new ReporteIndicaciones();
@@ -362,6 +404,18 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Paciente> choices0DownloadAll(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
+	public List<IndicacionesMedicas> choices1DownloadAll(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(IndicacionesMedicas.class,
+				"traerPorPaciente", "paciente", paciente));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "5.3")
 	@ActionLayout(named = "Listar Receta por Paciente")
 	public List<Receta> listareceta(final Paciente paciente) {
@@ -372,8 +426,10 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Historia Clinica", sequence = "10.2")
 	@ActionLayout(named = "Exportar Receta")
-	public Blob downloadAll1(final Paciente paciente) throws JRException,
-			IOException {
+	// public Blob downloadAll1(final Paciente paciente) throws JRException,
+	// IOException {
+	public Blob downloadAll1(final Paciente paciente, final Receta rec)
+			throws JRException, IOException {
 		RecetaDataSource datasource = new RecetaDataSource();
 
 		for (Receta a : listareceta(paciente)) {
@@ -435,6 +491,18 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			byte[] result = new String("error en crear archivo").getBytes();
 			return new Blob("error.txt", "text/plain", result);
 		}
+	}
+
+	public List<Paciente> choices0DownloadAll1(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
+	public List<Receta> choices1DownloadAll1(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Receta.class,
+				"traerRecetaPorPaciente", "paciente", paciente));
 	}
 
 	@javax.inject.Inject
