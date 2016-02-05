@@ -256,6 +256,12 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<Doctor> choices0DownloadAll() {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivos"));
+	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 
