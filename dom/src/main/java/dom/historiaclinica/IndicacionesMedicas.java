@@ -16,6 +16,8 @@ limitations under the License.
 
 package dom.historiaclinica;
 
+import java.text.SimpleDateFormat;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
@@ -39,18 +41,14 @@ public class IndicacionesMedicas {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
-	/*----------------------------------------------------*/
-	// public TranslatableString title() {
-	// return TranslatableString.tr("{nombre}", "nombre",
-	// "Indicaciones Medicas de: " + this.paciente.getApellido()
-	// + ", " + this.paciente.getNombre());
-	// }
+
+	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
 
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
 				"Indicaciones Medicas de: " + getPaciente().getApellido()
 						+ ", " + getPaciente().getNombre() + ". Del día "
-						+ getTurno().getHorarioTurno().getDia());
+						+ fecha.format(getTurno().getHorarioTurno().getDia()));
 	}
 
 	/**

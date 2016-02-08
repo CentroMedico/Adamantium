@@ -365,8 +365,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Historia Clinica", sequence = "10.1")
 	@ActionLayout(named = "Exportar Indicaciones Medicas")
-	// public Blob downloadAll(final Paciente paciente) throws JRException,
-	// IOException {
 	public Blob downloadAll(final Paciente paciente,
 			IndicacionesMedicas indicacion) throws JRException, IOException {
 		IndicacionesDataSource datasource = new IndicacionesDataSource();
@@ -378,7 +376,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			indicaciones.setComotomarlo(a.getComotomarlo());
 			indicaciones.setDoctor(a.getDoctor().getApellido() + " "
 					+ a.getDoctor().getNombre());
-			// indicaciones.setMatricula(a.getDoctor().getMatricula().toString());
 			datasource.addParticipante(indicaciones);
 		}
 		File file = new File("Indicaciones.jrxml");
@@ -446,8 +443,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Historia Clinica", sequence = "10.2")
 	@ActionLayout(named = "Exportar Receta")
-	// public Blob downloadAll1(final Paciente paciente) throws JRException,
-	// IOException {
 	public Blob downloadAll1(final Paciente paciente, final Receta rec)
 			throws JRException, IOException {
 		RecetaDataSource datasource = new RecetaDataSource();

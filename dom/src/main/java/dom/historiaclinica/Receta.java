@@ -16,6 +16,8 @@ limitations under the License.
 
 package dom.historiaclinica;
 
+import java.text.SimpleDateFormat;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
@@ -39,18 +41,16 @@ public class Receta {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
-	/*----------------------------------------------------*/
-	// public TranslatableString title() {
-	// return TranslatableString.tr("{nombre}", "nombre",
-	// "Receta de: " + this.paciente.getApellido() + ", "
-	// + this.paciente.getNombre());
-	// }
+
+	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Receta de: "
-				+ getPaciente().getApellido() + ", "
-				+ getPaciente().getNombre() + ". Del día "
-				+ getTurno().getHorarioTurno().getDia());
+		return TranslatableString.tr(
+				"{nombre}",
+				"nombre",
+				"Receta de: " + getPaciente().getApellido() + ", "
+						+ getPaciente().getNombre() + ". Del día "
+						+ fecha.format(getTurno().getHorarioTurno().getDia()));
 	}
 
 	/**

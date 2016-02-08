@@ -192,7 +192,6 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 	public List<AgendaDoctor> listaDoctor(final Doctor doc) {
 		return allMatches(QueryDefault.create(AgendaDoctor.class,
 				"traerPorDoctor", "doctor", doc));
-
 	}
 
 	@MemberOrder(name = "Doctor", sequence = "107")

@@ -33,23 +33,15 @@ import dom.paciente.Paciente;
 @PersistenceCapable
 public class TurnoPaciente {
 
-	// public TranslatableString title() {
-	// return TranslatableString.tr("{nombre}", "nombre",
-	// "Turno de: " + this.paciente.getApellido() + ", "
-	// + this.paciente.getNombre());
-	// }
-
 	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
 
-	// fecha.format(agendaDoctor.getDia()
-
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno de: "
-				+ getPaciente().getApellido() + ", "
-				+ getPaciente().getNombre() + ". Horario: "
-				// + getHorarioTurno().toString());
-				// + getHorarioTurno().getDia());
-				+ fecha.format(getHorarioTurno().getDia()));
+		return TranslatableString.tr(
+				"{nombre}",
+				"nombre",
+				"Turno de: " + getPaciente().getApellido() + ", "
+						+ getPaciente().getNombre() + ". Horario: "
+						+ fecha.format(getHorarioTurno().getDia()));
 	}
 
 	public TurnoPaciente() {
@@ -166,35 +158,35 @@ public class TurnoPaciente {
 
 	public TurnoPaciente disponerTurno() {
 		getEstado().disponerTurno();
-		horarioTurno.setEstado(getEstadoTurno());
+		getHorarioTurno().setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente solicitarTurno(Doctor doctor, Paciente paciente) {
 		getEstado().solicitarTurno(doctor, paciente);
-		horarioTurno.setEstado(getEstadoTurno());
+		getHorarioTurno().setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente aceptarTurno() {
 		getEstado().aceptarTurno();
-		horarioTurno.setEstado(getEstadoTurno());
+		getHorarioTurno().setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente atenderTurno() {
 		getEstado().atenderTurno();
-		horarioTurno.setEstado(getEstadoTurno());
+		getHorarioTurno().setEstado(getEstadoTurno());
 		return this;
 
 	}
 
 	public TurnoPaciente cancelarTurno() {
 		getEstado().cancelarTurno();
-		horarioTurno.setEstado(getEstadoTurno());
+		getHorarioTurno().setEstado(getEstadoTurno());
 		return this;
 
 	}
