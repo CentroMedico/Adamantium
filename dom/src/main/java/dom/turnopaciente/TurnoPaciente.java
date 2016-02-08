@@ -1,5 +1,7 @@
 package dom.turnopaciente;
 
+import java.text.SimpleDateFormat;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.Join;
@@ -37,12 +39,17 @@ public class TurnoPaciente {
 	// + this.paciente.getNombre());
 	// }
 
+	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
+
+	// fecha.format(agendaDoctor.getDia()
+
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre", "Turno de: "
 				+ getPaciente().getApellido() + ", "
 				+ getPaciente().getNombre() + ". Horario: "
 				// + getHorarioTurno().toString());
-				+ getHorarioTurno().getDia());
+				// + getHorarioTurno().getDia());
+				+ fecha.format(getHorarioTurno().getDia()));
 	}
 
 	public TurnoPaciente() {
