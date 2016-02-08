@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-01-26T21:20:46 -->
+<!-- 2016-02-08T18:21:36 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Receta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25f8363f-7b9f-426f-a7c6-8e5607bcc0d7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
@@ -26,11 +26,6 @@
 	</background>
 	<title>
 		<band height="105" splitType="Stretch">
-			<image>
-				<reportElement x="-10" y="0" width="130" height="100" uuid="4f4954f3-a45c-4dff-85a9-99c9fd29878f"/>
-				<imageExpression><![CDATA["/home/luciano/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
-				
-			</image>
 			<staticText>
 				<reportElement x="130" y="0" width="60" height="30" uuid="23f9d302-980c-45b8-af74-875159a800ba"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -68,6 +63,10 @@ TEL: 299-4786349.]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="-15" y="0" width="145" height="100" uuid="16540593-cdbb-4c3c-9cfd-5608af96bf3d"/>
+				<imageExpression><![CDATA["http://imageshack.com/a/img921/8333/MSyHyF.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -104,7 +103,7 @@ TEL: 299-4786349.]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{medicamento}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="50" y="85" width="500" height="38" uuid="278ab6c9-6387-4330-a9e6-41a521b8189d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
@@ -112,12 +111,26 @@ TEL: 299-4786349.]]></text>
 				<textFieldExpression><![CDATA[$F{medicamento1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="8" width="121" height="22" uuid="f9c908ce-9c6d-4eed-ad18-744be8708158"/>
+				<reportElement x="0" y="16" width="121" height="22" uuid="f9c908ce-9c6d-4eed-ad18-744be8708158"/>
 				<textElement>
 					<font size="14" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Rp./]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="-8" width="121" height="30" uuid="ae1f05ca-8362-45bc-8ed9-c86e645efc93"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Obra Social:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="-7" width="280" height="30" uuid="ca448c93-77da-4817-b923-3e61ee9db6d0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obraSocial}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

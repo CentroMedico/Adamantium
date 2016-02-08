@@ -25,7 +25,10 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+@javax.jdo.annotations.Queries({
 
+	@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
+			+ " FROM dom.historiaclinica.AntecedentesPersonales WHERE paciente == :paciente ")})
 @PersistenceCapable
 public class AntecedentesPersonales {
 
@@ -64,15 +67,15 @@ public class AntecedentesPersonales {
 	// }}
 
 	// {{ Tabaquismo (property)
-	private boolean tabaquismo;
+	private Boolean tabaquismo;
 
 	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "true")
-	public boolean getTabaquismo() {
+	@Column(allowsNull = "false")
+	public Boolean getTabaquismo() {
 		return tabaquismo;
 	}
 
-	public void setTabaquismo(final boolean tabaquismo) {
+	public void setTabaquismo(final Boolean tabaquismo) {
 		this.tabaquismo = tabaquismo;
 	}
 
@@ -108,60 +111,60 @@ public class AntecedentesPersonales {
 	// }}
 
 	// {{ Alcohol (property)
-	private boolean alcohol;
+	private Boolean alcohol;
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "true")
-	public boolean getAlcohol() {
+	public Boolean getAlcohol() {
 		return alcohol;
 	}
 
-	public void setAlcohol(final boolean alcohol) {
+	public void setAlcohol(final Boolean alcohol) {
 		this.alcohol = alcohol;
 	}
 
 	// }}
 
 	// {{ CriticasporTomar (property)
-	private boolean criticasporTomar;
+	private Boolean criticasporTomar;
 
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
-	public boolean getCriticasporTomar() {
+	public Boolean getCriticasporTomar() {
 		return criticasporTomar;
 	}
 
-	public void setCriticasporTomar(final boolean criticasporTomar) {
+	public void setCriticasporTomar(final Boolean criticasporTomar) {
 		this.criticasporTomar = criticasporTomar;
 	}
 
 	// }}
 
 	// {{ TomaporlaMañana (property)
-	private boolean tomaporlaMañana;
+	private Boolean tomaporlaMañana;
 
 	@MemberOrder(sequence = "6")
 	@Column(allowsNull = "true")
-	public boolean getTomaporlaMañana() {
+	public Boolean getTomaporlaMañana() {
 		return tomaporlaMañana;
 	}
 
-	public void setTomaporlaMañana(final boolean tomaporlaMañana) {
+	public void setTomaporlaMañana(final Boolean tomaporlaMañana) {
 		this.tomaporlaMañana = tomaporlaMañana;
 	}
 
 	// }}
 
 	// {{ Drogas (property)
-	private boolean drogas;
+	private Boolean drogas;
 
 	@MemberOrder(sequence = "7")
 	@Column(allowsNull = "true")
-	public boolean getDrogas() {
+	public Boolean getDrogas() {
 		return drogas;
 	}
 
-	public void setDrogas(final boolean drogas) {
+	public void setDrogas(final Boolean drogas) {
 		this.drogas = drogas;
 	}
 
@@ -183,15 +186,15 @@ public class AntecedentesPersonales {
 	// }}
 
 	// {{ ActividadFisica (property)
-	private boolean actividadFisica;
+	private Boolean actividadFisica;
 
 	@MemberOrder(sequence = "9")
 	@Column(allowsNull = "true")
-	public boolean getActividadFisica() {
+	public Boolean getActividadFisica() {
 		return actividadFisica;
 	}
 
-	public void setActividadFisica(final boolean actividadFisica) {
+	public void setActividadFisica(final Boolean actividadFisica) {
 		this.actividadFisica = actividadFisica;
 	}
 
@@ -213,210 +216,210 @@ public class AntecedentesPersonales {
 	// }}
 
 	// {{ HTA (property)
-	private boolean hta;
+	private Boolean hta;
 
 	@MemberOrder(sequence = "11")
 	@Column(allowsNull = "true")
-	public boolean getHTA() {
+	public Boolean getHTA() {
 		return hta;
 	}
 
-	public void setHTA(final boolean hta) {
+	public void setHTA(final Boolean hta) {
 		this.hta = hta;
 	}
 
 	// }}
 
 	// {{ Diabetes (property)
-	private boolean diabetes;
+	private Boolean diabetes;
 
 	@MemberOrder(sequence = "12")
 	@Column(allowsNull = "true")
-	public boolean getDiabetes() {
+	public Boolean getDiabetes() {
 		return diabetes;
 	}
 
-	public void setDiabetes(final boolean diabetes) {
+	public void setDiabetes(final Boolean diabetes) {
 		this.diabetes = diabetes;
 	}
 
 	// }}
 
 	// {{ EnfermedadCoronaria (property)
-	private boolean enfermedadCoronaria;
+	private Boolean enfermedadCoronaria;
 
 	@MemberOrder(sequence = "13")
 	@Column(allowsNull = "true")
-	public boolean getEnfermedadCoronaria() {
+	public Boolean getEnfermedadCoronaria() {
 		return enfermedadCoronaria;
 	}
 
-	public void setEnfermedadCoronaria(final boolean enfermedadCoronaria) {
+	public void setEnfermedadCoronaria(final Boolean enfermedadCoronaria) {
 		this.enfermedadCoronaria = enfermedadCoronaria;
 	}
 
 	// }}
 
 	// {{ ACV (property)
-	private boolean acv;
+	private Boolean acv;
 
 	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "true")
-	public boolean getACV() {
+	public Boolean getACV() {
 		return acv;
 	}
 
-	public void setACV(final boolean acv) {
+	public void setACV(final Boolean acv) {
 		this.acv = acv;
 	}
 
 	// }}
 
 	// {{ EPOC (property)
-	private boolean epoc;
+	private Boolean epoc;
 
 	@MemberOrder(sequence = "15")
 	@Column(allowsNull = "true")
-	public boolean getEPOC() {
+	public Boolean getEPOC() {
 		return epoc;
 	}
 
-	public void setEPOC(final boolean epoc) {
+	public void setEPOC(final Boolean epoc) {
 		this.epoc = epoc;
 	}
 
 	// }}
 
 	// {{ Alergia (property)
-	private boolean alergia;
+	private Boolean alergia;
 
 	@MemberOrder(sequence = "16")
 	@Column(allowsNull = "true")
-	public boolean getAlergia() {
+	public Boolean getAlergia() {
 		return alergia;
 	}
 
-	public void setAlergia(final boolean alergia) {
+	public void setAlergia(final Boolean alergia) {
 		this.alergia = alergia;
 	}
 
 	// }}
 
 	// {{ EnfermedadReumatica (property)
-	private boolean enfermedadReumatica;
+	private Boolean enfermedadReumatica;
 
 	@MemberOrder(sequence = "17")
 	@Column(allowsNull = "true")
-	public boolean getEnfermedadReumatica() {
+	public Boolean getEnfermedadReumatica() {
 		return enfermedadReumatica;
 	}
 
-	public void setEnfermedadReumatica(final boolean enfermedadReumatica) {
+	public void setEnfermedadReumatica(final Boolean enfermedadReumatica) {
 		this.enfermedadReumatica = enfermedadReumatica;
 	}
 
 	// }}
 
 	// {{ EnfermedadOncologica (property)
-	private boolean enfermedadOncologica;
+	private Boolean enfermedadOncologica;
 
 	@MemberOrder(sequence = "18")
 	@Column(allowsNull = "true")
-	public boolean getEnfermedadOncologica() {
+	public Boolean getEnfermedadOncologica() {
 		return enfermedadOncologica;
 	}
 
-	public void setEnfermedadOncologica(final boolean enfermedadOncologica) {
+	public void setEnfermedadOncologica(final Boolean enfermedadOncologica) {
 		this.enfermedadOncologica = enfermedadOncologica;
 	}
 
 	// }}
 
 	// {{ TBC (property)
-	private boolean tbc;
+	private Boolean tbc;
 
 	@MemberOrder(sequence = "19")
-	@Column(allowsNull = "true")
-	public boolean getTBC() {
+	@Column(allowsNull = "false")
+	public Boolean getTBc() {
 		return tbc;
 	}
 
-	public void setTBC(final boolean tbc) {
+	public void setTBc(final Boolean tbc) {
 		this.tbc = tbc;
 	}
 
 	// }}
 
 	// {{ VIH (property)
-	private boolean vih;
+	private Boolean vih;
 
 	@MemberOrder(sequence = "20")
 	@Column(allowsNull = "true")
-	public boolean getVIH() {
+	public Boolean getVIH() {
 		return vih;
 	}
 
-	public void setVIH(final boolean vih) {
+	public void setVIH(final Boolean vih) {
 		this.vih = vih;
 	}
 
 	// }}
 
 	// {{ Chagas (property)
-	private boolean chagas;
+	private Boolean chagas;
 
 	@MemberOrder(sequence = "21")
 	@Column(allowsNull = "true")
-	public boolean getChagas() {
+	public Boolean getChagas() {
 		return chagas;
 	}
 
-	public void setChagas(final boolean chagas) {
+	public void setChagas(final Boolean chagas) {
 		this.chagas = chagas;
 	}
 
 	// }}
 
 	// {{ ITS (property)
-	private boolean its;
+	private Boolean its;
 
 	@MemberOrder(sequence = "22")
 	@Column(allowsNull = "true")
-	public boolean getITS() {
+	public Boolean getITS() {
 		return its;
 	}
 
-	public void setITS(final boolean its) {
+	public void setITS(final Boolean its) {
 		this.its = its;
 	}
 
 	// }}
 
 	// {{ Neurologicos (property)
-	private boolean neurologicos;
+	private Boolean neurologicos;
 
 	@MemberOrder(sequence = "23")
 	@Column(allowsNull = "true")
-	public boolean getNeurologicos() {
+	public Boolean getNeurologicos() {
 		return neurologicos;
 	}
 
-	public void setNeurologicos(final boolean neurologicos) {
+	public void setNeurologicos(final Boolean neurologicos) {
 		this.neurologicos = neurologicos;
 	}
 
 	// }}
 
 	// {{ Tranfuciones (property)
-	private boolean transfuciones;
+	private Boolean transfuciones;
 
 	@MemberOrder(sequence = "24")
 	@Column(allowsNull = "true")
-	public boolean getTranfuciones() {
+	public Boolean getTranfuciones() {
 		return transfuciones;
 	}
 
-	public void setTranfuciones(final boolean transfuciones) {
+	public void setTranfuciones(final Boolean transfuciones) {
 		this.transfuciones = transfuciones;
 	}
 	// }}

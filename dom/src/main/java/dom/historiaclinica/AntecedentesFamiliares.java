@@ -24,7 +24,10 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+@javax.jdo.annotations.Queries({
 
+	@javax.jdo.annotations.Query(name = "traerFamiliaresPorPaciente", language = "JDOQL", value = "SELECT "
+			+ " FROM dom.historiaclinica.AntecedentesFamiliares WHERE paciente == :paciente ")})
 @PersistenceCapable
 public class AntecedentesFamiliares {
 	/**
@@ -62,150 +65,150 @@ public class AntecedentesFamiliares {
 	// }}
 
 	// {{ Hta (property)
-	private boolean hta;
+	private Boolean hta;
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	public boolean getHta() {
+	public Boolean getHta() {
 		return hta;
 	}
 
-	public void setHta(final boolean hta) {
+	public void setHta(final Boolean hta) {
 		this.hta = hta;
 	}
 
 	// }}
 
 	// {{ Cardiopatias (property)
-	private boolean cardiopatias;
+	private Boolean cardiopatias;
 
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
-	public boolean getCardiopatias() {
+	public Boolean getCardiopatias() {
 		return cardiopatias;
 	}
 
-	public void setCardiopatias(final boolean cardiopatias) {
+	public void setCardiopatias(final Boolean cardiopatias) {
 		this.cardiopatias = cardiopatias;
 	}
 
 	// }}
 
 	// {{ Diabetes (property)
-	private boolean diabetes;
+	private Boolean diabetes;
 
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
-	public boolean getDiabetes() {
+	public Boolean getDiabetes() {
 		return diabetes;
 	}
 
-	public void setDiabetes(final boolean diabetes) {
+	public void setDiabetes(final Boolean diabetes) {
 		this.diabetes = diabetes;
 	}
 
 	// }}
 
 	// {{ ACV (property)
-	private boolean acv;
+	private Boolean acv;
 
 	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "true")
-	public boolean getACV() {
+	public Boolean getACV() {
 		return acv;
 	}
 
-	public void setACV(final boolean acv) {
+	public void setACV(final Boolean acv) {
 		this.acv = acv;
 	}
 
 	// }}
 
 	// {{ CadeColon (property)
-	private boolean caddeColon;
+	private Boolean caddeColon;
 
 	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "true")
-	public boolean getCadeColon() {
+	public Boolean getCadeColon() {
 		return caddeColon;
 	}
 
-	public void setCadeColon(final boolean caddeColon) {
+	public void setCadeColon(final Boolean caddeColon) {
 		this.caddeColon = caddeColon;
 	}
 
 	// }}
 
 	// {{ CadePulmon (property)
-	private boolean cadePulmon;
+	private Boolean cadePulmon;
 
 	@MemberOrder(sequence = "6")
 	@Column(allowsNull = "true")
-	public boolean getCadePulmon() {
+	public Boolean getCadePulmon() {
 		return cadePulmon;
 	}
 
-	public void setCadePulmon(final boolean cadePulmon) {
+	public void setCadePulmon(final Boolean cadePulmon) {
 		this.cadePulmon = cadePulmon;
 	}
 
 	// }}
 
 	// {{ CadeMama (property)
-	private boolean cadeMama;
+	private Boolean cadeMama;
 
 	@MemberOrder(sequence = "7")
 	@Column(allowsNull = "true")
-	public boolean getCadeMama() {
+	public Boolean getCadeMama() {
 		return cadeMama;
 	}
 
-	public void setCadeMama(final boolean cadeMama) {
+	public void setCadeMama(final Boolean cadeMama) {
 		this.cadeMama = cadeMama;
 	}
 
 	// }}
 
 	// {{ ConsumoDrogas (property)
-	private boolean consumoDrogas;
+	private Boolean consumoDrogas;
 
 	@MemberOrder(sequence = "8")
 	@Column(allowsNull = "true")
-	public boolean getConsumoDrogas() {
+	public Boolean getConsumoDrogas() {
 		return consumoDrogas;
 	}
 
-	public void setConsumoDrogas(final boolean consumoDrogas) {
+	public void setConsumoDrogas(final Boolean consumoDrogas) {
 		this.consumoDrogas = consumoDrogas;
 	}
 
 	// }}
 
 	// {{ AbusoAlcohol (property)
-	private boolean abusoAlcohol;
+	private Boolean abusoAlcohol;
 
 	@MemberOrder(sequence = "9")
 	@Column(allowsNull = "true")
-	public boolean getAbusoAlcohol() {
+	public Boolean getAbusoAlcohol() {
 		return abusoAlcohol;
 	}
 
-	public void setAbusoAlcohol(final boolean abusoAlcohol) {
+	public void setAbusoAlcohol(final Boolean abusoAlcohol) {
 		this.abusoAlcohol = abusoAlcohol;
 	}
 
 	// }}
 
 	// {{ Depresion (property)
-	private boolean depresion;
+	private Boolean depresion;
 
 	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "true")
-	public boolean getDepresion() {
+	public Boolean getDepresion() {
 		return depresion;
 	}
 
-	public void setDepresion(final boolean depresion) {
+	public void setDepresion(final Boolean depresion) {
 		this.depresion = depresion;
 	}
 	// }}

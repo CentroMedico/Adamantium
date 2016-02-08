@@ -3,6 +3,7 @@ package dom.historiaclinica;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRException;
@@ -31,8 +32,10 @@ import dom.doctor.Doctor;
 import dom.especialidad.EspecialidadEnum;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
+import dom.reportes.HistoriaClinicaDataSource;
 import dom.reportes.IndicacionesDataSource;
 import dom.reportes.RecetaDataSource;
+import dom.reportes.ReporteHistoriaClinica;
 import dom.reportes.ReporteIndicaciones;
 import dom.reportes.ReporteReceta;
 import dom.turnopaciente.TurnoPaciente;
@@ -50,7 +53,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		return "historia";
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "1")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.1")
 	@ActionLayout(cssClass = "boton")
 	public AdicionalesPaciente crearAdicionalesPaciente(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
@@ -76,12 +79,12 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "1.2")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.1")
 	public List<AdicionalesPaciente> listarAdicionalesPaciente() {
 		return container.allInstances(AdicionalesPaciente.class);
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "2")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.2")
 	@ActionLayout(cssClass = "boton")
 	public AntecedentesPersonales crearAntecedentesPersonales(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
@@ -129,7 +132,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		antecedentes.setAlergia(alergias);
 		antecedentes.setEnfermedadReumatica(reumatica);
 		antecedentes.setEnfermedadOncologica(oncologica);
-		antecedentes.setTBC(tbc);
+		antecedentes.setTBc(tbc);
 		antecedentes.setVIH(hiv);
 		antecedentes.setChagas(chagas);
 		antecedentes.setITS(its);
@@ -146,7 +149,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "2.1")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.2")
 	public List<AntecedentesPersonales> listarAntecedentesPersonales() {
 		return container.allInstances(AntecedentesPersonales.class);
 	}
@@ -156,7 +159,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 */
 
-	@MemberOrder(name = "Historia Clinica", sequence = "3")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.3")
 	@ActionLayout(cssClass = "boton")
 	public AntecedentesFamiliares crearAntecedentesFamiliares(
 
@@ -195,12 +198,12 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "3.1")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.3")
 	public List<AntecedentesFamiliares> listarAntecedentesFamiliares() {
 		return container.allInstances(AntecedentesFamiliares.class);
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "4")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.4")
 	@ActionLayout(cssClass = "boton")
 	public ExamenFisico crearExamenFisico(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
@@ -252,12 +255,12 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "4.1")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.4")
 	public List<ExamenFisico> listarExamenFisico() {
 		return container.allInstances(ExamenFisico.class);
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "5")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.5")
 	@ActionLayout(cssClass = "boton")
 	public Receta crearReceta(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
@@ -284,7 +287,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "5.1")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.5")
 	public List<Receta> listarReceta() {
 		return container.allInstances(Receta.class);
 	}
@@ -305,7 +308,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "6")
+	@MemberOrder(name = "Historia Clinica", sequence = "1.6")
 	@ActionLayout(cssClass = "boton")
 	public IndicacionesMedicas crearIndicacionesMedicas(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
@@ -332,7 +335,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "6.1")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.6")
 	public List<IndicacionesMedicas> listarIndicacionesMedicas() {
 		return container.allInstances(IndicacionesMedicas.class);
 	}
@@ -353,7 +356,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "6.2")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.7")
 	@ActionLayout(named = "Listar Indicaciones por Paciente")
 	public List<IndicacionesMedicas> listaindicaciones(final Paciente paciente) {
 		return allMatches(QueryDefault.create(IndicacionesMedicas.class,
@@ -433,7 +436,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPorPaciente", "paciente", paciente));
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "5.3")
+	@MemberOrder(name = "Historia Clinica", sequence = "2.8")
 	@ActionLayout(named = "Listar Receta por Paciente")
 	public List<Receta> listareceta(final Paciente paciente) {
 		return allMatches(QueryDefault.create(Receta.class,
@@ -451,17 +454,34 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			ReporteReceta receta = new ReporteReceta();
 			receta.setPaciente(a.getPaciente().getApellido() + " "
 					+ a.getPaciente().getNombre());
-			receta.setObraSocial(a.getObraSocial().getNombre());
+			if(a.getObraSocial()!=null)
+			{
+				receta.setObraSocial(a.getObraSocial().getNombre());
+			}
+			else
+			{
+				receta.setObraSocial(" ");
+			}
+			
 			receta.setMedicamento(a.getMedicamento().getProducto() + " "
 					+ a.getMedicamento().getPresentacion() + " "
 					+ a.getMedicamento().getTamaño() + " "
 					+ a.getMedicamento().getLaboratorio());
-			receta.setMedicamento1(a.getMedicamento2().getProducto() + " "
-					+ a.getMedicamento2().getPresentacion() + " "
-					+ a.getMedicamento2().getTamaño() + " "
-					+ a.getMedicamento2().getLaboratorio());
-			receta.setDoctor(a.getDoctor().getApellido() + " "
-					+ a.getDoctor().getNombre());
+			if(a.getMedicamento2()!=null)
+			{
+				receta.setMedicamento1(a.getMedicamento2().getProducto() + " "
+						+ a.getMedicamento2().getPresentacion() + " "
+						+ a.getMedicamento2().getTamaño() + " "
+						+ a.getMedicamento2().getLaboratorio());
+				receta.setDoctor(a.getDoctor().getApellido() + " "
+						+ a.getDoctor().getNombre());
+			}
+			else
+			{
+				receta.setMedicamento1(" ");
+			}
+			
+			
 			datasource.addParticipante(receta);
 		}
 		File file = new File("Receta.jrxml");
@@ -520,6 +540,183 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerRecetaPorPaciente", "paciente", paciente));
 	}
 
+	@MemberOrder(name = "Historia Clinica", sequence = "2.9")
+	@ActionLayout(named = "Listar Adicionales por Paciente")
+	public AdicionalesPaciente listarAdicionales(final Paciente paciente) {
+		return firstMatch(QueryDefault.create(AdicionalesPaciente.class,
+				"traerAdicionalesPorPaciente", "paciente", paciente));
+
+	}
+
+	@MemberOrder(name = "Historia Clinica", sequence = "2.10")
+	@ActionLayout(named = "Listar Antecedentes Personales por Paciente")
+	public AntecedentesPersonales listarPersonales(final Paciente paciente) {
+		return firstMatch(QueryDefault.create(AntecedentesPersonales.class,
+				"traerAdicionalesPorPaciente", "paciente", paciente));
+
+	}
+
+	@MemberOrder(name = "Historia Clinica", sequence = "2.11")
+	@ActionLayout(named = "Listar Antecedentes Familiares por Paciente")
+	public AntecedentesFamiliares listarFamiliares(final Paciente paciente) {
+		return firstMatch(QueryDefault.create(AntecedentesFamiliares.class,
+				"traerFamiliaresPorPaciente", "paciente", paciente));
+
+	}
+
+	@MemberOrder(name = "Historia Clinica", sequence = "2.12")
+	@ActionLayout(named = "Listar Examen Fisico por Paciente")
+	public ExamenFisico listarExamen(final Paciente paciente) {
+		return firstMatch(QueryDefault.create(ExamenFisico.class,
+				"traerExamenPorPaciente", "paciente", paciente));
+
+	}
+
+	private String pasarASiONo(boolean entrada){
+		if(entrada)
+		{
+			return "Si";
+		}
+		else
+		{
+			return "No";
+		}	
+	}	
+	@MemberOrder(name = "Historia Clinica", sequence = "10.4")
+	@ActionLayout(named = "Exportar Historia Clinica")
+	public Blob downloadAll2(final Paciente paciente) throws JRException,
+			IOException {
+	
+		HistoriaClinicaDataSource datasource = new HistoriaClinicaDataSource();
+
+		AdicionalesPaciente a = listarAdicionales(paciente);
+		ReporteHistoriaClinica general = new ReporteHistoriaClinica();
+
+		general.setPaciente(a.getPaciente().getApellido() + " "
+				+ a.getPaciente().getNombre());
+		general.setEstadoCivil(a.getEstadoCivil().toString());
+		if (a.getObraSocial()) {
+			general.setObraSocial(a.getPaciente().getObraSocial().getNombre());
+		} else {
+			general.setObraSocial("No tiene obra Social");
+		}
+
+		general.setEducacion(a.getEducacion().getNombre());
+		
+		general.setTrabajo(pasarASiONo(a.getTrabajo()));
+		general.setDni(a.getPaciente().getDocumento());
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");		
+		
+		general.setFechanac(df.format(a.getPaciente().getFechaNacimiento().toDate()));
+		general.setNumCarnet(a.getPaciente().getNumerodeCarnet());
+		
+		AntecedentesPersonales b = listarPersonales(paciente);
+		// ReporteHistoriaClinica personales = new ReporteHistoriaClinica();
+		general.setTabaquismo1(pasarASiONo(b.getTabaquismo()));
+		general.setEdadqueempezo(b.getDesdequeEdad().toString());
+		general.setCantidaddeCigarrillos(b.getCantidadCigarrillos());
+		general.setAlchool(pasarASiONo(b.getAlcohol()));
+		general.setCriticas(pasarASiONo(b.getCriticasporTomar()));
+		general.setTomaporlaMañana(pasarASiONo(b.getTomaporlaMañana()));
+		general.setDrogas(pasarASiONo(b.getDrogas()));
+		general.setTipoDrogas(b.getTipoDroga());
+		general.setActividad(pasarASiONo(b.getActividadFisica()));
+		general.setTipoActividad(b.getTipoActividad());
+		general.setHta(pasarASiONo(b.getHTA()));
+		general.setDiabetes(pasarASiONo(b.getDiabetes()));
+		general.setCoronaria(pasarASiONo(b.getEnfermedadCoronaria()));
+		general.setAcv(pasarASiONo(b.getACV()));
+		general.setEpoc(pasarASiONo(b.getEPOC()));
+		general.setAlergias(pasarASiONo(b.getAlergia()));
+		general.setReumatica(pasarASiONo(b.getEnfermedadReumatica()));
+		general.setOncologicas(pasarASiONo(b.getEnfermedadOncologica()));
+		general.setTbc(pasarASiONo(b.getTBc()));
+		general.setHiv(pasarASiONo(b.getVIH()));
+		general.setChagas(pasarASiONo(b.getChagas()));
+		general.setIts(pasarASiONo(b.getITS()));
+		general.setNeurologicas(pasarASiONo(b.getNeurologicos()));
+		general.setTransfuciones(pasarASiONo(b.getTranfuciones()));
+
+		AntecedentesFamiliares c = listarFamiliares(paciente);
+		// ReporteHistoriaClinica familiares = new ReporteHistoriaClinica();
+
+		general.setHta1(pasarASiONo(c.getHta()));
+		general.setCardiopatias(pasarASiONo(c.getCardiopatias()));
+		general.setDiabetes1(pasarASiONo(c.getDiabetes()));
+		general.setAcv1(pasarASiONo(c.getACV()));
+		general.setCancerdeColon(pasarASiONo(c.getCadeColon()));
+		general.setCancerdePulmon(pasarASiONo(c.getCadePulmon()));
+		general.setCancerdeMama(pasarASiONo(c.getCadeMama()));
+		general.setConsumodeDrogas(pasarASiONo(c.getConsumoDrogas()));
+		general.setAbusodeAlchool(pasarASiONo(c.getAbusoAlcohol()));
+		general.setDepresion(pasarASiONo(c.getDepresion()));
+
+		ExamenFisico d = listarExamen(paciente);
+		// ReporteHistoriaClinica examen = new ReporteHistoriaClinica();
+		general.setPiel(d.getPiel());
+		general.setUtilizalentes(d.getLentes().toString());
+		general.setAgudezaVisual(d.getAgudezaVisual());
+		general.setOidos(d.getOidos());
+		general.setDentadura(d.getDentadura());
+		general.setPulmones(d.getPulmones());
+		general.setCorazon(d.getCorazon());
+		general.setAbdomen(d.getAbdomen());
+		general.setGenitales(d.getGenitales());
+		general.setMamas(d.getMamas());
+		general.setAltura(d.getTalla());
+		general.setPeso(d.getPeso());
+		general.setTemperaturaCorporal(d.getTemperatura());
+		general.setFrecuenciaCardiaca(d.getFrecuenciaCardiaca());
+		general.setFrecuenciaRespiratoria(d.getFrecuenciaRespiratoria());
+		general.setTensionArterial(d.getTensionArterial());
+		general.setEstadoGeneral(d.getEstadoGeneral());
+		datasource.addParticipante(general);
+
+		File file = new File("HistoriaClinica.jrxml");
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		JasperDesign jd = JRXmlLoader.load(input);
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
+		File archivo = new File("/tmp/salida.pdf");
+
+		byte[] fileContent = new byte[(int) archivo.length()];
+
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + " Historia Clinica" + ".pdf",
+					"application/pdf", fileContent);
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+	}
+
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

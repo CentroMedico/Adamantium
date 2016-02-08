@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-01-25T20:48:14 -->
+<!-- 2016-02-08T17:56:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Agenda" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9ea9f2e-89cb-4043-9cbb-945dcad1dadc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
@@ -23,8 +23,8 @@
 Centro Medico Especializado]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="200" height="150" forecolor="#FFFFFF" backcolor="#DEDEDE" uuid="90f15953-82fb-4b2b-9b06-5a985deaecd4"/>
-				<imageExpression><![CDATA["/home/luciano/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
+				<reportElement x="-10" y="7" width="190" height="143" uuid="44c2805c-9c13-46b1-b19c-04f8953f3cc1"/>
+				<imageExpression><![CDATA["http://imageshack.com/a/img921/8333/MSyHyF.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

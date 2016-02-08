@@ -67,7 +67,40 @@ public class ReporteHistoriaClinica
 	private String tensionArterial;
 	private String estadoGeneral;
 
+	private String	dni;
+	private String fechanac;
+	private String numCarnet;
+	private String Sexo;
 	
+	
+	@MemberOrder(sequence = "1")
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	@MemberOrder(sequence = "1")
+	public String getFechanac() {
+		return fechanac;
+	}
+	public void setFechanac(String fechanac) {
+		this.fechanac = fechanac;
+	}
+	@MemberOrder(sequence = "1")
+	public String getNumCarnet() {
+		return numCarnet;
+	}
+	public void setNumCarnet(String numCarnet) {
+		this.numCarnet = numCarnet;
+	}
+	@MemberOrder(sequence = "1")
+	public String getSexo() {
+		return Sexo;
+	}
+	public void setSexo(String sexo) {
+		Sexo = sexo;
+	}
 	@MemberOrder(sequence = "1")
 	public String getPaciente() {
 		return paciente;
@@ -104,10 +137,10 @@ public class ReporteHistoriaClinica
 		this.educacion = educacion;
 	}
 	@MemberOrder(sequence = "1")
-	public String getTabaquismo() {
+	public String getTabaquismo1() {
 		return tabaquismo;
 	}
-	public void setTabaquismo(String tabaquismo) {
+	public void setTabaquismo1(String tabaquismo) {
 		this.tabaquismo = tabaquismo;
 	}
 	@MemberOrder(sequence = "1")

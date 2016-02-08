@@ -25,7 +25,7 @@ public class HistoriaClinicaDataSource implements JRDataSource {
 		} else if ("educacion".equals(jrf.getName())) {
 			valor = listaHClinica.get(indiceAgendaActual).getEducacion();
 		} else if ("tabaquismo".equals(jrf.getName())) {
-			valor = listaHClinica.get(indiceAgendaActual).getTabaquismo();
+			valor = listaHClinica.get(indiceAgendaActual).getTabaquismo1();
 		} else if ("edadqueempezo".equals(jrf.getName())) {
 			valor = listaHClinica.get(indiceAgendaActual).getEdadqueempezo();
 		} else if ("cantidaddeCigarrillos".equals(jrf.getName())) {
@@ -129,6 +129,14 @@ public class HistoriaClinicaDataSource implements JRDataSource {
 			valor = listaHClinica.get(indiceAgendaActual).getTensionArterial();
 		}else if ("estadoGeneral".equals(jrf.getName())) {
 			valor = listaHClinica.get(indiceAgendaActual).getEstadoGeneral();
+		}else if ("dni".equals(jrf.getName())) {
+			valor = listaHClinica.get(indiceAgendaActual).getDni();
+		}else if ("fechanac".equals(jrf.getName())) {
+			valor = listaHClinica.get(indiceAgendaActual).getFechanac();
+		}else if ("numCarnet".equals(jrf.getName())) {
+			valor = listaHClinica.get(indiceAgendaActual).getNumCarnet();
+		}else if ("Sexo".equals(jrf.getName())) {
+			valor = listaHClinica.get(indiceAgendaActual).getSexo();
 		}
 
 		return valor;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-01-26T20:28:10 -->
+<!-- 2016-02-08T17:56:23 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indicaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="addba0ec-f27c-4279-b7b8-4a092d263e21">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
@@ -25,7 +25,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="80" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" x="110" y="0" width="450" height="80" forecolor="#182AED" uuid="20573d27-4eea-4be7-9e77-f8c7fafe8e9e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
@@ -35,9 +35,8 @@
 Centro Medico Especializado]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="110" height="80" forecolor="#FFFFFF" backcolor="#DEDEDE" uuid="4dd8b47f-6939-4b10-80be-6836afd4dd10"/>
-				
-				<imageExpression><![CDATA["/home/luciano/workspace/Adamantium/webapp/Adamantium.png"]]></imageExpression>
+				<reportElement x="-20" y="0" width="123" height="90" uuid="66806f98-9680-4236-b409-57f0fb0f760f"/>
+				<imageExpression><![CDATA["http://imageshack.com/a/img921/8333/MSyHyF.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
