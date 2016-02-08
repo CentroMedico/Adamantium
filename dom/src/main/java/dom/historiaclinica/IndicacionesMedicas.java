@@ -27,21 +27,30 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
+import dom.turnopaciente.TurnoPaciente;
 import dom.vademecum.Vademecum;
+
 @javax.jdo.annotations.Queries({
 
-	@javax.jdo.annotations.Query(name = "traerPorPaciente", language = "JDOQL", value = "SELECT "
-			+ "FROM dom.historiaclinica.IndicacionesMedicas WHERE paciente == :paciente ")})
+@javax.jdo.annotations.Query(name = "traerPorPaciente", language = "JDOQL", value = "SELECT "
+		+ "FROM dom.historiaclinica.IndicacionesMedicas WHERE paciente == :paciente ") })
 @PersistenceCapable
 public class IndicacionesMedicas {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
+	// public TranslatableString title() {
+	// return TranslatableString.tr("{nombre}", "nombre",
+	// "Indicaciones Medicas de: " + this.paciente.getApellido()
+	// + ", " + this.paciente.getNombre());
+	// }
+
 	public TranslatableString title() {
 		return TranslatableString.tr("{nombre}", "nombre",
-				"Indicaciones Medicas de: " + this.paciente.getApellido()
-						+ ", " + this.paciente.getNombre());
+				"Indicaciones Medicas de: " + getPaciente().getApellido()
+						+ ", " + getPaciente().getNombre() + ". Del día "
+						+ getTurno().getHorarioTurno().getDia());
 	}
 
 	/**
@@ -110,6 +119,21 @@ public class IndicacionesMedicas {
 
 	public void setDoctor(final Doctor doctor) {
 		this.doctor = doctor;
+	}
+
+	// }}
+
+	// {{ Turno (property)
+	private TurnoPaciente turnoPaciente;
+
+	@MemberOrder(sequence = "5")
+	@Column(allowsNull = "true")
+	public TurnoPaciente getTurno() {
+		return turnoPaciente;
+	}
+
+	public void setTurno(final TurnoPaciente turnoPaciente) {
+		this.turnoPaciente = turnoPaciente;
 	}
 	// }}
 

@@ -25,14 +25,24 @@ import dom.paciente.Paciente;
 		@javax.jdo.annotations.Query(name = "traerAtendidosPorPaciente", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido' && paciente== :paciente"),
 		@javax.jdo.annotations.Query(name = "traerAtendidos", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido'") })
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido'"),
+		@javax.jdo.annotations.Query(name = "traerPorPaciente", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE paciente== :paciente") })
 @PersistenceCapable
 public class TurnoPaciente {
 
+	// public TranslatableString title() {
+	// return TranslatableString.tr("{nombre}", "nombre",
+	// "Turno de: " + this.paciente.getApellido() + ", "
+	// + this.paciente.getNombre());
+	// }
+
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Turno de: " + this.paciente.getApellido() + ", "
-						+ this.paciente.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", "Turno de: "
+				+ getPaciente().getApellido() + ", "
+				+ getPaciente().getNombre() + ". Horario: "
+				// + getHorarioTurno().toString());
+				+ getHorarioTurno().getDia());
 	}
 
 	public TurnoPaciente() {

@@ -15,7 +15,6 @@
  */
 package dom.dueño;
 
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -286,45 +285,48 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
-	// Generar Tarjeta de ingreso
-		@MemberOrder(name = "Dueño", sequence = "5.1")
-		@ActionLayout(cssClass = "boton")
-		public String crearTarjetaDeIngreso(@ParameterLayout(named = "Doctor: ") final Doctor doc)
-		{
-			String doctor=doc.getApellido()+" "+doc.getNombre()+" "+doc.getMatricula();
-			try {
-				// Create the barcode bean
-				Code39Bean bean = new Code39Bean();
-				final int dpi = 150;
-				// Configure the barcode generator
-				bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); // makes the narrow
-				// bar
-				// width exactly
-				// one pixel
-				bean.setWideFactor(3);
-				bean.doQuietZone(false);
-				// Open output file
-				File outputFile = new File(doc.getApellido()+".jpg");
-				OutputStream out = new FileOutputStream(outputFile);
-				try {
-					// Set up the canvas provider for monochrome JPEG output
-					BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi,
-							BufferedImage.TYPE_BYTE_BINARY, false, 0);
-					// Generate the barcode
-					bean.generateBarcode(canvas, doctor);
-					// Signal end of generation
-					canvas.finish();
-				} finally {
-					out.close();
-				}
-				container.informUser("Tarjeta Creada Correctamente!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		return  ("Tarjeta Creada Correctamente para el Doctor: "+doc.getApellido()+" "+doc.getNombre());
-				
-		}
 
+	// Generar Tarjeta de ingreso
+	@MemberOrder(name = "Dueño", sequence = "5.1")
+	@ActionLayout(cssClass = "boton")
+	public String crearTarjetaDeIngreso(
+			@ParameterLayout(named = "Doctor: ") final Doctor doc) {
+		String doctor = doc.getApellido() + " " + doc.getNombre() + " "
+				+ doc.getMatricula();
+		try {
+			// Create the barcode bean
+			Code39Bean bean = new Code39Bean();
+			final int dpi = 150;
+			// Configure the barcode generator
+			bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); // makes the narrow
+			// bar
+			// width exactly
+			// one pixel
+			bean.setWideFactor(3);
+			bean.doQuietZone(false);
+			// Open output file
+			File outputFile = new File(doc.getApellido() + ".jpg");
+			OutputStream out = new FileOutputStream(outputFile);
+			try {
+				// Set up the canvas provider for monochrome JPEG output
+				BitmapCanvasProvider canvas = new BitmapCanvasProvider(out,
+						"image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY,
+						false, 0);
+				// Generate the barcode
+				bean.generateBarcode(canvas, doctor);
+				// Signal end of generation
+				canvas.finish();
+			} finally {
+				out.close();
+			}
+			container.informUser("Tarjeta Creada Correctamente!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ("Tarjeta Creada Correctamente para el Doctor: "
+				+ doc.getApellido() + " " + doc.getNombre());
+
+	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

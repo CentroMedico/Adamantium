@@ -25,6 +25,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.joda.time.DateTime;
 
 import dom.estado.EstadoEnum;
+import dom.historiaclinica.Receta;
 import dom.persona.Persona;
 
 /**
@@ -43,7 +44,6 @@ import dom.persona.Persona;
 @javax.jdo.annotations.Queries({
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.dueño.Dueño "),
-
 		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.dueño.Dueño "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "

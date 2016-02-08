@@ -23,6 +23,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.Blob;
 
@@ -34,6 +35,7 @@ import dom.reportes.IndicacionesDataSource;
 import dom.reportes.RecetaDataSource;
 import dom.reportes.ReporteIndicaciones;
 import dom.reportes.ReporteReceta;
+import dom.turnopaciente.TurnoPaciente;
 import dom.vademecum.Vademecum;
 
 @DomainService(repositoryFor = AntecedentesPersonales.class)
@@ -262,13 +264,15 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
 			@ParameterLayout(named = "Medicamento2") @Parameter(optionality = Optionality.OPTIONAL) final Vademecum medicamento2,
-			@ParameterLayout(named = "Doctor") final Doctor doctor) {
+			@ParameterLayout(named = "Doctor") final Doctor doctor,
+			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		final Receta receta = newTransientInstance(Receta.class);
 		receta.setPaciente(paciente);
 		receta.setObraSocial(obraSocial);
 		receta.setMedicamento(medicamento);
 		receta.setMedicamento2(medicamento2);
 		receta.setDoctor(doctor);
+		receta.setTurno(turno);
 		container.persistIfNotAlready(receta);
 		return receta;
 
@@ -294,19 +298,28 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public List<TurnoPaciente> choices5CrearReceta(final Paciente paciente,
+			final ObraSocial obraSocial, final Vademecum medicamento,
+			final Vademecum medicamento2, final Doctor doctor) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerAtendidosPorPaciente", "paciente", paciente));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "6")
 	@ActionLayout(cssClass = "boton")
 	public IndicacionesMedicas crearIndicacionesMedicas(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
 			@ParameterLayout(named = "Como Tomarlo", multiLine = 5) final String comoTomarlo,
-			@ParameterLayout(named = "Doctor") final Doctor doctor) {
+			@ParameterLayout(named = "Doctor") final Doctor doctor,
+			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		final IndicacionesMedicas indicaciones = newTransientInstance(IndicacionesMedicas.class);
 
 		indicaciones.setPaciente(paciente);
 		indicaciones.setMedicamento(medicamento);
 		indicaciones.setComotomarlo(comoTomarlo);
 		indicaciones.setDoctor(doctor);
+		indicaciones.setTurno(turno);
 		container.persistIfNotAlready(indicaciones);
 		return indicaciones;
 
@@ -331,6 +344,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		return container.allMatches(QueryDefault.create(Doctor.class,
 				"traerActivos"));
 
+	}
+
+	public List<TurnoPaciente> choices4CrearIndicacionesMedicas(
+			final Paciente paciente, final Vademecum medicamento,
+			final String comoTomarlo, final Doctor doctor) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "6.2")

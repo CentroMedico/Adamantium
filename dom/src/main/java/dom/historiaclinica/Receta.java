@@ -27,22 +27,30 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.doctor.Doctor;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
+import dom.turnopaciente.TurnoPaciente;
 import dom.vademecum.Vademecum;
 
 @javax.jdo.annotations.Queries({
 
 @javax.jdo.annotations.Query(name = "traerRecetaPorPaciente", language = "JDOQL", value = "SELECT "
-		+ "FROM dom.historiaclinica.Receta WHERE paciente == :paciente ") })
+		+ "FROM dom.historiaclinica.Receta WHERE paciente == :paciente "), })
 @PersistenceCapable
 public class Receta {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
 	/*----------------------------------------------------*/
+	// public TranslatableString title() {
+	// return TranslatableString.tr("{nombre}", "nombre",
+	// "Receta de: " + this.paciente.getApellido() + ", "
+	// + this.paciente.getNombre());
+	// }
+
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Receta de: " + this.paciente.getApellido() + ", "
-						+ this.paciente.getNombre());
+		return TranslatableString.tr("{nombre}", "nombre", "Receta de: "
+				+ getPaciente().getApellido() + ", "
+				+ getPaciente().getNombre() + ". Del día "
+				+ getTurno().getHorarioTurno().getDia());
 	}
 
 	/**
@@ -125,6 +133,21 @@ public class Receta {
 
 	public void setDoctor(final Doctor doctor) {
 		this.doctor = doctor;
+	}
+
+	// }}
+
+	// {{ Turno (property)
+	private TurnoPaciente turnoPaciente;
+
+	@MemberOrder(sequence = "5")
+	@Column(allowsNull = "true")
+	public TurnoPaciente getTurno() {
+		return turnoPaciente;
+	}
+
+	public void setTurno(final TurnoPaciente turnoPaciente) {
+		this.turnoPaciente = turnoPaciente;
 	}
 	// }}
 
