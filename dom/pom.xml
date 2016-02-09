@@ -114,6 +114,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.isisaddons.wicket.gmap3</groupId>
+			<artifactId>isis-wicket-gmap3-cpt</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.isis.core</groupId>
 			<artifactId>isis-core-applib</artifactId>
 		</dependency>
@@ -157,9 +163,9 @@
 			<version>0.3m</version>
 		</dependency>
 		<dependency>
-        	<groupId>org.apache.httpcomponents</groupId>
-        	<artifactId>httpclient</artifactId>
-        </dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>

@@ -36,6 +36,9 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -83,7 +86,7 @@ import dom.turnopaciente.TurnoPacienteServicio;
 })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")
 @PersistenceCapable
-public class Paciente extends Persona {
+public class Paciente extends Persona implements Locatable {
 	/**
 	 * Representa en UI el nombre "Paciente" en carga/modificacion.
 	 */
@@ -304,6 +307,45 @@ public class Paciente extends Persona {
 
 	// }}
 
+	// {{ Localizacion (property)
+
+	@javax.jdo.annotations.Persistent
+	private Location location;
+
+	@MemberOrder(sequence = "18")
+	@Column(allowsNull = "true")
+	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
+	public Location getLocation() {
+		if (getDireccion2() != null) {
+			LocationLookupService loc = new LocationLookupService();
+			return loc.lookup(getDireccion2());
+		}
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	// }}
+
+	// {{ Direccion2 (property)
+	private String direccion2;
+
+	@MemberOrder(sequence = "19")
+	@Column(allowsNull = "true")
+	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
+	public String getDireccion2() {
+		return direccion2;
+	}
+
+	public void setDireccion2(final String direccion2) {
+		this.direccion2 = direccion2;
+	}
+
+	// }}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
+
 }
