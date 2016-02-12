@@ -273,9 +273,8 @@ public class Paciente extends Persona implements Locatable {
 	public void setListaTurnos(final List<TurnoPaciente> listaTurnos) {
 		this.listaTurnos = listaTurnos;
 	}
-	
 
-		// {{ MayoriaEdad (property)
+	// {{ MayoriaEdad (property)
 	private MayoriaEdadEnum mayoriaEdad;
 
 	@MemberOrder(sequence = "16")

@@ -107,6 +107,28 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 				"traerTurnosDisponiblesDoctor", "doctor", doctor));
 	}
 
+	public String cancelarTurno(
+			@ParameterLayout(named = "Paciente") final Paciente paciente,
+			@ParameterLayout(named = "TurnoPaciente") final TurnoPaciente turnoPaciente) {
+
+		turnoPaciente.cancelarTurno();
+		turnoPaciente.setEstado2("Cancelado");
+		turnoPaciente.getHorarioTurno().setEstado("Cancelado");
+		container.flush();
+		return "Turno Cancelado";
+	}
+
+	public List<TurnoPaciente> choices1CancelarTurno(final Paciente paciente) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerParaCancelarPorPaciente", "paciente", paciente));
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
+	public List<TurnoPaciente> buscarTurno(String turno) {
+		return allMatches(QueryDefault
+				.create(TurnoPaciente.class, "traerTodos"));
+	}
+
 	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
 	public List<Paciente> buscarPaciente(String paciente) {
 		return allMatches(QueryDefault.create(Paciente.class,

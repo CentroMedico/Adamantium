@@ -1,12 +1,9 @@
 /*
  Copyright 2015 Adamantium
-
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
-
        http://www.apache.org/licenses/LICENSE-2.0
-
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -168,7 +165,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return paciente;
 	}
 
-	
 	@MemberOrder(name = "Paciente", sequence = "5.1.2")
 	@ActionLayout(cssClass = "boton")
 	public Paciente actualizarDatos(
@@ -243,10 +239,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		container.flush();
 		return paciente;
 	}
-	
-	
-	
-	
+
 	/**
 	 * Obtiene una lista de todos los Pacientes
 	 * 
@@ -315,9 +308,8 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 				"traerCiudad", "provincia", provincias));
 	}
 
-	
 	/************************************************/
-	
+
 	/**
 	 * Choice default devuelve la primer provincia de la lista.
 	 * 
@@ -326,7 +318,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return container.firstMatch(QueryDefault.create(Provincia.class,
 				"traerTodas"));
 	}
-	
+
 	public List<Ciudad> choices7ActualizarDatos(final String apellido,
 			final String nombre, final TipoDeSexoEnum tipoSexo,
 			final LocalDate fechaNacimiento,
@@ -335,7 +327,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return container.allMatches(QueryDefault.create(Ciudad.class,
 				"traerCiudad", "provincia", provincias));
 	}
-	
+
 	/**
 	 * Valida
 	 */

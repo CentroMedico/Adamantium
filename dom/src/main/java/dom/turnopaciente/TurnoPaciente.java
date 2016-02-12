@@ -9,6 +9,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
@@ -29,7 +30,12 @@ import dom.paciente.Paciente;
 		@javax.jdo.annotations.Query(name = "traerAtendidos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 == 'Atendido'"),
 		@javax.jdo.annotations.Query(name = "traerPorPaciente", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.turnopaciente.TurnoPaciente WHERE paciente== :paciente") })
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE paciente== :paciente"),
+		@javax.jdo.annotations.Query(name = "traerParaCancelar", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible'"),
+		@javax.jdo.annotations.Query(name = "traerParaCancelarPorPaciente", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible' &&  paciente== :paciente") })
+@DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarTurno")
 @PersistenceCapable
 public class TurnoPaciente {
 
