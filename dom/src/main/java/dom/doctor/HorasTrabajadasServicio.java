@@ -33,6 +33,7 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 		final HorasTrabajadas horas = newTransientInstance(HorasTrabajadas.class);
 		horas.setDoctor(doctor);
 		horas.setIngreso("Ingreso: " + ingreso);
+		
 		persist(horas);
 		return formatoFecha.format(ingreso);
 

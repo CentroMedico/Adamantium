@@ -21,6 +21,7 @@ import java.util.List;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Join;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Sequence;
@@ -272,10 +273,9 @@ public class Paciente extends Persona implements Locatable {
 	public void setListaTurnos(final List<TurnoPaciente> listaTurnos) {
 		this.listaTurnos = listaTurnos;
 	}
+	
 
-	// }}
-
-	// {{ MayoriaEdad (property)
+		// {{ MayoriaEdad (property)
 	private MayoriaEdadEnum mayoriaEdad;
 
 	@MemberOrder(sequence = "16")

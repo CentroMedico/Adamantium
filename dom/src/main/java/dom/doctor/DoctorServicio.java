@@ -338,7 +338,12 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
-
+	
+	public Doctor verMisDatos()
+	{
+		return firstMatch(QueryDefault.create(Doctor.class,
+				"traerDoctor", "usuariovinculado", container.getUser().getName()));
+	}
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

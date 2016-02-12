@@ -465,6 +465,18 @@ public abstract class Persona {
 		this.estado = estado;
 	}
 
+	private String usuariovinculado;
+	@MemberOrder(sequence = "14")
+	@Column(allowsNull = "true")
+	public String getUsuariovinculado() {
+		return usuariovinculado;
+	}
+
+	public void setUsuariovinculado(String usuariovinculado) {
+		this.usuariovinculado = usuariovinculado;
+	}
+	
+	
 	// }}
 
 }

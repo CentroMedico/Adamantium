@@ -67,7 +67,10 @@ import dom.persona.Persona;
 		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor " + " WHERE documento ==:documento"),
 		@javax.jdo.annotations.Query(name = "traerActivos", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.doctor.Doctor where estado== 'Activo'")
+				+ "FROM dom.doctor.Doctor where estado == 'Activo'"),
+		@javax.jdo.annotations.Query(name = "traerDoctor", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.doctor.Doctor WHERE usuariovinculado == :usuariovinculado")
+		
 
 })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")

@@ -168,6 +168,85 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return paciente;
 	}
 
+	
+	@MemberOrder(name = "Paciente", sequence = "5.1.2")
+	@ActionLayout(cssClass = "boton")
+	public Paciente actualizarDatos(
+			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
+			@ParameterLayout(named = "Nombre") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String nombre,
+			@ParameterLayout(named = "Tipo De Sexo") final TipoDeSexoEnum tipoSexo,
+			@ParameterLayout(named = "Fecha de Nacimiento") final LocalDate fechaNacimiento,
+			@ParameterLayout(named = "Tipo De Documento") final TipoDocumentoEnum tipoDocumento,
+			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
+			@ParameterLayout(named = "Provincia") final Provincia provincia,
+			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
+			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
+			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
+			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
+			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
+			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
+			@ParameterLayout(named = "Numero de Carnet") @Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
+			@ParameterLayout(named = "Numero de Plan") @Parameter(optionality = Optionality.OPTIONAL) final String numPlan) {
+
+		final Paciente paciente = newTransientInstance(Paciente.class);
+		paciente.setUsuariovinculado(container.getUser().getName());
+		paciente.setApellido(apellido.substring(0, 1).toUpperCase()
+				+ apellido.substring(1));
+		paciente.setNombre(nombre.substring(0, 1).toUpperCase()
+				+ nombre.substring(1));
+		paciente.setTipoDeSexoEnum(tipoSexo);
+		paciente.setFechaNacimiento(fechaNacimiento);
+		paciente.setTipoDocumento(tipoDocumento);
+		paciente.setDocumento(documento);
+		paciente.setProvincia(provincia);
+		paciente.setCiudad(ciudad);
+		paciente.setDireccion(direccion.substring(0, 1).toUpperCase()
+				+ direccion.substring(1));
+		paciente.setCorreo(correo);
+		paciente.setTelefono(telefono);
+		paciente.setEstado(EstadoEnum.Activo);
+		paciente.setGrupoSanguineo(grupoSanguineo);
+		paciente.setFechaAlta(LocalDate.now());
+		paciente.setObraSocial(obraSocial);
+		if (obraSocial != null) {
+			paciente.setNumerodeCarnet(numCarnet);
+			paciente.setNumerodePlan(numPlan);
+		}
+		if (getDiasNacimiento_Hoy(fechaNacimiento) <= 6570) {
+			paciente.setMayoriaEdad(MayoriaEdadEnum.Menor);
+		} else
+			paciente.setMayoriaEdad(MayoriaEdadEnum.Mayor);
+		if (getDiasNacimiento_Hoy(fechaNacimiento) <= 1825) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCinco);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 3650) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorDiez);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 7300) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorVeinte);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 10950) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorTreinta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 14600) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCuarenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 18250) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorCincuenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 21900) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorSesenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 25550) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorSetenta);
+		} else if (getDiasNacimiento_Hoy(fechaNacimiento) <= 29200) {
+			paciente.setRangoEdad(RangoEdadEnum.MenorOchenta);
+		} else
+			paciente.setRangoEdad(RangoEdadEnum.MayorOchenta);
+		paciente.setDireccion2(paciente.getDireccion() + ", "
+				+ paciente.getCiudad().getNombre() + ", "
+				+ paciente.getProvincia().getNombre());
+		persist(paciente);
+		container.flush();
+		return paciente;
+	}
+	
+	
+	
+	
 	/**
 	 * Obtiene una lista de todos los Pacientes
 	 * 
@@ -236,6 +315,27 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 				"traerCiudad", "provincia", provincias));
 	}
 
+	
+	/************************************************/
+	
+	/**
+	 * Choice default devuelve la primer provincia de la lista.
+	 * 
+	 */
+	public Provincia default6ActualizarDatos() {
+		return container.firstMatch(QueryDefault.create(Provincia.class,
+				"traerTodas"));
+	}
+	
+	public List<Ciudad> choices7ActualizarDatos(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento, final String documento,
+			final Provincia provincias) {
+		return container.allMatches(QueryDefault.create(Ciudad.class,
+				"traerCiudad", "provincia", provincias));
+	}
+	
 	/**
 	 * Valida
 	 */
