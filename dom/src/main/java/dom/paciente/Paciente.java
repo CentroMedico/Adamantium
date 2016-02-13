@@ -315,9 +315,11 @@ public class Paciente extends Persona implements Locatable {
 	@Column(allowsNull = "true")
 	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
 	public Location getLocation() {
-		if (getDireccion2() != null) {
+		if (getDireccion() != null) {
 			LocationLookupService loc = new LocationLookupService();
-			return loc.lookup(getDireccion2());
+			return loc.lookup(this.getDireccion() + ", "
+					+ this.getCiudad().getNombre() + ", "
+					+ this.getProvincia().getNombre());
 		}
 		return location;
 	}
@@ -328,21 +330,15 @@ public class Paciente extends Persona implements Locatable {
 
 	// }}
 
-	// {{ Direccion2 (property)
-	private String direccion2;
-
-	@MemberOrder(sequence = "19")
-	@Column(allowsNull = "true")
-	@Property(editing = Editing.DISABLED, hidden = Where.ANYWHERE)
-	public String getDireccion2() {
-		return direccion2;
-	}
-
-	public void setDireccion2(final String direccion2) {
-		this.direccion2 = direccion2;
-	}
-
-	// }}
+	// private List<Paciente> listaPaciente = new ArrayList<Paciente>();
+	//
+	// @MemberOrder(sequence = "16")
+	// @CollectionLayout(render = RenderType.EAGERLY)
+	// @NotPersistent
+	// public List<Paciente> getListaDireccion() {
+	// this.listaPaciente.add(this);
+	// return this.listaPaciente;
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

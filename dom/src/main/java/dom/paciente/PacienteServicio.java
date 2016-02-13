@@ -157,9 +157,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			paciente.setRangoEdad(RangoEdadEnum.MenorOchenta);
 		} else
 			paciente.setRangoEdad(RangoEdadEnum.MayorOchenta);
-		paciente.setDireccion2(paciente.getDireccion() + ", "
-				+ paciente.getCiudad().getNombre() + ", "
-				+ paciente.getProvincia().getNombre());
 		persist(paciente);
 		container.flush();
 		return paciente;
@@ -232,9 +229,6 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			paciente.setRangoEdad(RangoEdadEnum.MenorOchenta);
 		} else
 			paciente.setRangoEdad(RangoEdadEnum.MayorOchenta);
-		paciente.setDireccion2(paciente.getDireccion() + ", "
-				+ paciente.getCiudad().getNombre() + ", "
-				+ paciente.getProvincia().getNombre());
 		persist(paciente);
 		container.flush();
 		return paciente;
