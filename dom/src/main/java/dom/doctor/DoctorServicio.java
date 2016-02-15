@@ -102,6 +102,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Provincia") final Provincia provincia,
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
+			@ParameterLayout(named = "Código Postal") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.CODIGOPOSTAL) final String codigoPostal,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -118,6 +119,7 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		doctor.setDocumento(documento);
 		doctor.setProvincia(provincia);
 		doctor.setCiudad(ciudad);
+		doctor.setCodigoPostal(codigoPostal);
 		doctor.setDireccion(direccion.substring(0, 1).toUpperCase()
 				+ direccion.substring(1));
 		doctor.setCorreo(correo);
@@ -255,7 +257,8 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 			final TipoDeSexoEnum tipoSexo, final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
-			final String direccion, final String correo, final String telefono,
+			final String codigoPostal, final String direccion,
+			final String correo, final String telefono,
 			final EspecialidadEnum especialidad) {
 
 		final Doctor miDoctor = container.firstMatch(QueryDefault.create(
@@ -338,12 +341,12 @@ public class DoctorServicio extends AbstractFactoryAndRepository {
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
 	}
-	
-	public Doctor verMisDatos()
-	{
-		return firstMatch(QueryDefault.create(Doctor.class,
-				"traerDoctor", "usuariovinculado", container.getUser().getName()));
+
+	public Doctor verMisDatos() {
+		return firstMatch(QueryDefault.create(Doctor.class, "traerDoctor",
+				"usuariovinculado", container.getUser().getName()));
 	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

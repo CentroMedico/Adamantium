@@ -309,6 +309,30 @@ public abstract class Persona {
 
 	// }}
 
+	// {{ CodigoPostal (property)
+	private String codigoPostal;
+
+	@MemberOrder(sequence = "9")
+	@Column(allowsNull = "false")
+	public String getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	public void setCodigoPostal(final String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+	// }}
+
+	public String validateCodigoPostal(String codPostal) {
+
+		if (codPostal.matches("[0-9]{4}$+") == false) {
+			return "Datos erroneos, vuelva a intentarlo";
+		} else {
+			return null;
+		}
+	}
+
 	private String direccion;
 
 	/**
@@ -316,7 +340,7 @@ public abstract class Persona {
 	 * 
 	 * @return direccion String
 	 */
-	@MemberOrder(sequence = "9")
+	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "false")
 	public String getDireccion() {
 		return direccion;
@@ -354,7 +378,7 @@ public abstract class Persona {
 	 * 
 	 * @return correo String
 	 */
-	@MemberOrder(sequence = "10")
+	@MemberOrder(sequence = "11")
 	@Column(allowsNull = "false")
 	public String getCorreo() {
 		return correo;
@@ -393,7 +417,7 @@ public abstract class Persona {
 	 * 
 	 * @return telefono String
 	 */
-	@MemberOrder(sequence = "11")
+	@MemberOrder(sequence = "12")
 	@Column(allowsNull = "false")
 	public String getTelefono() {
 		return telefono;
@@ -427,7 +451,7 @@ public abstract class Persona {
 	// {{ FechaAlta (property)
 	private LocalDate fechaAlta;
 
-	@MemberOrder(sequence = "12")
+	@MemberOrder(sequence = "13")
 	@Column(allowsNull = "false")
 	@Property(editing = Editing.DISABLED)
 	public LocalDate getFechaAlta() {
@@ -448,7 +472,7 @@ public abstract class Persona {
 	 * 
 	 * @return estado String
 	 */
-	@MemberOrder(sequence = "13")
+	@MemberOrder(sequence = "14")
 	@Column(allowsNull = "false")
 	public EstadoEnum getEstado() {
 		return estado;
@@ -466,7 +490,8 @@ public abstract class Persona {
 	}
 
 	private String usuariovinculado;
-	@MemberOrder(sequence = "14")
+
+	@MemberOrder(sequence = "15")
 	@Column(allowsNull = "true")
 	public String getUsuariovinculado() {
 		return usuariovinculado;
@@ -475,8 +500,7 @@ public abstract class Persona {
 	public void setUsuariovinculado(String usuariovinculado) {
 		this.usuariovinculado = usuariovinculado;
 	}
-	
-	
+
 	// }}
 
 }

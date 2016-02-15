@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -47,10 +48,15 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.value.Blob;
+import org.joda.time.LocalDate;
 
+import dom.ciudadprovincia.Ciudad;
+import dom.ciudadprovincia.Provincia;
 import dom.doctor.Doctor;
 import dom.reportes.AgendaDataSource;
 import dom.reportes.ReporteAgenda;
+import dom.tipodesexo.TipoDeSexoEnum;
+import dom.tipodocumento.TipoDocumentoEnum;
 import dom.turnopaciente.TurnoPaciente;
 
 @DomainService(repositoryFor = AgendaDoctor.class)
@@ -102,13 +108,31 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 			}
 		}
 
-		return "Agenda de doctor creada correctamente";
+		return "Agenda quincenal del doctor creada correctamente";
 	}
 
 	public List<Doctor> choices0CrearAgendaQuincenal() {
 
 		return container.allMatches(QueryDefault.create(Doctor.class,
 				"traerActivos"));
+	}
+
+	// /Valida agenda quincenal Doctor
+
+	AgendaDoctor agenda = new AgendaDoctor();
+
+	public String validateCrearAgendaQuincenal(final Doctor doctor) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		Date mañana = cal.getTime();
+		cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 24);
+		mañana = cal.getTime();
+
+		if (agenda.getDia().after(mañana))
+			return "No se puede crear agenda. El doctor ya tiene creada la agenda.";
+		return "Agenda quincenal del doctor creada correctamente";
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -145,7 +169,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 			}
 		}
 
-		return "Agenda de doctor creada correctamente";
+		return "Agenda mensual del doctor creada correctamente";
 	}
 
 	public List<Doctor> choices0CrearAgendaMensual() {

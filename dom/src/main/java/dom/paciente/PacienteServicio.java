@@ -102,6 +102,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Provincia") final Provincia provincia,
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
+			@ParameterLayout(named = "Código Postal") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.CODIGOPOSTAL) final String codigoPostal,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -121,6 +122,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setDocumento(documento);
 		paciente.setProvincia(provincia);
 		paciente.setCiudad(ciudad);
+		paciente.setCodigoPostal(codigoPostal);
 		paciente.setDireccion(direccion.substring(0, 1).toUpperCase()
 				+ direccion.substring(1));
 		paciente.setCorreo(correo);
@@ -173,6 +175,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Provincia") final Provincia provincia,
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
+			@ParameterLayout(named = "Código Postal") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.CODIGOPOSTAL) final String codigoPostal,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
@@ -193,6 +196,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		paciente.setDocumento(documento);
 		paciente.setProvincia(provincia);
 		paciente.setCiudad(ciudad);
+		paciente.setCodigoPostal(codigoPostal);
 		paciente.setDireccion(direccion.substring(0, 1).toUpperCase()
 				+ direccion.substring(1));
 		paciente.setCorreo(correo);
@@ -331,7 +335,36 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
-			final String direccion, final String correo, final String telefono,
+			final String codigoPostal, final String direccion,
+			final String correo, final String telefono,
+			final GrupoSanguineoEnum grupoSanguineo,
+			final ObraSocial obraSocial, final String numCarnet,
+			final String numPlan) {
+
+		final Paciente miPaciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "buscarDocDuplicados", "documento", documento));
+		if (miPaciente != null) {
+			if (miPaciente.getDocumento().equals(documento)) {
+				return "Ya existe un Paciente con este numero de documento: "
+						+ documento;
+			}
+		}
+		if (fechaNacimiento.isAfter(fecha_actual))
+			return "La fecha de Nacimiento debe ser menor o igual a la fecha actual";
+		if (validaMayorEdad(fechaNacimiento) == false)
+			return "El Paciente es menor a 2 años";
+		if (validaMayorCien(fechaNacimiento) == false)
+			return "El paciente no puede ser mayor a 100 años";
+		return "";
+	}
+
+	public String validateActualizarDatos(final String apellido,
+			final String nombre, final TipoDeSexoEnum tipoSexo,
+			final LocalDate fechaNacimiento,
+			final TipoDocumentoEnum tipoDocumento, final String documento,
+			final Provincia provincia, final Ciudad ciudad,
+			final String codigoPostal, final String direccion,
+			final String correo, final String telefono,
 			final GrupoSanguineoEnum grupoSanguineo,
 			final ObraSocial obraSocial, final String numCarnet,
 			final String numPlan) {

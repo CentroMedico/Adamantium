@@ -99,6 +99,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Documento") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String documento,
 			@ParameterLayout(named = "Provincia") final Provincia provincia,
 			@ParameterLayout(named = "Ciudad") final Ciudad ciudad,
+			@ParameterLayout(named = "Código Postal") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.CODIGOPOSTAL) final String codigoPostal,
 			@ParameterLayout(named = "Direccion") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.DIRECCION) final String direccion,
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono) {
@@ -114,6 +115,7 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 		dueño.setDocumento(documento);
 		dueño.setProvincia(provincia);
 		dueño.setCiudad(ciudad);
+		dueño.setCodigoPostal(codigoPostal);
 		dueño.setDireccion(direccion.substring(0, 1).toUpperCase()
 				+ direccion.substring(1));
 		dueño.setCorreo(correo);
@@ -203,7 +205,8 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 			final LocalDate fechaNacimiento,
 			final TipoDocumentoEnum tipoDocumento, final String documento,
 			final Provincia provincia, final Ciudad ciudad,
-			final String direccion, final String correo, final String telefono) {
+			final String codigoPostal, final String direccion,
+			final String correo, final String telefono) {
 
 		final Dueño miDueño = container.firstMatch(QueryDefault.create(
 				Dueño.class, "buscarDuplicados", "documento", documento));
