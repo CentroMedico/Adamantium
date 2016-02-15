@@ -50,7 +50,9 @@ import dom.persona.Persona;
 				+ " && apellido.indexOf(:parametro) >= 0 "),
 		@javax.jdo.annotations.Query(name = "buscarDocDuplicados", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.paciente.Paciente "
-				+ " WHERE documento ==:documento") })
+				+ " WHERE documento ==:documento"),
+		@javax.jdo.annotations.Query(name = "traerRecepcionista", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.recepcionista.Recepcionista WHERE usuariovinculado == :usuariovinculado")})
 @DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)

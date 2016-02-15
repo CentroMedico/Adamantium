@@ -65,7 +65,7 @@ public class MedicoFixture extends Fixture {
 	private Doctor create(final String matricula, final String apellido, final String nombre, final String documento,
 			final String correo, final String telefono, ExecutionContext executionContext) {
 		return executionContext.addResult(this, repoDoctor.crearDoctor(matricula, apellido, nombre, null, null, null,
-				documento, null, null, null, correo, telefono, null));
+				documento, null, null, null, correo, telefono, null, null));
 	}
 
 	@javax.inject.Inject

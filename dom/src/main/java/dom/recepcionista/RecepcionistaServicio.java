@@ -34,6 +34,7 @@ import com.google.common.base.Predicate;
 
 import dom.ciudadprovincia.Ciudad;
 import dom.ciudadprovincia.Provincia;
+import dom.doctor.Doctor;
 import dom.estado.EstadoEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
@@ -270,6 +271,11 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 
 		Days meses = Days.daysBetween(fechadeNacimiento, fecha_actual);
 		return meses.getDays();
+	}
+	
+	public Doctor verMisDatos() {
+		return firstMatch(QueryDefault.create(Doctor.class, "traerRecepcionista",
+				"usuariovinculado", container.getUser().getName()));
 	}
 
 	@javax.inject.Inject

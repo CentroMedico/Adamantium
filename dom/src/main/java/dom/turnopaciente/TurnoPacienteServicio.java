@@ -109,7 +109,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	public String cancelarTurno(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "TurnoPaciente") final TurnoPaciente turnoPaciente) {
+			@ParameterLayout(named = "Turno Paciente") final TurnoPaciente turnoPaciente) {
 
 		turnoPaciente.cancelarTurno();
 		turnoPaciente.setEstado2("Cancelado");
