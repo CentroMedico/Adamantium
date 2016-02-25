@@ -108,7 +108,8 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 			}
 		}
 
-		return "Agenda quincenal del doctor creada correctamente";
+		return "Agenda quincenal del doctor " + doctor.getApellido() + ", "
+		+ doctor.getNombre() + " creada correctamente";
 	}
 
 	public List<Doctor> choices0CrearAgendaQuincenal() {
@@ -117,23 +118,23 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 				"traerActivos"));
 	}
 
-	// /Valida agenda quincenal Doctor
-
-	AgendaDoctor agenda = new AgendaDoctor();
-
-	public String validateCrearAgendaQuincenal(final Doctor doctor) {
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		Date mañana = cal.getTime();
-		cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 24);
-		mañana = cal.getTime();
-
-		if (agenda.getDia().after(mañana))
-			return "No se puede crear agenda. El doctor ya tiene creada la agenda.";
-		return "Agenda quincenal del doctor creada correctamente";
-
-	}
+//	// /Valida agenda quincenal Doctor
+//
+//	AgendaDoctor agenda = new AgendaDoctor();
+//
+//	public String validateCrearAgendaQuincenal(final Doctor doctor) {
+//
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(new Date());
+//		Date mañana = cal.getTime();
+//		cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 24);
+//		mañana = cal.getTime();
+//
+//		if (agenda.getDia().after(mañana))
+//			return "No se puede crear agenda. El doctor ya tiene creada la agenda.";
+//		return "Agenda quincenal del doctor creada correctamente";
+//
+//	}
 
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "51")
@@ -169,7 +170,8 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 			}
 		}
 
-		return "Agenda mensual del doctor creada correctamente";
+		return "Agenda mensual del doctor " + doctor.getApellido() + ", "
+		+ doctor.getNombre() + " creada correctamente";
 	}
 
 	public List<Doctor> choices0CrearAgendaMensual() {

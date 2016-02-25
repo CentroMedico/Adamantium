@@ -328,6 +328,15 @@ public class Paciente extends Persona implements Locatable {
 		this.location = location;
 	}
 
+	private List<Paciente> listaPaciente = new ArrayList<Paciente>();
+	@MemberOrder(sequence = "16")
+	@CollectionLayout(render = RenderType.EAGERLY)
+    @NotPersistent
+	public List<Paciente> getListaDireccion()
+	{
+		this.listaPaciente.add(this);
+		return this.listaPaciente;
+	}
 	@javax.inject.Inject
 	DomainObjectContainer container;
 

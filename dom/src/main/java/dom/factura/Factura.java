@@ -17,15 +17,19 @@ import javax.jdo.annotations.SequenceStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
 import dom.turnopaciente.TurnoPaciente;
 
-@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerFacturas", language = "JDOQL", value = "SELECT "
-		+ " FROM dom.factura.Factura"), })
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "traerFacturas", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.factura.Factura"), })
 @Sequence(name = "secuenciaNumeroFactura", strategy = SequenceStrategy.CONTIGUOUS)
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
 @DomainObject(autoCompleteRepository = FacturaServicio.class, autoCompleteAction = "autocompleteFactura")
@@ -37,6 +41,11 @@ public class Factura {
 	 */
 	public String iconName() {
 		return "Factura";
+	}
+
+	public TranslatableString title() {
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Factura: " + this.getPaciente().getApellido() + ", " + this.getPaciente().getNombre()+". Factura N°: "+this.getNumero());
 	}
 
 	/**
@@ -58,6 +67,7 @@ public class Factura {
 	@Title(prepend = "Factura Nº ")
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence = "secuenciaNumeroFactura")
 	@MemberOrder(sequence = "1")
+	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
 	public long getNumero() {
 		return numero;

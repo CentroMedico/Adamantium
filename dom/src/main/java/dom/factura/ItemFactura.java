@@ -83,29 +83,29 @@ public class ItemFactura {
 		this.precio = precio;
 	}
 
-	// {{ Cantidad (property)
-	private int cantidad;
-
-	/**
-	 * Obtiene la cantidad de una nueva Factura
-	 * 
-	 * @return cantidad int
-	 */
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "false")
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	/**
-	 * Setea la cantidad de una nueva Factura
-	 * 
-	 * @param cantidad
-	 *            int
-	 */
-
-	public void setCantidad(final int cantidad) {
-		this.cantidad = cantidad;
-	}
+	// // {{ Cantidad (property)
+	// private int cantidad;
+	//
+	// /**
+	// * Obtiene la cantidad de una nueva Factura
+	// *
+	// * @return cantidad int
+	// */
+	// @MemberOrder(sequence = "1")
+	// @Column(allowsNull = "false")
+	// public int getCantidad() {
+	// return cantidad;
+	// }
+	//
+	// /**
+	// * Setea la cantidad de una nueva Factura
+	// *
+	// * @param cantidad
+	// * int
+	// */
+	//
+	// public void setCantidad(final int cantidad) {
+	// this.cantidad = cantidad;
+	// }
 
 }

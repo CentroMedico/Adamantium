@@ -43,20 +43,19 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(cssClass = "boton")
-	public Factura crearFactura(
-			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Cantidad") final int cant,
+	public Factura crearFactura(@ParameterLayout(named = "Paciente") final Paciente paciente,
+			// @ParameterLayout(named = "Cantidad") final int cant,
 			@ParameterLayout(named = "Precio") final Double precio,
 			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		double precioTotal = 0;
 		String nomb = "Coseguro-Atencion";
 		final Factura factura = newTransientInstance(Factura.class);
 		final ItemFactura item = newTransientInstance(ItemFactura.class);
-		item.setCantidad(cant);
+		// item.setCantidad(cant);
 		item.setNombre(nomb);
 		item.setPrecio(precio);
 		persist(item);
-		precioTotal = precioTotal + (cant * precio);
+		precioTotal = precioTotal + precio;
 
 		factura.setPaciente(paciente);
 		factura.addToItems(item);
@@ -69,14 +68,12 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	public List<Paciente> choices0CrearFactura(final Paciente paciente) {
 
-		return allMatches(QueryDefault.create(Paciente.class,
-				"traerPacientesActivos"));
+		return allMatches(QueryDefault.create(Paciente.class, "traerPacientesActivos"));
 	}
 
-	public List<TurnoPaciente> choices3CrearFactura(final Paciente paciente,
-			final int cant, final Double precio) {
-		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
-				"traerAtendidosPorPaciente", "paciente", paciente));
+	public List<TurnoPaciente> choices2CrearFactura(final Paciente paciente, final Double precio) {
+		return container.allMatches(
+				QueryDefault.create(TurnoPaciente.class, "traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
 	// @MemberOrder(name = "Factura", sequence = "2.3")
@@ -86,8 +83,9 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Factura> autocompleteFactura(final String factura) {
-		return allMatches(QueryDefault.create(Factura.class, "traerFacturas",
-				factura.toUpperCase()));
+		return allMatches(QueryDefault.create(Factura.class, "traerFacturas", factura
+		// .toUpperCase()
+		));
 	}
 
 	/**
@@ -104,8 +102,7 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	@PostConstruct
 	public void init() throws IOException {
-		pdfAsBytes = Resources.toByteArray(Resources.getResource(
-				this.getClass(), "plantilla.pdf"));
+		pdfAsBytes = Resources.toByteArray(Resources.getResource(this.getClass(), "plantilla.pdf"));
 	}
 
 	// @NotContributed(NotContributed.As.ASSOCIATION)
@@ -127,21 +124,21 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 			return new Blob(name, mimeType, bytes);
 		}
 	}
+	
+	public List<Factura> choices0ImprimirFactura() {
+		return container.allMatches(
+				QueryDefault.create(Factura.class, "traerFacturas"));
+	}
 
 	private PDDocument cargarPlantilla(Factura _factura) throws Exception {
-		PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(
-				pdfAsBytes));
+		PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfAsBytes));
 
 		PDAcroForm pdfForm = pdfDocument.getDocumentCatalog().getAcroForm();
 
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm",
-				new Locale("es_AR"));
-		pdfForm.getField("fecha").setValue(
-				formato.format(_factura.getFechaHora()));
-		pdfForm.getField("numero").setValue(
-				String.valueOf(_factura.getNumero()));
-		pdfForm.getField("total").setValue(
-				new DecimalFormat("#.00").format(_factura.getTotal()));
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm", new Locale("es_AR"));
+		pdfForm.getField("fecha").setValue(formato.format(_factura.getFechaHora()));
+		pdfForm.getField("numero").setValue(String.valueOf(_factura.getNumero()));
+		pdfForm.getField("total").setValue(new DecimalFormat("#.00").format(_factura.getTotal()));
 
 		int i = 1;
 		Iterator<ItemFactura> iterador = _factura.getItems().iterator();
@@ -151,11 +148,10 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 			String txtDescripcion = "desc" + i;
 			String txtPrecio = "precio" + i;
 
-			pdfForm.getField(txtDescripcion).setValue(
-					item.getCantidad() + " " + item.getNombre() + " ");
-
-			pdfForm.getField(txtPrecio).setValue(
-					new DecimalFormat("#.00").format(item.getPrecio()));
+			// pdfForm.getField(txtDescripcion).setValue(item.getCantidad() + "
+			// " + item.getNombre() + " ");}
+			pdfForm.getField(txtDescripcion).setValue(item.getNombre() + " ");
+			pdfForm.getField(txtPrecio).setValue(new DecimalFormat("#.00").format(item.getPrecio()));
 
 			i++;
 		}
