@@ -7,7 +7,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -27,13 +26,24 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.paciente.Paciente;
 import dom.turnopaciente.TurnoPaciente;
 
-@javax.jdo.annotations.Queries({
-		@javax.jdo.annotations.Query(name = "traerFacturas", language = "JDOQL", value = "SELECT "
-				+ " FROM dom.factura.Factura"), })
+@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerFacturas", language = "JDOQL", value = "SELECT "
+		+ " FROM dom.factura.Factura"), })
 @Sequence(name = "secuenciaNumeroFactura", strategy = SequenceStrategy.CONTIGUOUS)
-@PersistenceCapable(identityType = IdentityType.DATASTORE)
+@PersistenceCapable
 @DomainObject(autoCompleteRepository = FacturaServicio.class, autoCompleteAction = "autocompleteFactura")
 public class Factura {
+
+	/**
+	 * Representa en UI el nombre "Factura" en carga/modificacion.
+	 */
+	/*----------------------------------------------------*/
+	public TranslatableString title() {
+		return TranslatableString.tr("{nombre}", "nombre",
+				"Factura N° " + this.getNumeroFactura() + ". Del paciente: "
+						+ this.getPaciente().getApellido() + ", "
+						+ this.getPaciente().getNombre());
+	}
+
 	/**
 	 * Retorna el nombre del icono de una nueva Factura
 	 * 
@@ -43,11 +53,6 @@ public class Factura {
 		return "Factura";
 	}
 
-	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre",
-				"Factura: " + this.getPaciente().getApellido() + ", " + this.getPaciente().getNombre()+". Factura N°: "+this.getNumero());
-	}
-
 	/**
 	 * Constructor de la clase Factura
 	 */
@@ -55,8 +60,8 @@ public class Factura {
 
 	}
 
-	// {{ Numero (property)
-	private long numero;
+	// {{ NumeroFactura (property)
+	private long numeroFactura;
 
 	/**
 	 * Obtiene el numero de una nueva Factura, el cual se genera en forma
@@ -67,10 +72,10 @@ public class Factura {
 	@Title(prepend = "Factura Nº ")
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT, sequence = "secuenciaNumeroFactura")
 	@MemberOrder(sequence = "1")
-	@Property(editing = Editing.DISABLED)
 	@Column(allowsNull = "false")
-	public long getNumero() {
-		return numero;
+	@Property(editing = Editing.DISABLED)
+	public long getNumeroFactura() {
+		return numeroFactura;
 	}
 
 	/**
@@ -79,8 +84,8 @@ public class Factura {
 	 * @param numero
 	 *            long
 	 */
-	public void setNumero(final long numero) {
-		this.numero = numero;
+	public void setNumeroFactura(final long numeroFactura) {
+		this.numeroFactura = numeroFactura;
 	}
 
 	// {{ Total (property)

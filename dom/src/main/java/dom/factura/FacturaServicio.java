@@ -27,8 +27,6 @@ import org.apache.isis.applib.value.Blob;
 
 import com.google.common.io.Resources;
 
-import dom.agendadoctor.AgendaDoctor;
-import dom.especialidad.EspecialidadEnum;
 import dom.paciente.Paciente;
 import dom.turnopaciente.TurnoPaciente;
 
@@ -43,17 +41,18 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(cssClass = "boton")
-	public Factura crearFactura(@ParameterLayout(named = "Paciente") final Paciente paciente,
-			// @ParameterLayout(named = "Cantidad") final int cant,
+	public Factura crearFactura(
+			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Precio") final Double precio,
-			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
+			@ParameterLayout(named = "Turnos Atendidos") final TurnoPaciente turno) {
 		double precioTotal = 0;
 		String nomb = "Coseguro-Atencion";
+		// String motivo = turno.getMotivoConsulta();
 		final Factura factura = newTransientInstance(Factura.class);
 		final ItemFactura item = newTransientInstance(ItemFactura.class);
-		// item.setCantidad(cant);
 		item.setNombre(nomb);
 		item.setPrecio(precio);
+		// item.setMotivo(motivo);
 		persist(item);
 		precioTotal = precioTotal + precio;
 
@@ -68,24 +67,20 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	public List<Paciente> choices0CrearFactura(final Paciente paciente) {
 
-		return allMatches(QueryDefault.create(Paciente.class, "traerPacientesActivos"));
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
 	}
 
-	public List<TurnoPaciente> choices2CrearFactura(final Paciente paciente, final Double precio) {
-		return container.allMatches(
-				QueryDefault.create(TurnoPaciente.class, "traerAtendidosPorPaciente", "paciente", paciente));
+	public List<TurnoPaciente> choices2CrearFactura(final Paciente paciente,
+			final Double precio) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
-
-	// @MemberOrder(name = "Factura", sequence = "2.3")
-	// public List<Factura> listarFactura() {
-	// return container.allInstances(Factura.class);
-	// }
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public List<Factura> autocompleteFactura(final String factura) {
-		return allMatches(QueryDefault.create(Factura.class, "traerFacturas", factura
-		// .toUpperCase()
-		));
+		return allMatches(QueryDefault.create(Factura.class, "traerFacturas",
+				factura.toUpperCase()));
 	}
 
 	/**
@@ -102,13 +97,10 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 	@PostConstruct
 	public void init() throws IOException {
-		pdfAsBytes = Resources.toByteArray(Resources.getResource(this.getClass(), "plantilla.pdf"));
+		pdfAsBytes = Resources.toByteArray(Resources.getResource(
+				this.getClass(), "plantilla.pdf"));
 	}
 
-	// @NotContributed(NotContributed.As.ASSOCIATION)
-	// @NotInServiceMenu
-	// @ActionSemantics(Of.SAFE)
-	// @ActionLayout(hidden = Where.EVERYWHERE)
 	@MemberOrder(sequence = "3.3")
 	public Blob imprimirFactura(final Factura _factura) throws Exception {
 
@@ -117,28 +109,34 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 			final ByteArrayOutputStream target = new ByteArrayOutputStream();
 			pdfDocument.save(target);
 
-			final String name = "Factura-" + _factura.getNumero() + ".pdf";
+			final String name = "Factura-" + _factura.getNumeroFactura()
+					+ ".pdf";
 			final String mimeType = "application/pdf";
 			final byte[] bytes = target.toByteArray();
 
 			return new Blob(name, mimeType, bytes);
 		}
 	}
-	
+
 	public List<Factura> choices0ImprimirFactura() {
-		return container.allMatches(
-				QueryDefault.create(Factura.class, "traerFacturas"));
+
+		return allMatches(QueryDefault.create(Factura.class, "traerFacturas"));
 	}
 
 	private PDDocument cargarPlantilla(Factura _factura) throws Exception {
-		PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfAsBytes));
+		PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(
+				pdfAsBytes));
 
 		PDAcroForm pdfForm = pdfDocument.getDocumentCatalog().getAcroForm();
 
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm", new Locale("es_AR"));
-		pdfForm.getField("fecha").setValue(formato.format(_factura.getFechaHora()));
-		pdfForm.getField("numero").setValue(String.valueOf(_factura.getNumero()));
-		pdfForm.getField("total").setValue(new DecimalFormat("#.00").format(_factura.getTotal()));
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm",
+				new Locale("es_AR"));
+		pdfForm.getField("fecha").setValue(
+				formato.format(_factura.getFechaHora()));
+		pdfForm.getField("numero").setValue(
+				String.valueOf(_factura.getNumeroFactura()));
+		pdfForm.getField("total").setValue(
+				new DecimalFormat("#.00").format(_factura.getTotal()));
 
 		int i = 1;
 		Iterator<ItemFactura> iterador = _factura.getItems().iterator();
@@ -147,11 +145,14 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 			String txtDescripcion = "desc" + i;
 			String txtPrecio = "precio" + i;
+			// String txtMotivo = "motivo" + i;
 
-			// pdfForm.getField(txtDescripcion).setValue(item.getCantidad() + "
-			// " + item.getNombre() + " ");}
 			pdfForm.getField(txtDescripcion).setValue(item.getNombre() + " ");
-			pdfForm.getField(txtPrecio).setValue(new DecimalFormat("#.00").format(item.getPrecio()));
+
+			pdfForm.getField(txtPrecio).setValue(
+					new DecimalFormat("#.00").format(item.getPrecio()));
+
+			// pdfForm.getField(txtMotivo).setValue(item.getMotivo() + " ");
 
 			i++;
 		}

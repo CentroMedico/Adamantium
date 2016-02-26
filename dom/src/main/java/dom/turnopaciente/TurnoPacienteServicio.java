@@ -1,23 +1,11 @@
 package dom.turnopaciente;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -78,22 +66,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
-	public List<Paciente> choices3AsignarTurno(
-			final EspecialidadEnum especialidad, final Doctor doctor,
-			final AgendaDoctor agendaDoctor, final Paciente paciente) {
-
-		return allMatches(QueryDefault.create(Paciente.class,
-				"traerPacientesActivos"));
-	}
-
-	// public List<Doctor> choices1AsignarTurno(final EspecialidadEnum
-	// especialidad) {
-	//
-	// return container.allMatches(QueryDefault.create(Doctor.class,
-	// "traerPorEspecialidad", "especialidad", especialidad));
-	//
-	// }
-
 	public List<Doctor> choices1AsignarTurno(final EspecialidadEnum especialidad) {
 
 		return container.allMatches(QueryDefault.create(Doctor.class,
@@ -102,6 +74,61 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	}
 
 	public List<AgendaDoctor> choices2AsignarTurno(
+			final EspecialidadEnum especialidad, Doctor doctor) {
+		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
+				"traerTurnosDisponiblesDoctor", "doctor", doctor));
+	}
+
+	public List<Paciente> choices3AsignarTurno(
+			final EspecialidadEnum especialidad, final Doctor doctor,
+			final AgendaDoctor agendaDoctor, final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
+	@ActionLayout(cssClass = "boton")
+	public TurnoPaciente sacarTurno(
+			@ParameterLayout(named = "Especialidad") final EspecialidadEnum especialidad,
+			@ParameterLayout(named = "Doctor") final Doctor doctor,
+			@ParameterLayout(named = "Horario") final AgendaDoctor agendaDoctor,
+			@ParameterLayout(named = "Motivo de Consulta") final String motivoConsulta) {
+
+		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
+
+		Paciente paciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+				container.getUser().getName()));
+
+		turno.getEstado().solicitarTurno(doctor, paciente);
+		turno.setHorarioTurno(agendaDoctor);
+		agendaDoctor.setEstado(turno.getEstadoTurno());
+		turno.setMensajeAPaciente(mensajeDia
+				+ fecha.format(agendaDoctor.getDia()) + mensajeDoctor
+				+ doctor.getApellido() + " " + doctor.getNombre());
+		turno.setEstado2(turno.getEstadoTurno());
+		EnviarEmail(paciente, turno);
+		turno.setMotivoConsulta(motivoConsulta);
+		paciente.getListaTurnos().add(turno);
+		persistIfNotAlready(turno);
+		container.flush();
+		return turno;
+	}
+
+	public EspecialidadEnum default0SacarTurno() {
+
+		return EspecialidadEnum.Clinica_General;
+
+	}
+
+	public List<Doctor> choices1SacarTurno(final EspecialidadEnum especialidad) {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivosPorEspecialidad", "especialidad", especialidad));
+
+	}
+
+	public List<AgendaDoctor> choices2SacarTurno(
 			final EspecialidadEnum especialidad, Doctor doctor) {
 		return container.allMatches(QueryDefault.create(AgendaDoctor.class,
 				"traerTurnosDisponiblesDoctor", "doctor", doctor));

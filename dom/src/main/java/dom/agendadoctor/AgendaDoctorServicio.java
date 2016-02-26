@@ -48,11 +48,13 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.value.Blob;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import dom.ciudadprovincia.Ciudad;
 import dom.ciudadprovincia.Provincia;
 import dom.doctor.Doctor;
+import dom.especialidad.EspecialidadEnum;
 import dom.reportes.AgendaDataSource;
 import dom.reportes.ReporteAgenda;
 import dom.tipodesexo.TipoDeSexoEnum;
@@ -85,6 +87,20 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		fecha.setMinutes(00);
 		fecha.setSeconds(00);
 
+		// //////PARA VALIDAR////////////
+
+		// Date mñna = new Date();
+		// mñna = SumarFecha(mñna, 1);
+		// mñna.setHours(7);
+		// mñna.setMinutes(0);
+		// mñna.setSeconds(0);
+
+		// Date ultimo = new Date();
+		// ultimo = SumarFecha(ultimo, 16);
+		// ultimo.setHours(20);
+		// ultimo.setMinutes(0);
+		// ultimo.setSeconds(0);
+
 		for (int x = 0; x < 15; x++) {
 			fecha = SumarFecha(fecha, 1);
 
@@ -94,12 +110,41 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 
 			for (int i = 0; i < 27; i++) {
 
+				// Date dia = new Date();
+
 				final AgendaDoctor agenda = newTransientInstance(AgendaDoctor.class);
+				// final AgendaDoctor agenda = container.firstMatch(QueryDefault
+				// .create(AgendaDoctor.class, "buscarTurnosRepetidos",
+				// "dia", dia));
+				// // "dia", fecha));
 				Calendar c1 = GregorianCalendar.getInstance();
 
 				agenda.setDia(fecha);
 				agenda.setDoctor(doctor);
 				agenda.setEstado(turno.getEstadoTurno());
+
+				// if (agenda.getDia().equals(mñna)) {
+				// // if (agenda.getDia().equals(ultimo)) {
+				// // if (agenda.getEstado().equals("Disponible")) {
+				// return "No se puede crear agenda";
+				// }
+
+				// //
+
+				// final AgendaDoctor agenda =
+				// container.firstMatch(QueryDefault.create(
+				// AgendaDoctor.class, "buscarTurnosRepetidos", "dia", dia));
+
+				// if (agenda != null) {
+				//
+				// // if (agenda.getDia().equals(dia)) {
+				// if (agenda.getDia().equals(fecha)) {
+				// return "El doctor ya posee la agenda creada.";
+				// }
+				// }
+
+				// //
+
 				doctor.getListaAgenda().add(agenda);
 				c1 = agregarMinutos(fecha, 30);
 				fecha = c1.getTime();
@@ -109,7 +154,8 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		}
 
 		return "Agenda quincenal del doctor " + doctor.getApellido() + ", "
-		+ doctor.getNombre() + " creada correctamente";
+				+ doctor.getNombre() + " creada correctamente";
+
 	}
 
 	public List<Doctor> choices0CrearAgendaQuincenal() {
@@ -118,23 +164,117 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 				"traerActivos"));
 	}
 
-//	// /Valida agenda quincenal Doctor
-//
-//	AgendaDoctor agenda = new AgendaDoctor();
-//
-//	public String validateCrearAgendaQuincenal(final Doctor doctor) {
-//
-//		Calendar cal = Calendar.getInstance();
-//		cal.setTime(new Date());
-//		Date mañana = cal.getTime();
-//		cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 24);
-//		mañana = cal.getTime();
-//
-//		if (agenda.getDia().after(mañana))
-//			return "No se puede crear agenda. El doctor ya tiene creada la agenda.";
-//		return "Agenda quincenal del doctor creada correctamente";
-//
-//	}
+	// VALIDA 1
+
+	// /Valida agenda quincenal Doctor
+
+	// AgendaDoctor agenda = new AgendaDoctor();
+	//
+	// public String validateCrearAgendaQuincenal(final Doctor doctor) {
+	//
+	// Calendar cal = Calendar.getInstance();
+	// cal.setTime(new Date());
+	// Date mañana = cal.getTime();
+	// cal.set(Calendar.HOUR, cal.get(Calendar.HOUR) + 24);
+	// mañana = cal.getTime();
+	//
+	// if (agenda.getValQuincenal().after(mañana))
+	// return "No se puede crear agenda. El doctor ya tiene creada la agenda.";
+	// return "Agenda quincenal del doctor creada correctamente";
+	//
+	// // }
+
+	// VALIDA 2
+
+	// public String validateCrearAgendaQuincenal(final Doctor doctor) {
+	// Date fecha = new Date();
+	// fecha.setHours(07);
+	// fecha.setMinutes(00);
+	// fecha.setSeconds(00);
+	//
+	// // Date priFechaVal = new Date();
+	// // priFechaVal = SumarFecha(priFechaVal, 1);
+	// // priFechaVal.setHours(07);
+	// // priFechaVal.setMinutes(0);
+	// // priFechaVal.setSeconds(0);
+	//
+	// for (int x = 0; x < 15; x++) {
+	// fecha = SumarFecha(fecha, 1);
+	//
+	// fecha.setHours(07);
+	// fecha.setMinutes(00);
+	// fecha.setSeconds(00);
+	//
+	// for (int i = 0; i < 27; i++) {
+	//
+	// final AgendaDoctor agenda = newTransientInstance(AgendaDoctor.class);
+	// Calendar c1 = GregorianCalendar.getInstance();
+	//
+	// agenda.setDia(fecha);
+	// agenda.setDoctor(doctor);
+	// agenda.setEstado(turno.getEstadoTurno());
+	// // agenda.setValPri(priFechaVal);
+	// doctor.getListaAgenda().add(agenda);
+	// c1 = agregarMinutos(fecha, 30);
+	// fecha = c1.getTime();
+	//
+	// Date mñna = new Date();
+	// mñna = SumarFecha(fecha, 1);
+	//
+	// if (agenda.getDia().compareTo(mñna) == 0)
+	// // if (agenda.getDia().compareTo(priFechaVal) == 0)
+	// return "No se puede crear agenda. El doctor ya tiene una agenda creada.";
+	// }
+	// }
+	// return "";
+	// }
+
+	// VALIDA 3
+
+	// public String validateCrearAgendaQuincenal(final Doctor doctor) {
+	// // AgendaDoctor agenda = new AgendaDoctor();
+	// //
+	// // Date mñna = new Date();
+	// //
+	// // mñna = SumarFecha(mñna, 1);
+	// // mñna.setHours(7);
+	// // mñna.setMinutes(0);
+	// // mñna.setSeconds(0);
+	// //
+	// //
+	// //
+	// // // for (int i = 0; i < 27; i++) {
+	// // if (agenda.getDia().compareTo(mñna) == 0)
+	// // return
+	// // "No se puede crear agenda, el doctor ya tiene una agenda creada.";
+	// // // }
+	// //
+	// // return null;
+	//
+	// Date dia = new Date();
+	// dia = SumarFecha(dia, 1);
+	// dia.setHours(7);
+	// dia.setMinutes(0);
+	// dia.setSeconds(0);
+	//
+	// // dia = SumarFecha(dia, 15);
+	// // dia.setHours(20);
+	// // dia.setMinutes(0);
+	// // dia.setSeconds(0);
+	//
+	// final AgendaDoctor agenda = container.firstMatch(QueryDefault.create(
+	// AgendaDoctor.class, "buscarTurnosRepetidos", "dia", dia));
+	//
+	// if (agenda != null) {
+	//
+	// if (agenda.getDia().equals(dia)) {
+	// // if (agenda.getDia().compareTo(dia) == 0) {
+	// // if (agenda.getDia().compareTo(dia) > 0) {
+	// return "El doctor ya posee la agenda creada.";
+	// }
+	// }
+	// return "";
+	// }
 
 	@SuppressWarnings("deprecation")
 	@MemberOrder(name = "Doctor", sequence = "51")
@@ -171,7 +311,7 @@ public class AgendaDoctorServicio extends AbstractFactoryAndRepository {
 		}
 
 		return "Agenda mensual del doctor " + doctor.getApellido() + ", "
-		+ doctor.getNombre() + " creada correctamente";
+				+ doctor.getNombre() + " creada correctamente";
 	}
 
 	public List<Doctor> choices0CrearAgendaMensual() {

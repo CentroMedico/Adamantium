@@ -10,23 +10,16 @@ package dom.agendadoctor;
  */
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Join;
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
-import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.doctor.Doctor;
-import dom.paciente.Paciente;
 
 @javax.jdo.annotations.Queries({
 
@@ -37,7 +30,9 @@ import dom.paciente.Paciente;
 		@javax.jdo.annotations.Query(name = "traerTurnos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.agendadoctor.AgendaDoctor"),
 		@javax.jdo.annotations.Query(name = "traerTurnosDisponiblesDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor== :doctor ORDER BY dia") })
+				+ "FROM dom.agendadoctor.AgendaDoctor WHERE estado == 'Disponible' && doctor== :doctor ORDER BY dia"),
+		@javax.jdo.annotations.Query(name = "buscarTurnosRepetidos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.agendadoctor.AgendaDoctor " + " WHERE dia ==:dia"), })
 @PersistenceCapable
 public class AgendaDoctor {
 
