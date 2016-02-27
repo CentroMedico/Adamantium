@@ -45,8 +45,8 @@ import org.joda.time.LocalDate;
 
 import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.obrasocial.ObraSocial;
-import dom.paciente.graficotorta.MayoriaEdadEnum;
-import dom.paciente.graficotorta.RangoEdadEnum;
+import dom.paciente.grafico.MayoriaEdadEnum;
+import dom.paciente.grafico.RangoEdadEnum;
 import dom.persona.Persona;
 import dom.turnopaciente.TurnoPaciente;
 import dom.turnopaciente.TurnoPacienteServicio;

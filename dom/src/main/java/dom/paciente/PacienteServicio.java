@@ -37,8 +37,8 @@ import dom.ciudadprovincia.Provincia;
 import dom.estado.EstadoEnum;
 import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.obrasocial.ObraSocial;
-import dom.paciente.graficotorta.MayoriaEdadEnum;
-import dom.paciente.graficotorta.RangoEdadEnum;
+import dom.paciente.grafico.MayoriaEdadEnum;
+import dom.paciente.grafico.RangoEdadEnum;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 

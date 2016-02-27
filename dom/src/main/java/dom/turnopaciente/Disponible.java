@@ -25,6 +25,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
+import dom.turnopaciente.grafico.EstadoTurnoEnum;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoDisponible")
@@ -58,10 +59,10 @@ public class Disponible implements IEstadoTurno {
 	public void solicitarTurno(Doctor doctor, Paciente paciente) {
 		this.getTurno().setDoctor(doctor);
 		this.getTurno().setPaciente(paciente);
-		// paciente.addListaTurnos(turno);
 		this.getTurno().setEstado(this.getTurno().getSolicitado());
 		turno.setEstado2((this.getTurno().getSolicitado().getClass()
 				.getSimpleName()));
+		this.getTurno().setEstadoGrafico(EstadoTurnoEnum.Solicitado);
 	}
 
 	@Override

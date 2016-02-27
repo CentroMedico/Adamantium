@@ -1,4 +1,4 @@
-package dom.recepcionista.graficotorta;
+package dom.paciente.grafico;
 
 import java.io.Serializable;
 
@@ -7,19 +7,19 @@ import org.apache.isis.applib.annotation.Value;
 
 import com.googlecode.wickedcharts.highcharts.options.Options;
 
-@Value(semanticsProviderClass = GraficoRecepcionistaSemantica.class)
-public class GraficoRecepcionista implements Serializable {
+@Value(semanticsProviderClass = GraficoPacienteSemantica.class)
+public class GraficoPaciente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Options options;
 
-	public GraficoRecepcionista(Options o) {
+	public GraficoPaciente(Options o) {
 		this.options = o;
 	}
 
 	public String title() {
-		return "Recepcionistas Activos / Inactivos";
+		return "Grafico Pacientes";
 	}
 
 	@Programmatic

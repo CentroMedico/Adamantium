@@ -51,7 +51,7 @@ public class VademecumServicio extends AbstractFactoryAndRepository {
 
 	@ActionLayout(named = "Buscar Medicamento", cssClass = "buscarMedicamento")
 	public Vademecum buscarMedicamento(
-			@ParameterLayout(named = "Buscar Medicamento en Mayusculas", describedAs = "Busca Medicamentos en el Vademecum", cssClass = "buscarMedicamento") Vademecum vademecum) {
+			@ParameterLayout(named = "Buscar Medicamento", describedAs = "Busca Medicamentos en el Vademecum", cssClass = "buscarMedicamento") Vademecum vademecum) {
 		return vademecum;
 	}
 

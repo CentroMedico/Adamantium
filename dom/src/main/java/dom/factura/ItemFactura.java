@@ -3,6 +3,7 @@ package dom.factura;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
@@ -44,6 +45,7 @@ public class ItemFactura {
 	@PropertyLayout(hidden = Where.ALL_TABLES)
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
 	public String getNombre() {
 		return nombre;
 	}
@@ -66,9 +68,9 @@ public class ItemFactura {
 	 * 
 	 * @return precio double
 	 */
-	// @Named("Precio ($)")
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
 	public Double getPrecio() {
 		return precio;
 	}
@@ -83,29 +85,21 @@ public class ItemFactura {
 		this.precio = precio;
 	}
 
-	// // {{ Cantidad (property)
-	// private int cantidad;
+	// // {{ Motivo (property)
+	// private String motivo;
 	//
-	// /**
-	// * Obtiene la cantidad de una nueva Factura
-	// *
-	// * @return cantidad int
-	// */
-	// @MemberOrder(sequence = "1")
+	// @Title
+	// @PropertyLayout(hidden = Where.ALL_TABLES)
+	// @MemberOrder(sequence = "3")
 	// @Column(allowsNull = "false")
-	// public int getCantidad() {
-	// return cantidad;
+	// @Property(editing = Editing.DISABLED)
+	// public String getMotivo() {
+	// return motivo;
 	// }
 	//
-	// /**
-	// * Setea la cantidad de una nueva Factura
-	// *
-	// * @param cantidad
-	// * int
-	// */
-	//
-	// public void setCantidad(final int cantidad) {
-	// this.cantidad = cantidad;
+	// public void setMotivo(final String motivo) {
+	// this.motivo = motivo;
 	// }
+	// // }}
 
 }

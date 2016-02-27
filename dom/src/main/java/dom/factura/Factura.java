@@ -18,6 +18,7 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Title;
@@ -88,6 +89,52 @@ public class Factura {
 		this.numeroFactura = numeroFactura;
 	}
 
+	// {{ FechaHora (property)
+	private Date fechaHora;
+
+	@MemberOrder(sequence = "2")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public Date getFechaHora() {
+		return fechaHora;
+	}
+
+	public void setFechaHora(final Date fechaHora) {
+		this.fechaHora = fechaHora;
+	}
+
+	// }}
+
+	// {{ Paciente (property)
+	private Paciente paciente;
+
+	@MemberOrder(sequence = "3")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	// {{ Turno (property)
+	private TurnoPaciente turno;
+
+	@MemberOrder(sequence = "4")
+	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
+	public TurnoPaciente getTurno() {
+		return turno;
+	}
+
+	public void setTurno(final TurnoPaciente turno) {
+		this.turno = turno;
+	}
+
+	// }}
+
 	// {{ Total (property)
 	private double total;
 
@@ -97,8 +144,9 @@ public class Factura {
 	 * @return total double
 	 */
 	// @Named("Total ($)")
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "5")
 	@Column(allowsNull = "false")
+	@Property(editing = Editing.DISABLED)
 	public double getTotal() {
 		return total;
 	}
@@ -126,7 +174,7 @@ public class Factura {
 	@Join
 	// @Named("Detalle")
 	// @Render(Type.EAGERLY)
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "6")
 	@CollectionLayout(render = RenderType.EAGERLY)
 	public List<ItemFactura> getItems() {
 		return items;
@@ -161,49 +209,6 @@ public class Factura {
 	public void removeFromItems(final ItemFactura _item) {
 		items.remove(_item);
 	}
-
-	// {{ FechaHora (property)
-	private Date fechaHora;
-
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "false")
-	public Date getFechaHora() {
-		return fechaHora;
-	}
-
-	public void setFechaHora(final Date fechaHora) {
-		this.fechaHora = fechaHora;
-	}
-
-	// }}
-
-	// {{ Paciente (property)
-	private Paciente paciente;
-
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "false")
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	// {{ Turno (property)
-	private TurnoPaciente turno;
-
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "false")
-	public TurnoPaciente getTurno() {
-		return turno;
-	}
-
-	public void setTurno(final TurnoPaciente turno) {
-		this.turno = turno;
-	}
-
-	// }}
 
 	@SuppressWarnings("unused")
 	@Inject

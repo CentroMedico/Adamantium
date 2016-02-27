@@ -1,4 +1,4 @@
-package dom.paciente.graficotorta;
+package dom.paciente.grafico;
 
 import org.apache.isis.applib.adapters.DefaultsProvider;
 import org.apache.isis.applib.adapters.EncoderDecoder;

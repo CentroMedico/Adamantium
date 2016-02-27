@@ -21,6 +21,7 @@ import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.especialidad.EspecialidadEnum;
 import dom.paciente.Paciente;
+import dom.turnopaciente.grafico.EstadoTurnoEnum;
 
 @DomainService(repositoryFor = TurnoPaciente.class)
 @DomainServiceLayout(named = "Paciente", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "5")
@@ -46,6 +47,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		final TurnoPaciente turno = newTransientInstance(TurnoPaciente.class);
 
 		turno.getEstado().solicitarTurno(doctor, paciente);
+		turno.setEstadoGrafico(EstadoTurnoEnum.Solicitado);
 		turno.setHorarioTurno(agendaDoctor);
 		agendaDoctor.setEstado(turno.getEstadoTurno());
 		turno.setMensajeAPaciente(mensajeDia
@@ -101,6 +103,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 				container.getUser().getName()));
 
 		turno.getEstado().solicitarTurno(doctor, paciente);
+		turno.setEstadoGrafico(EstadoTurnoEnum.Solicitado);
 		turno.setHorarioTurno(agendaDoctor);
 		agendaDoctor.setEstado(turno.getEstadoTurno());
 		turno.setMensajeAPaciente(mensajeDia

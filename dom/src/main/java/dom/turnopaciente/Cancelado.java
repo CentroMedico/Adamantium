@@ -25,6 +25,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
+import dom.turnopaciente.grafico.EstadoTurnoEnum;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "idTurnoCancelado")
@@ -53,6 +54,7 @@ public class Cancelado implements IEstadoTurno {
 		this.getTurno().setEstado(this.getTurno().getDisponible());
 		turno.setEstado2((this.getTurno().getDisponible().getClass()
 				.getSimpleName()));
+		this.getTurno().setEstadoGrafico(EstadoTurnoEnum.Disponible);
 	}
 
 	@Override

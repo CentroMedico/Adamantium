@@ -1,4 +1,4 @@
-package dom.paciente.graficotorta;
+package dom.paciente.grafico;
 
 import java.util.List;
 import java.util.Map;

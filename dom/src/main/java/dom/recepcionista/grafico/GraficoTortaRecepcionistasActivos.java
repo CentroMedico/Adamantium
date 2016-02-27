@@ -1,4 +1,4 @@
-package dom.paciente.graficotorta;
+package dom.recepcionista.grafico;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,18 +21,18 @@ import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import com.googlecode.wickedcharts.highcharts.options.series.Series;
 
-public class GraficoTortaPacientesMayoriaEdad extends Options {
+import dom.estado.EstadoEnum;
+
+public class GraficoTortaRecepcionistasActivos extends Options {
 
 	private static final long serialVersionUID = 1L;
 
-	public GraficoTortaPacientesMayoriaEdad(
-			Map<MayoriaEdadEnum, AtomicInteger> a) {
+	public GraficoTortaRecepcionistasActivos(Map<EstadoEnum, AtomicInteger> a) {
 		setChartOptions(new ChartOptions()
 				.setPlotBackgroundColor(new NullColor())
 				.setPlotBorderWidth(null).setPlotShadow(Boolean.FALSE));
 
-		setTitle(new Title(
-				"Gráfico de porcentaje por pacientes mayores/menores de edad"));
+		setTitle(new Title("Grafico Recepcionistas Activos"));
 
 		PercentageFormatter formato = new PercentageFormatter();
 		setTooltip(new Tooltip().setFormatter(formato).setPercentageDecimals(1));
@@ -48,7 +48,7 @@ public class GraficoTortaPacientesMayoriaEdad extends Options {
 
 		Series<Point> series = new PointSeries().setType(SeriesType.PIE);
 		int i = 8;
-		for (Map.Entry<MayoriaEdadEnum, AtomicInteger> entry : a.entrySet()) {
+		for (Map.Entry<EstadoEnum, AtomicInteger> entry : a.entrySet()) {
 			series.addPoint(new Point(nombre(entry.getKey()), entry.getValue()
 					.get()).setColor(new RadialGradient().setCx(0.5).setCy(0.3)
 					.setR(0.7).addStop(0, new HighchartsColor(i))
@@ -58,12 +58,13 @@ public class GraficoTortaPacientesMayoriaEdad extends Options {
 		addSeries(series);
 	}
 
-	private String nombre(MayoriaEdadEnum edad) {
+	private String nombre(EstadoEnum estado) {
 		String salida = "";
-		if (edad == MayoriaEdadEnum.Mayor)
-			salida = "Mayores de edad";
+		if (estado == EstadoEnum.Activo)
+			salida = "Activos";
 		else
-			salida = "Menores de edad";
+			salida = "Inactivos";
 		return salida;
 	}
+
 }

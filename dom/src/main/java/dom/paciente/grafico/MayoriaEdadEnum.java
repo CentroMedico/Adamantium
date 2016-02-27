@@ -1,4 +1,4 @@
-package dom.paciente.graficotorta;
+package dom.paciente.grafico;
 
 public enum MayoriaEdadEnum {
 

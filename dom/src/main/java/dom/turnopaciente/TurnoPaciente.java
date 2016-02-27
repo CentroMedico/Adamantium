@@ -20,6 +20,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import dom.agendadoctor.AgendaDoctor;
 import dom.doctor.Doctor;
 import dom.paciente.Paciente;
+import dom.turnopaciente.grafico.EstadoTurnoEnum;
 
 @javax.jdo.annotations.Queries({
 
@@ -58,6 +59,7 @@ public class TurnoPaciente {
 		this.cancelado = new Cancelado(this);
 
 		this.setEstado(this.getDisponible());
+		this.setEstadoGrafico(EstadoTurnoEnum.Disponible);
 	}
 
 	public String iconName() {
@@ -312,6 +314,22 @@ public class TurnoPaciente {
 
 	public void setEstado2(final String estado2) {
 		this.estado2 = estado2;
+	}
+
+	// }}
+
+	// {{ EstadoGrafico (property)
+	private EstadoTurnoEnum estadoGrafico;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "false")
+	@Property(hidden = Where.ANYWHERE)
+	public EstadoTurnoEnum getEstadoGrafico() {
+		return estadoGrafico;
+	}
+
+	public void setEstadoGrafico(final EstadoTurnoEnum estadoGrafico) {
+		this.estadoGrafico = estadoGrafico;
 	}
 
 	// }}

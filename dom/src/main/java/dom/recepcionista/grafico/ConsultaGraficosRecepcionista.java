@@ -1,4 +1,4 @@
-package dom.recepcionista.graficotorta;
+package dom.recepcionista.grafico;
 
 import java.util.List;
 import java.util.Map;

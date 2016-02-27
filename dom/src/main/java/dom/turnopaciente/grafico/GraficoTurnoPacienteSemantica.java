@@ -1,29 +1,29 @@
-package dom.recepcionista.graficotorta;
+package dom.turnopaciente.grafico;
 
 import org.apache.isis.applib.adapters.DefaultsProvider;
 import org.apache.isis.applib.adapters.EncoderDecoder;
 import org.apache.isis.applib.adapters.Parser;
 import org.apache.isis.applib.adapters.ValueSemanticsProvider;
 
-public class GraficoRecepcionistaSemantica implements
-		ValueSemanticsProvider<GraficoRecepcionista> {
+public class GraficoTurnoPacienteSemantica implements
+		ValueSemanticsProvider<GraficoTurno> {
 
 	@Override
-	public Parser<GraficoRecepcionista> getParser() {
+	public Parser<GraficoTurno> getParser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public EncoderDecoder<GraficoRecepcionista> getEncoderDecoder() {
-		return new EncoderDecoder<GraficoRecepcionista>() {
+	public EncoderDecoder<GraficoTurno> getEncoderDecoder() {
+		return new EncoderDecoder<GraficoTurno>() {
 
-			public String toEncodedString(GraficoRecepcionista toEncode) {
+			public String toEncodedString(GraficoTurno toEncode) {
 				return Base64Serializer.toString(toEncode);
 			}
 
-			public GraficoRecepcionista fromEncodedString(String encodedString) {
-				return (GraficoRecepcionista) Base64Serializer
+			public GraficoTurno fromEncodedString(String encodedString) {
+				return (GraficoTurno) Base64Serializer
 						.fromString(encodedString);
 			}
 		};
@@ -31,7 +31,7 @@ public class GraficoRecepcionistaSemantica implements
 	}
 
 	@Override
-	public DefaultsProvider<GraficoRecepcionista> getDefaultsProvider() {
+	public DefaultsProvider<GraficoTurno> getDefaultsProvider() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,5 +47,4 @@ public class GraficoRecepcionistaSemantica implements
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }

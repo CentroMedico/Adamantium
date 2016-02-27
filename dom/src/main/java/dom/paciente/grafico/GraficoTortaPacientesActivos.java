@@ -1,4 +1,4 @@
-package dom.paciente.graficotorta;
+package dom.paciente.grafico;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;

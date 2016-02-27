@@ -1,4 +1,4 @@
-package dom.recepcionista.graficotorta;
+package dom.paciente.grafico;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
