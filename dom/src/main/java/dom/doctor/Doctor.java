@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -29,7 +27,6 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RenderType;
-import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.agendadoctor.AgendaDoctor;
@@ -69,8 +66,9 @@ import dom.persona.Persona;
 		@javax.jdo.annotations.Query(name = "traerActivos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.doctor.Doctor where estado == 'Activo'"),
 		@javax.jdo.annotations.Query(name = "traerDoctor", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.doctor.Doctor WHERE usuariovinculado == :usuariovinculado")
-		
+				+ "FROM dom.doctor.Doctor WHERE usuariovinculado == :usuariovinculado"),
+		@javax.jdo.annotations.Query(name = "traerDoctorPorUsuario", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.doctor.Doctor WHERE usuariovinculado == :usuariovinculado"),
 
 })
 @DomainObject(autoCompleteRepository = DoctorServicio.class, autoCompleteAction = "buscarDoctor")

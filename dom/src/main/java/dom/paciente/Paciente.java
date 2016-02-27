@@ -83,6 +83,8 @@ import dom.turnopaciente.TurnoPacienteServicio;
 				+ " FROM dom.paciente.Paciente "),
 		@javax.jdo.annotations.Query(name = "traerPacientesActivos", language = "JDOQL", value = "SELECT "
 				+ " FROM dom.paciente.Paciente WHERE estado == 'Activo'"),
+		@javax.jdo.annotations.Query(name = "traerPacientePorUsuario", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.paciente.Paciente WHERE usuariovinculado == :usuariovinculado"),
 
 })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarPaciente")

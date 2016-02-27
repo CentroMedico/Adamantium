@@ -46,13 +46,12 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Precio") final Double precio,
 			@ParameterLayout(named = "Turnos Atendidos") final TurnoPaciente turno) {
 		double precioTotal = 0;
-		String nomb = "Coseguro-Atencion";
-		// String motivo = turno.getMotivoConsulta();
+		String motivo = turno.getMotivoConsulta();
+		String nomb = "Coseguro-" + motivo;
 		final Factura factura = newTransientInstance(Factura.class);
 		final ItemFactura item = newTransientInstance(ItemFactura.class);
 		item.setNombre(nomb);
 		item.setPrecio(precio);
-		// item.setMotivo(motivo);
 		persist(item);
 		precioTotal = precioTotal + precio;
 
@@ -145,14 +144,11 @@ public class FacturaServicio extends AbstractFactoryAndRepository {
 
 			String txtDescripcion = "desc" + i;
 			String txtPrecio = "precio" + i;
-			// String txtMotivo = "motivo" + i;
 
 			pdfForm.getField(txtDescripcion).setValue(item.getNombre() + " ");
 
 			pdfForm.getField(txtPrecio).setValue(
 					new DecimalFormat("#.00").format(item.getPrecio()));
-
-			// pdfForm.getField(txtMotivo).setValue(item.getMotivo() + " ");
 
 			i++;
 		}
