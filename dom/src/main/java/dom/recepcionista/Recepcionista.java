@@ -42,7 +42,6 @@ import dom.persona.Persona;
 @javax.jdo.annotations.Queries({
 		@javax.jdo.annotations.Query(name = "traerTodos", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.recepcionista.Recepcionista "),
-
 		@javax.jdo.annotations.Query(name = "buscarNombre,Apellido,Id", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.recepcionista.Recepcionista "
 				+ "WHERE documento == :parametro || nombre.indexOf(:parametro) == 0 "
@@ -52,7 +51,7 @@ import dom.persona.Persona;
 				+ "FROM dom.paciente.Paciente "
 				+ " WHERE documento ==:documento"),
 		@javax.jdo.annotations.Query(name = "traerRecepcionista", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.recepcionista.Recepcionista WHERE usuariovinculado == :usuariovinculado")})
+				+ "FROM dom.recepcionista.Recepcionista WHERE usuariovinculado == :usuariovinculado") })
 @DomainObject(autoCompleteRepository = RecepcionistaServicio.class, autoCompleteAction = "buscarRecepcionista")
 // Primera Estrategia: Una tabla por cada clase
 // @PersistenceCapable(identityType = IdentityType.DATASTORE)
