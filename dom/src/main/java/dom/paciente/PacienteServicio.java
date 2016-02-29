@@ -39,6 +39,7 @@ import dom.gruposanguineo.GrupoSanguineoEnum;
 import dom.obrasocial.ObraSocial;
 import dom.paciente.grafico.MayoriaEdadEnum;
 import dom.paciente.grafico.RangoEdadEnum;
+import dom.recepcionista.Recepcionista;
 import dom.tipodesexo.TipoDeSexoEnum;
 import dom.tipodocumento.TipoDocumentoEnum;
 
@@ -164,7 +165,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 		return paciente;
 	}
 
-	@MemberOrder(name = "Paciente", sequence = "5.1.2")
+	@MemberOrder(name = "Paciente", sequence = "5.2")
 	@ActionLayout(cssClass = "boton")
 	public Paciente actualizarDatos(
 			@ParameterLayout(named = "Apellido") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String apellido,
@@ -243,7 +244,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return listaDePaiente List<Paciente>
 	 */
-	@MemberOrder(name = "Paciente", sequence = "5.2")
+	@MemberOrder(name = "Paciente", sequence = "5.3")
 	public List<Paciente> listarPacientes() {
 		return container.allInstances(Paciente.class);
 	}
@@ -253,7 +254,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Paciente>
 	 */
-	@MemberOrder(name = "Paciente", sequence = "5.3")
+	@MemberOrder(name = "Paciente", sequence = "5.4")
 	public List<Paciente> listarPacientesActivos() {
 		return allMatches(Paciente.class, new Predicate<Paciente>() {
 
@@ -270,7 +271,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @return List<Paciente>
 	 */
-	@MemberOrder(name = "Paciente", sequence = "5.4")
+	@MemberOrder(name = "Paciente", sequence = "5.5")
 	public List<Paciente> listarPacientesInactivos() {
 		return allMatches(Paciente.class, new Predicate<Paciente>() {
 
@@ -438,7 +439,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
-	@MemberOrder(name = "Paciente", sequence = "5.1.2")
+	@MemberOrder(name = "Paciente", sequence = "5.6")
 	public Paciente buscarPaciente(
 			@ParameterLayout(named = "Buscar Paciente") Paciente paciente) {
 		return paciente;
@@ -452,6 +453,12 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 				"nombre",
 				paciente.substring(0, 1).toUpperCase()
 						+ paciente.substring(1, paciente.length())));
+	}
+
+	public Paciente verMisDatos() {
+		return firstMatch(QueryDefault.create(Paciente.class,
+				"traerPacientePorUsuario", "usuariovinculado", container
+						.getUser().getName()));
 	}
 
 	@javax.inject.Inject

@@ -243,17 +243,17 @@ BOTON GRIS
 	font-style: italic;
 }
 
+
 .loginPanel {
-	border-radius: 800px;
-	height: 480px;
-	border-radius: 700px 700px 700px 700px;
-	width: 340px;
+	border-radius: 900px;
+	height: 500px;
+	border-radius: 800px 800px 800px 800px;
+	width: 460px;
 	padding: 46px;
 	font-style: italic;
-	border-radius: 9px 154px 154px 9px;
-	border-radius: 53px 154px 154px 53px;
-	-moz-border-radius: 53px 154px 154px 53px;
-	-webkit-border-radius: 53px 154px 154px 53px;
+	border-radius: 53px 53px 53px 53px;
+/* 	-moz-border-radius: 53px 154px 154px 53px; */
+/* 	-webkit-border-radius: 53px 154px 154px 53px; */
 	border: 9px solid #000000;
 }
 
@@ -340,7 +340,7 @@ BOTON GRIS
 	font-size: 14px;
 	font-weight: bold;
 	font-style: italic;
-	padding: 5px 11px;
+	padding: 6px 25px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #000000;
 }
@@ -360,7 +360,7 @@ BOTON GRIS
 
 .btn:active {
 	position: relative;
-	top: 1px;
+	top: 2px;
 }
 
 .boton {
@@ -387,7 +387,7 @@ BOTON GRIS
 	font-size: 14px;
 	font-weight: bold;
 	font-style: italic;
-	padding: 5px 11px;
+	padding: 6px 13px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #000000;
 }

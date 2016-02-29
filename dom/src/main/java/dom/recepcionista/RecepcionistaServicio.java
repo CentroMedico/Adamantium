@@ -273,8 +273,8 @@ public class RecepcionistaServicio extends AbstractFactoryAndRepository {
 		return meses.getDays();
 	}
 	
-	public Doctor verMisDatos() {
-		return firstMatch(QueryDefault.create(Doctor.class, "traerRecepcionista",
+	public Recepcionista verMisDatos() {
+		return firstMatch(QueryDefault.create(Recepcionista.class, "traerRecepcionista",
 				"usuariovinculado", container.getUser().getName()));
 	}
 
