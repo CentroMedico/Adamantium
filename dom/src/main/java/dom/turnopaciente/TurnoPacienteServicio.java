@@ -118,12 +118,6 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		return turno;
 	}
 
-	public EspecialidadEnum default0SacarTurno() {
-
-		return EspecialidadEnum.Clinica_General;
-
-	}
-
 	public List<EspecialidadEnum> choices0SacarTurno() {
 
 		List<EspecialidadEnum> especialidades = new ArrayList<EspecialidadEnum>();
@@ -132,6 +126,13 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 			especialidades.add(aux);
 		}
 		return especialidades;
+
+	}
+
+	public List<Doctor> choices1SacarTurno(final EspecialidadEnum especialidad) {
+
+		return container.allMatches(QueryDefault.create(Doctor.class,
+				"traerActivosPorEspecialidad", "especialidad", especialidad));
 
 	}
 
