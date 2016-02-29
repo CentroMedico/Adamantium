@@ -125,7 +125,8 @@ public class Doctor extends Persona {
 	/*----------------------------------------------------*/
 	public String validateMatricula(String matr) {
 
-		if (matr.matches("[a-z,A-Z,0-9,ñ,Ñ]+") == false) {
+		// if (matr.matches("[a-z,A-Z,0-9,ñ,Ñ]+") == false) {
+		if (matr.matches("[0-9,.]+") == false) {
 			return "Datos erroneos, vuelva a intentarlo";
 		} else {
 			return null;

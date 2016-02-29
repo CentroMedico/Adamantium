@@ -53,7 +53,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		turno.setMensajeAPaciente(mensajeDia
 				+ fecha.format(agendaDoctor.getDia()) + mensajeDoctor
 				+ doctor.getApellido() + " " + doctor.getNombre());
-		turno.setEstado2(turno.getEstadoTurno());
+		turno.setEstado2(EstadoTurnoEnum.Solicitado.getClass().getSimpleName());
 		EnviarEmail(paciente, turno);
 		turno.setMotivoConsulta(motivoConsulta);
 		paciente.getListaTurnos().add(turno);
@@ -109,7 +109,7 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		turno.setMensajeAPaciente(mensajeDia
 				+ fecha.format(agendaDoctor.getDia()) + mensajeDoctor
 				+ doctor.getApellido() + " " + doctor.getNombre());
-		turno.setEstado2(turno.getEstadoTurno());
+		turno.setEstado2(EstadoTurnoEnum.Solicitado.getClass().getSimpleName());
 		EnviarEmail(paciente, turno);
 		turno.setMotivoConsulta(motivoConsulta);
 		paciente.getListaTurnos().add(turno);
@@ -124,10 +124,14 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	}
 
-	public List<Doctor> choices1SacarTurno(final EspecialidadEnum especialidad) {
+	public List<EspecialidadEnum> choices0SacarTurno() {
 
-		return container.allMatches(QueryDefault.create(Doctor.class,
-				"traerActivosPorEspecialidad", "especialidad", especialidad));
+		List<EspecialidadEnum> especialidades = new ArrayList<EspecialidadEnum>();
+
+		for (EspecialidadEnum aux : EspecialidadEnum.values()) {
+			especialidades.add(aux);
+		}
+		return especialidades;
 
 	}
 
@@ -138,20 +142,26 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	}
 
 	public String cancelarTurno(
-			@ParameterLayout(named = "Paciente") final Paciente paciente,
+	// @ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Turno Paciente") final TurnoPaciente turnoPaciente) {
+
+		Paciente paciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+				container.getUser().getName()));
 
 		turnoPaciente.cancelarTurno();
 		turnoPaciente.setEstado2("Cancelado");
 		turnoPaciente.getHorarioTurno().setEstado("Cancelado");
+		EnviarEmailCancelado(paciente, turnoPaciente);
 		container.flush();
 		return "Turno Cancelado";
 	}
 
-	public List<TurnoPaciente> choices1CancelarTurno(final Paciente paciente) {
-		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
-				"traerParaCancelarPorPaciente", "paciente", paciente));
-	}
+	// public List<TurnoPaciente> choices1CancelarTurno(final Paciente paciente)
+	// {
+	// return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+	// "traerParaCancelarPorPaciente", "paciente", paciente));
+	// }
 
 	@ActionLayout(hidden = Where.EVERYWHERE, cssClass = "boton")
 	public List<TurnoPaciente> buscarTurno(String turno) {
@@ -185,7 +195,26 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 			email.send(to, null, null, "Adamantium le Recuenda su Turno",
 					turno.getMensajeAPaciente(),
 					(javax.activation.DataSource[]) null);
-			container.informUser("se ha enviado un correo");
+			container.informUser("Se ha enviado un correo");
+		}
+	}
+
+	@ActionLayout(hidden = Where.EVERYWHERE)
+	public void EnviarEmailCancelado(Paciente paciente, TurnoPaciente turno) {
+		// SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
+		String mensajeCancelado = "Su turno del dia "
+				// + fecha.format(turno.getHorarioTurno()) + " con el doctor "
+				+ fecha.format(turno.getHorarioTurno().getDia())
+				+ " con el Doctor " + turno.getDoctor().getApellido() + " "
+				+ turno.getDoctor().getNombre() + " ha sido cancelado.";
+
+		if (paciente.getCorreo().contains("@")) {
+			ArrayList<String> to = new ArrayList<String>();
+			to.add(paciente.getCorreo());
+
+			email.send(to, null, null, "Su turno ha sido cancelado",
+					mensajeCancelado, (javax.activation.DataSource[]) null);
+			container.informUser("Se ha enviado un correo");
 		}
 	}
 

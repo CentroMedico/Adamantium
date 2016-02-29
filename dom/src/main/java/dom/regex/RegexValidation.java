@@ -59,7 +59,8 @@ public final class RegexValidation {
 
 		}
 
-		public static final String MATRICULA = "[a-z,A-Z,0-9,ñ,Ñ]+";
+		// public static final String MATRICULA = "[a-z,A-Z,0-9,ñ,Ñ]+";
+		public static final String MATRICULA = "[0-9,.]+";
 
 	}
 

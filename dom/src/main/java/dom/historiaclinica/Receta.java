@@ -107,25 +107,10 @@ public class Receta {
 
 	// }}
 
-	// {{ Medicamento2 (property)
-	private Vademecum medicamento2;
-
-	@MemberOrder(sequence = "3")
-	@Column(allowsNull = "true")
-	public Vademecum getMedicamento2() {
-		return medicamento2;
-	}
-
-	public void setMedicamento2(final Vademecum medicamento2) {
-		this.medicamento2 = medicamento2;
-	}
-
-	// }}
-
 	// {{ Doctor (property)
 	private Doctor doctor;
 
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
 	public Doctor getDoctor() {
 		return doctor;
@@ -140,7 +125,7 @@ public class Receta {
 	// {{ Turno (property)
 	private TurnoPaciente turnoPaciente;
 
-	@MemberOrder(sequence = "5")
+	@MemberOrder(sequence = "4")
 	@Column(allowsNull = "true")
 	public TurnoPaciente getTurno() {
 		return turnoPaciente;
