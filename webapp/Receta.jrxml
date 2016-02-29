@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-02-29T19:51:40 -->
+<!-- 2016-02-29T20:16:08 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Receta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25f8363f-7b9f-426f-a7c6-8e5607bcc0d7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
@@ -121,23 +121,9 @@ TEL: 299-4786349.]]></text>
 	<columnFooter>
 		<band height="101" splitType="Stretch">
 			<staticText>
-				<reportElement x="300" y="17" width="60" height="30" uuid="498b9337-01f4-41c6-8a3b-717747ffa265"/>
-				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Doctor: ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="360" y="17" width="190" height="30" uuid="6f829c82-38ce-45b7-ab2a-f589dbd2beb7"/>
-				<textElement verticalAlignment="Middle">
-					<font size="12" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{doctor}]]></textFieldExpression>
-			</textField>
-			<staticText>
 				<reportElement x="380" y="71" width="170" height="30" uuid="a795f837-3712-4702-ad8c-d9e6274e1658"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[.............................................
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[.......................................
             Firma]]></text>
 			</staticText>
 		</band>
