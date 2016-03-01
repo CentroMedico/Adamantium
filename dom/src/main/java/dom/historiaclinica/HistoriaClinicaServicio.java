@@ -825,156 +825,156 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		}
 	}
 
-	@MemberOrder(name = "Historia Clinica", sequence = "10.6")
-	@ActionLayout(named = "Exportar Mis Indicaciones Medicas")
-	public Blob downloadAll4(
-	// final Paciente paciente,
-			IndicacionesMedicas indicacion) throws JRException, IOException {
-		Paciente paciente = container.firstMatch(QueryDefault.create(
-				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
-				container.getUser().getName()));
-		IndicacionesDataSource datasource = new IndicacionesDataSource();
-		for (IndicacionesMedicas a : listaindicaciones(paciente)) {
-			ReporteIndicaciones indicaciones = new ReporteIndicaciones();
-			indicaciones.setPaciente(a.getPaciente().getApellido() + " "
-					+ a.getPaciente().getNombre());
-			indicaciones.setMedicamento(a.getMedicamento().getProducto());
-			indicaciones.setComotomarlo(a.getComotomarlo());
-			indicaciones.setDoctor(a.getDoctor().getApellido() + " "
-					+ a.getDoctor().getNombre());
-			datasource.addParticipante(indicaciones);
-		}
-		File file = new File("Indicaciones.jrxml");
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(file);
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		JasperDesign jd = JRXmlLoader.load(input);
-		JasperReport reporte = JasperCompileManager.compileReport(jd);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
-				datasource);
-		JasperExportManager.exportReportToPdfFile(jasperPrint,
-				"/tmp/salida.pdf");
-		File archivo = new File("/tmp/salida.pdf");
-		byte[] fileContent = new byte[(int) archivo.length()];
-		if (!(archivo.exists())) {
-			try {
-				archivo.createNewFile();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-		}
-		try {
-			FileInputStream fileInputStream = new FileInputStream(archivo);
-
-			fileInputStream.read(fileContent);
-			fileInputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			return new Blob(paciente.getApellido() + " - "
-					+ paciente.getNombre() + ".pdf", "application/pdf",
-					fileContent);
-		} catch (Exception e) {
-			byte[] result = new String("error en crear archivo").getBytes();
-			return new Blob("error.txt", "text/plain", result);
-		}
-
-	}
-
-	// public List<Paciente> choices0DownloadAll4(final Paciente paciente) {
+	// @MemberOrder(name = "Historia Clinica", sequence = "10.6")
+	// @ActionLayout(named = "Exportar Mis Indicaciones Medicas")
+	// public Blob downloadAll4(
+	// // final Paciente paciente,
+	// IndicacionesMedicas indicacion) throws JRException, IOException {
+	// Paciente paciente = container.firstMatch(QueryDefault.create(
+	// Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+	// container.getUser().getName()));
+	// IndicacionesDataSource datasource = new IndicacionesDataSource();
+	// for (IndicacionesMedicas a : listaindicaciones(paciente)) {
+	// ReporteIndicaciones indicaciones = new ReporteIndicaciones();
+	// indicaciones.setPaciente(a.getPaciente().getApellido() + " "
+	// + a.getPaciente().getNombre());
+	// indicaciones.setMedicamento(a.getMedicamento().getProducto());
+	// indicaciones.setComotomarlo(a.getComotomarlo());
+	// indicaciones.setDoctor(a.getDoctor().getApellido() + " "
+	// + a.getDoctor().getNombre());
+	// datasource.addParticipante(indicaciones);
+	// }
+	// File file = new File("Indicaciones.jrxml");
+	// FileInputStream input = null;
+	// try {
+	// input = new FileInputStream(file);
+	//
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// }
+	// JasperDesign jd = JRXmlLoader.load(input);
+	// JasperReport reporte = JasperCompileManager.compileReport(jd);
+	// JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+	// datasource);
+	// JasperExportManager.exportReportToPdfFile(jasperPrint,
+	// "/tmp/salida.pdf");
+	// File archivo = new File("/tmp/salida.pdf");
+	// byte[] fileContent = new byte[(int) archivo.length()];
+	// if (!(archivo.exists())) {
+	// try {
+	// archivo.createNewFile();
+	// } catch (IOException e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
+	// try {
+	// FileInputStream fileInputStream = new FileInputStream(archivo);
+	//
+	// fileInputStream.read(fileContent);
+	// fileInputStream.close();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// try {
+	// return new Blob(paciente.getApellido() + " - "
+	// + paciente.getNombre() + ".pdf", "application/pdf",
+	// fileContent);
+	// } catch (Exception e) {
+	// byte[] result = new String("error en crear archivo").getBytes();
+	// return new Blob("error.txt", "text/plain", result);
+	// }
+	//
+	// }
+	//
+	// // public List<Paciente> choices0DownloadAll4(final Paciente paciente) {
+	// //
+	// // return allMatches(QueryDefault.create(Paciente.class,
+	// // "traerPacientesActivos"));
+	// // }
+	//
+	// // public List<IndicacionesMedicas> choices1DownloadAll4(
+	// // final Paciente paciente) {
+	// //
+	// // return allMatches(QueryDefault.create(IndicacionesMedicas.class,
+	// // "traerPorPaciente", "paciente", paciente));
+	// // }
+	//
+	// @MemberOrder(name = "Historia Clinica", sequence = "10.7")
+	// @ActionLayout(named = "Exportar Mis Recetas")
+	// public Blob downloadAll5(final Paciente paciente, final Receta rec)
+	// throws JRException, IOException {
+	// RecetaDataSource datasource = new RecetaDataSource();
+	//
+	// for (Receta a : listareceta(paciente)) {
+	// ReporteReceta receta = new ReporteReceta();
+	// receta.setPaciente(a.getPaciente().getApellido() + " "
+	// + a.getPaciente().getNombre());
+	//
+	// receta.setObraSocial(a.getObraSocial().getNombre());
+	//
+	// receta.setMedicamento(a.getMedicamento().getProducto() + " "
+	// + a.getMedicamento().getPresentacion() + " "
+	// + a.getMedicamento().getTamaño() + " "
+	// + a.getMedicamento().getLaboratorio());
+	//
+	// datasource.addParticipante(receta);
+	// }
+	// File file = new File("Receta.jrxml");
+	// FileInputStream input = null;
+	// try {
+	// input = new FileInputStream(file);
+	//
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// }
+	// JasperDesign jd = JRXmlLoader.load(input);
+	// JasperReport reporte = JasperCompileManager.compileReport(jd);
+	// JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+	// datasource);
+	// JasperExportManager.exportReportToPdfFile(jasperPrint,
+	// "/tmp/salida.pdf");
+	// File archivo = new File("/tmp/salida.pdf");
+	//
+	// byte[] fileContent = new byte[(int) archivo.length()];
+	//
+	// if (!(archivo.exists())) {
+	// try {
+	// archivo.createNewFile();
+	// } catch (IOException e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
+	// try {
+	// FileInputStream fileInputStream = new FileInputStream(archivo);
+	//
+	// fileInputStream.read(fileContent);
+	// fileInputStream.close();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// try {
+	// return new Blob(paciente.getApellido() + " - "
+	// + paciente.getNombre() + " Receta" + ".pdf",
+	// "application/pdf", fileContent);
+	// } catch (Exception e) {
+	// byte[] result = new String("error en crear archivo").getBytes();
+	// return new Blob("error.txt", "text/plain", result);
+	// }
+	// }
+	//
+	// public List<Paciente> choices0DownloadAll5(final Paciente paciente) {
 	//
 	// return allMatches(QueryDefault.create(Paciente.class,
 	// "traerPacientesActivos"));
 	// }
-
-	// public List<IndicacionesMedicas> choices1DownloadAll4(
-	// final Paciente paciente) {
 	//
-	// return allMatches(QueryDefault.create(IndicacionesMedicas.class,
-	// "traerPorPaciente", "paciente", paciente));
+	// public List<Receta> choices1DownloadAll5(final Paciente paciente) {
+	//
+	// return allMatches(QueryDefault.create(Receta.class,
+	// "traerRecetaPorPaciente", "paciente", paciente));
 	// }
-
-	@MemberOrder(name = "Historia Clinica", sequence = "10.7")
-	@ActionLayout(named = "Exportar Mis Recetas")
-	public Blob downloadAll5(final Paciente paciente, final Receta rec)
-			throws JRException, IOException {
-		RecetaDataSource datasource = new RecetaDataSource();
-
-		for (Receta a : listareceta(paciente)) {
-			ReporteReceta receta = new ReporteReceta();
-			receta.setPaciente(a.getPaciente().getApellido() + " "
-					+ a.getPaciente().getNombre());
-
-			receta.setObraSocial(a.getObraSocial().getNombre());
-
-			receta.setMedicamento(a.getMedicamento().getProducto() + " "
-					+ a.getMedicamento().getPresentacion() + " "
-					+ a.getMedicamento().getTamaño() + " "
-					+ a.getMedicamento().getLaboratorio());
-
-			datasource.addParticipante(receta);
-		}
-		File file = new File("Receta.jrxml");
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(file);
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		JasperDesign jd = JRXmlLoader.load(input);
-		JasperReport reporte = JasperCompileManager.compileReport(jd);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
-				datasource);
-		JasperExportManager.exportReportToPdfFile(jasperPrint,
-				"/tmp/salida.pdf");
-		File archivo = new File("/tmp/salida.pdf");
-
-		byte[] fileContent = new byte[(int) archivo.length()];
-
-		if (!(archivo.exists())) {
-			try {
-				archivo.createNewFile();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-		}
-		try {
-			FileInputStream fileInputStream = new FileInputStream(archivo);
-
-			fileInputStream.read(fileContent);
-			fileInputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			return new Blob(paciente.getApellido() + " - "
-					+ paciente.getNombre() + " Receta" + ".pdf",
-					"application/pdf", fileContent);
-		} catch (Exception e) {
-			byte[] result = new String("error en crear archivo").getBytes();
-			return new Blob("error.txt", "text/plain", result);
-		}
-	}
-
-	public List<Paciente> choices0DownloadAll5(final Paciente paciente) {
-
-		return allMatches(QueryDefault.create(Paciente.class,
-				"traerPacientesActivos"));
-	}
-
-	public List<Receta> choices1DownloadAll5(final Paciente paciente) {
-
-		return allMatches(QueryDefault.create(Receta.class,
-				"traerRecetaPorPaciente", "paciente", paciente));
-	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
