@@ -21,6 +21,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
+@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "traerPorDoctor", language = "JDOQL", value = "SELECT "
+		+ "FROM dom.doctor.HorasTrabajadas " + " WHERE doctor ==:doctor"), })
 @PersistenceCapable
 public class HorasTrabajadas {
 

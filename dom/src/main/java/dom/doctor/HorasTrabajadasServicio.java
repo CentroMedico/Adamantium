@@ -28,6 +28,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.paciente.Paciente;
+import dom.turnopaciente.TurnoPaciente;
+
 @DomainService(repositoryFor = Doctor.class)
 @DomainServiceLayout(named = "Doctor", menuBar = DomainServiceLayout.MenuBar.PRIMARY, menuOrder = "7")
 public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
@@ -120,6 +123,15 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(name = "Doctor", sequence = "4.3")
 	public List<HorasTrabajadas> listarHorasTrabajadas() {
 		return container.allInstances(HorasTrabajadas.class);
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "4.3")
+	public List<HorasTrabajadas> listarMisHorasTrabajadas() {
+		Doctor doctor = container.firstMatch(QueryDefault.create(Doctor.class,
+				"traerDoctorPorUsuario", "usuariovinculado", container
+						.getUser().getName()));
+		return allMatches(QueryDefault.create(HorasTrabajadas.class,
+				"traerPorDoctor", "doctor", doctor));
 	}
 
 	@javax.inject.Inject
