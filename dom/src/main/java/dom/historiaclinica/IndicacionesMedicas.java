@@ -95,7 +95,7 @@ public class IndicacionesMedicas {
 
 	@MemberOrder(sequence = "3")
 	@PropertyLayout(multiLine = 5)
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getComotomarlo() {
 		return comoTomarlo;
 	}

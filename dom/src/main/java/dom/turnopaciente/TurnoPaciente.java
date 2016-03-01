@@ -50,7 +50,9 @@ import dom.turnopaciente.grafico.EstadoTurnoEnum;
 		@javax.jdo.annotations.Query(name = "traerParaCancelar", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible'"),
 		@javax.jdo.annotations.Query(name = "traerParaCancelarPorPaciente", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible' &&  paciente== :paciente") })
+				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible' &&  paciente== :paciente"),
+		@javax.jdo.annotations.Query(name = "traerTurnosPacientePorUsuario", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.turnopaciente.TurnoPaciente WHERE usuariovinculado == :usuariovinculado") })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarTurno")
 @PersistenceCapable
 public class TurnoPaciente {
@@ -58,12 +60,10 @@ public class TurnoPaciente {
 	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
 
 	public TranslatableString title() {
-		return TranslatableString.tr(
-				"{nombre}",
-				"nombre",
-				"Turno de: " + getPaciente().getApellido() + ", "
-						+ getPaciente().getNombre() +getDoctor().getApellido()+ ". Horario: "
-						+ fecha.format(getHorarioTurno().getDia()));
+		return TranslatableString.tr("{nombre}", "nombre", "Turno de: "
+				+ getPaciente().getApellido() + ", "
+				+ getPaciente().getNombre() + getDoctor().getApellido()
+				+ ". Horario: " + fecha.format(getHorarioTurno().getDia()));
 	}
 
 	public TurnoPaciente() {

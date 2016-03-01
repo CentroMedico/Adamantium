@@ -24,10 +24,11 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+
 @javax.jdo.annotations.Queries({
 
-	@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
-			+ " FROM dom.historiaclinica.AdicionalesPaciente WHERE paciente == :paciente ")})
+@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
+		+ " FROM dom.historiaclinica.AdicionalesPaciente WHERE paciente == :paciente ") })
 @PersistenceCapable
 public class AdicionalesPaciente {
 

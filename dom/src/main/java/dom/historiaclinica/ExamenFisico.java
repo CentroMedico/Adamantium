@@ -24,10 +24,11 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+
 @javax.jdo.annotations.Queries({
 
-	@javax.jdo.annotations.Query(name = "traerExamenPorPaciente", language = "JDOQL", value = "SELECT "
-			+ " FROM dom.historiaclinica.ExamenFisico WHERE paciente == :paciente ")})
+@javax.jdo.annotations.Query(name = "traerExamenPorPaciente", language = "JDOQL", value = "SELECT "
+		+ " FROM dom.historiaclinica.ExamenFisico WHERE paciente == :paciente ") })
 @PersistenceCapable
 public class ExamenFisico {
 	/**
@@ -68,7 +69,7 @@ public class ExamenFisico {
 	private String piel;
 
 	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getPiel() {
 		return piel;
 	}
@@ -83,7 +84,7 @@ public class ExamenFisico {
 	private String lentes;
 
 	@MemberOrder(sequence = "2")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getLentes() {
 		return lentes;
 	}
@@ -98,7 +99,7 @@ public class ExamenFisico {
 	private String agudezaVisual;
 
 	@MemberOrder(sequence = "3")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getAgudezaVisual() {
 		return agudezaVisual;
 	}
@@ -113,7 +114,7 @@ public class ExamenFisico {
 	private String oidos;
 
 	@MemberOrder(sequence = "4")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getOidos() {
 		return oidos;
 	}
@@ -128,7 +129,7 @@ public class ExamenFisico {
 	private String dentadura;
 
 	@MemberOrder(sequence = "5")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getDentadura() {
 		return dentadura;
 	}
@@ -143,7 +144,7 @@ public class ExamenFisico {
 	private String pulmones;
 
 	@MemberOrder(sequence = "6")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getPulmones() {
 		return pulmones;
 	}
@@ -158,7 +159,7 @@ public class ExamenFisico {
 	private String corazon;
 
 	@MemberOrder(sequence = "7")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getCorazon() {
 		return corazon;
 	}
@@ -172,7 +173,7 @@ public class ExamenFisico {
 	private String abdomen;
 
 	@MemberOrder(sequence = "8")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getAbdomen() {
 		return abdomen;
 	}
@@ -187,7 +188,7 @@ public class ExamenFisico {
 	private String genitales;
 
 	@MemberOrder(sequence = "9")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getGenitales() {
 		return genitales;
 	}
@@ -202,7 +203,7 @@ public class ExamenFisico {
 	private String mamas;
 
 	@MemberOrder(sequence = "10")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getMamas() {
 		return mamas;
 	}
@@ -217,7 +218,7 @@ public class ExamenFisico {
 	private String talla;
 
 	@MemberOrder(sequence = "11")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getTalla() {
 		return talla;
 	}
@@ -232,7 +233,7 @@ public class ExamenFisico {
 	private String peso;
 
 	@MemberOrder(sequence = "12")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getPeso() {
 		return peso;
 	}
@@ -247,7 +248,7 @@ public class ExamenFisico {
 	private String temperatura;
 
 	@MemberOrder(sequence = "13")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getTemperatura() {
 		return temperatura;
 	}
@@ -262,7 +263,7 @@ public class ExamenFisico {
 	private String frecuenciaCardiaca;
 
 	@MemberOrder(sequence = "14")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getFrecuenciaCardiaca() {
 		return frecuenciaCardiaca;
 	}
@@ -277,7 +278,7 @@ public class ExamenFisico {
 	private String frecuenciaRespiratoria;
 
 	@MemberOrder(sequence = "15")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getFrecuenciaRespiratoria() {
 		return frecuenciaRespiratoria;
 	}
@@ -292,7 +293,7 @@ public class ExamenFisico {
 	private String tensionArterial;
 
 	@MemberOrder(sequence = "16")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getTensionArterial() {
 		return tensionArterial;
 	}
@@ -307,7 +308,7 @@ public class ExamenFisico {
 	private String estadoGeneral;
 
 	@MemberOrder(sequence = "17")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getEstadoGeneral() {
 		return estadoGeneral;
 	}

@@ -108,7 +108,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
-			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
+			@ParameterLayout(named = "Obra Social") final ObraSocial obraSocial,
 			@ParameterLayout(named = "Numero de Carnet") @Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
 			@ParameterLayout(named = "Numero de Plan") @Parameter(optionality = Optionality.OPTIONAL) final String numPlan) {
 
@@ -181,7 +181,7 @@ public class PacienteServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Correo") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaMail.EMAIL) final String correo,
 			@ParameterLayout(named = "Telefono") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaTel.NUMEROTEL) final String telefono,
 			@ParameterLayout(named = "Grupo Sanguineo") final GrupoSanguineoEnum grupoSanguineo,
-			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
+			@ParameterLayout(named = "Obra Social") final ObraSocial obraSocial,
 			@ParameterLayout(named = "Numero de Carnet") @Parameter(optionality = Optionality.OPTIONAL) final String numCarnet,
 			@ParameterLayout(named = "Numero de Plan") @Parameter(optionality = Optionality.OPTIONAL) final String numPlan) {
 

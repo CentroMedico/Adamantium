@@ -71,8 +71,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public AdicionalesPaciente crearAdicionalesPaciente(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Estado Civil") final EstadoCivilEnum estadoCivil,
-			@ParameterLayout(named = "Tabaja ?", cssClass = "trabaja") final boolean trabajo,
-			@ParameterLayout(named = "Tiene Obra Social", cssClass = "historiaClinica") final boolean obraSocial,
+			@ParameterLayout(named = "Tabaja ?", cssClass = "trabaja") @Parameter(optionality = Optionality.OPTIONAL) final boolean trabajo,
+			@ParameterLayout(named = "Tiene Obra Social", cssClass = "historiaClinica") @Parameter(optionality = Optionality.OPTIONAL) final boolean obraSocial,
 			@ParameterLayout(named = "Educacion") final EducacionEnum educacion) {
 		final AdicionalesPaciente adicionalPaciente = newTransientInstance(AdicionalesPaciente.class);
 
@@ -101,30 +101,30 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public AntecedentesPersonales crearAntecedentesPersonales(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Tabaquismo") final boolean tabaquismo,
-			@ParameterLayout(named = "Edad que empezo a Fumar") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String edad,
-			@ParameterLayout(named = "Cantidad de Cigarrillos") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String cantidad,
-			@ParameterLayout(named = "Alcohol") final boolean alcohol,
-			@ParameterLayout(named = "Lo han criticado por tomar") final boolean criticas,
-			@ParameterLayout(named = "Toma por la mañana") final boolean tomapormañana,
-			@ParameterLayout(named = "Drogas") final boolean drogas,
-			@ParameterLayout(named = "Tipos") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String tipodogras,
-			@ParameterLayout(named = "Actividad Fisica ") final boolean actividad,
-			@ParameterLayout(named = "Tipo de Actividad Fisica") @Parameter(optionality = Optionality.OPTIONAL, regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String tipoactividad,
-			@ParameterLayout(named = "HTA") final boolean hta,
-			@ParameterLayout(named = "Diabetes") final boolean diabetes,
-			@ParameterLayout(named = "Enfermedad Coronaria") final boolean coronaria,
-			@ParameterLayout(named = "ACV ") final boolean acv,
-			@ParameterLayout(named = "EPOC") final boolean epoc,
-			@ParameterLayout(named = "Alergias") final boolean alergias,
-			@ParameterLayout(named = "Enfermedad Reumatica") final boolean reumatica,
-			@ParameterLayout(named = "Enfermedad Oncologica") final boolean oncologica,
-			@ParameterLayout(named = "TBC") final boolean tbc,
-			@ParameterLayout(named = "HIV") final boolean hiv,
-			@ParameterLayout(named = "Chagas") final boolean chagas,
-			@ParameterLayout(named = "ITS") final boolean its,
-			@ParameterLayout(named = "Enfermedad Neurologicas") final boolean neurologicas,
-			@ParameterLayout(named = "Tranfuciones de sangre") final boolean tranfuciones) {
+			@ParameterLayout(named = "Tabaquismo") @Parameter(optionality = Optionality.OPTIONAL) final boolean tabaquismo,
+			@ParameterLayout(named = "Edad que empezo a Fumar") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String edad,
+			@ParameterLayout(named = "Cantidad de Cigarrillos") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaDoc.DOCUMENTO) final String cantidad,
+			@ParameterLayout(named = "Alcohol") @Parameter(optionality = Optionality.OPTIONAL) final boolean alcohol,
+			@ParameterLayout(named = "Lo han criticado por tomar") @Parameter(optionality = Optionality.OPTIONAL) final boolean criticas,
+			@ParameterLayout(named = "Toma por la mañana") @Parameter(optionality = Optionality.OPTIONAL) final boolean tomapormañana,
+			@ParameterLayout(named = "Drogas") @Parameter(optionality = Optionality.OPTIONAL) final boolean drogas,
+			@ParameterLayout(named = "Tipos") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String tipodogras,
+			@ParameterLayout(named = "Actividad Fisica ") @Parameter(optionality = Optionality.OPTIONAL) final boolean actividad,
+			@ParameterLayout(named = "Tipo de Actividad Fisica") @Parameter(regexPattern = dom.regex.RegexValidation.ValidaNombres.REFERENCIA) final String tipoactividad,
+			@ParameterLayout(named = "HTA") @Parameter(optionality = Optionality.OPTIONAL) final boolean hta,
+			@ParameterLayout(named = "Diabetes") @Parameter(optionality = Optionality.OPTIONAL) final boolean diabetes,
+			@ParameterLayout(named = "Enfermedad Coronaria") @Parameter(optionality = Optionality.OPTIONAL) final boolean coronaria,
+			@ParameterLayout(named = "ACV ") @Parameter(optionality = Optionality.OPTIONAL) final boolean acv,
+			@ParameterLayout(named = "EPOC") @Parameter(optionality = Optionality.OPTIONAL) final boolean epoc,
+			@ParameterLayout(named = "Alergias") @Parameter(optionality = Optionality.OPTIONAL) final boolean alergias,
+			@ParameterLayout(named = "Enfermedad Reumatica") @Parameter(optionality = Optionality.OPTIONAL) final boolean reumatica,
+			@ParameterLayout(named = "Enfermedad Oncologica") @Parameter(optionality = Optionality.OPTIONAL) final boolean oncologica,
+			@ParameterLayout(named = "TBC") @Parameter(optionality = Optionality.OPTIONAL) final boolean tbc,
+			@ParameterLayout(named = "HIV") @Parameter(optionality = Optionality.OPTIONAL) final boolean hiv,
+			@ParameterLayout(named = "Chagas") @Parameter(optionality = Optionality.OPTIONAL) final boolean chagas,
+			@ParameterLayout(named = "ITS") @Parameter(optionality = Optionality.OPTIONAL) final boolean its,
+			@ParameterLayout(named = "Enfermedad Neurologicas") @Parameter(optionality = Optionality.OPTIONAL) final boolean neurologicas,
+			@ParameterLayout(named = "Tranfuciones de sangre") @Parameter(optionality = Optionality.OPTIONAL) final boolean tranfuciones) {
 		final AntecedentesPersonales antecedentes = newTransientInstance(AntecedentesPersonales.class);
 		antecedentes.setPaciente(paciente);
 		antecedentes.setTabaquismo(tabaquismo);
@@ -177,16 +177,16 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	public AntecedentesFamiliares crearAntecedentesFamiliares(
 
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "HTA") final boolean hta,
-			@ParameterLayout(named = "Cardiopatias") final boolean cardiopatias,
-			@ParameterLayout(named = "Diabetes") final boolean diabetes,
-			@ParameterLayout(named = "Acv") final boolean acv,
-			@ParameterLayout(named = "Cancer de Colon") final boolean caddeColon,
-			@ParameterLayout(named = "Cancer de Pulmon") final boolean cadePulmon,
-			@ParameterLayout(named = "Cancer de Mama") final boolean cadeMama,
-			@ParameterLayout(named = "Consumo de drogas") final boolean consumoDrogas,
-			@ParameterLayout(named = "Abuso de Alcohol") final boolean abusoAlcohol,
-			@ParameterLayout(named = "Depresion") final boolean depresion) {
+			@ParameterLayout(named = "HTA") @Parameter(optionality = Optionality.OPTIONAL) final boolean hta,
+			@ParameterLayout(named = "Cardiopatias") @Parameter(optionality = Optionality.OPTIONAL) final boolean cardiopatias,
+			@ParameterLayout(named = "Diabetes") @Parameter(optionality = Optionality.OPTIONAL) final boolean diabetes,
+			@ParameterLayout(named = "Acv") @Parameter(optionality = Optionality.OPTIONAL) final boolean acv,
+			@ParameterLayout(named = "Cancer de Colon") @Parameter(optionality = Optionality.OPTIONAL) final boolean caddeColon,
+			@ParameterLayout(named = "Cancer de Pulmon") @Parameter(optionality = Optionality.OPTIONAL) final boolean cadePulmon,
+			@ParameterLayout(named = "Cancer de Mama") @Parameter(optionality = Optionality.OPTIONAL) final boolean cadeMama,
+			@ParameterLayout(named = "Consumo de drogas") @Parameter(optionality = Optionality.OPTIONAL) final boolean consumoDrogas,
+			@ParameterLayout(named = "Abuso de Alcohol") @Parameter(optionality = Optionality.OPTIONAL) final boolean abusoAlcohol,
+			@ParameterLayout(named = "Depresion") @Parameter(optionality = Optionality.OPTIONAL) final boolean depresion) {
 		final AntecedentesFamiliares antecedentesfamiliares = newTransientInstance(AntecedentesFamiliares.class);
 
 		antecedentesfamiliares.setPaciente(paciente);
@@ -220,23 +220,23 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public ExamenFisico crearExamenFisico(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Piel y Anexos") @Parameter(optionality = Optionality.OPTIONAL) final String piel,
-			@ParameterLayout(named = "Utiliza Lentes? Tipo de enfermedad") @Parameter(optionality = Optionality.OPTIONAL) final String lentes,
-			@ParameterLayout(named = "Agudeza Visual") @Parameter(optionality = Optionality.OPTIONAL) final String agudezaVisual,
-			@ParameterLayout(named = "Oidos") @Parameter(optionality = Optionality.OPTIONAL) final String oidos,
-			@ParameterLayout(named = "Dentadura") @Parameter(optionality = Optionality.OPTIONAL) final String dentadura,
-			@ParameterLayout(named = "Pulmones") @Parameter(optionality = Optionality.OPTIONAL) final String pulmones,
-			@ParameterLayout(named = "Corazon") @Parameter(optionality = Optionality.OPTIONAL) final String corazon,
-			@ParameterLayout(named = "Abdomen") @Parameter(optionality = Optionality.OPTIONAL) final String abdomen,
-			@ParameterLayout(named = "Genitales") @Parameter(optionality = Optionality.OPTIONAL) final String genitales,
-			@ParameterLayout(named = "Mamas") @Parameter(optionality = Optionality.OPTIONAL) final String mamas,
-			@ParameterLayout(named = "Altura") @Parameter(optionality = Optionality.OPTIONAL) final String talla,
-			@ParameterLayout(named = "Peso") @Parameter(optionality = Optionality.OPTIONAL) final String peso,
-			@ParameterLayout(named = "Temperatura Corporal") @Parameter(optionality = Optionality.OPTIONAL) final String temperatura,
-			@ParameterLayout(named = "Frecuencia Cardiaca") @Parameter(optionality = Optionality.OPTIONAL) final String frecuenciaCardiaca,
-			@ParameterLayout(named = "Frecuencia Respiratoria") @Parameter(optionality = Optionality.OPTIONAL) final String frecuenciaRespiratoria,
-			@ParameterLayout(named = "Tension Arterial") @Parameter(optionality = Optionality.OPTIONAL) final String tensionArterial,
-			@ParameterLayout(named = "Estado General") @Parameter(optionality = Optionality.OPTIONAL) final String estadoGeneral) {
+			@ParameterLayout(named = "Piel y Anexos") final String piel,
+			@ParameterLayout(named = "Utiliza Lentes? Tipo de enfermedad") final String lentes,
+			@ParameterLayout(named = "Agudeza Visual") final String agudezaVisual,
+			@ParameterLayout(named = "Oidos") final String oidos,
+			@ParameterLayout(named = "Dentadura") final String dentadura,
+			@ParameterLayout(named = "Pulmones") final String pulmones,
+			@ParameterLayout(named = "Corazon") final String corazon,
+			@ParameterLayout(named = "Abdomen") final String abdomen,
+			@ParameterLayout(named = "Genitales") final String genitales,
+			@ParameterLayout(named = "Mamas") final String mamas,
+			@ParameterLayout(named = "Altura") final String talla,
+			@ParameterLayout(named = "Peso") final String peso,
+			@ParameterLayout(named = "Temperatura Corporal") final String temperatura,
+			@ParameterLayout(named = "Frecuencia Cardiaca") final String frecuenciaCardiaca,
+			@ParameterLayout(named = "Frecuencia Respiratoria") final String frecuenciaRespiratoria,
+			@ParameterLayout(named = "Tension Arterial") final String tensionArterial,
+			@ParameterLayout(named = "Estado General") final String estadoGeneral) {
 		final ExamenFisico examen = newTransientInstance(ExamenFisico.class);
 
 		examen.setPaciente(paciente);
@@ -277,7 +277,7 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public Receta crearReceta(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Obra Social") @Parameter(optionality = Optionality.OPTIONAL) final ObraSocial obraSocial,
+			@ParameterLayout(named = "Obra Social") final ObraSocial obraSocial,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
 			@ParameterLayout(named = "Doctor") final Doctor doctor,
 			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
@@ -464,9 +464,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			ReporteReceta receta = new ReporteReceta();
 			receta.setPaciente(a.getPaciente().getApellido() + " "
 					+ a.getPaciente().getNombre());
-			
-				receta.setObraSocial(a.getObraSocial().getNombre());
-			
+
+			receta.setObraSocial(a.getObraSocial().getNombre());
 
 			receta.setMedicamento(a.getMedicamento().getProducto() + " "
 					+ a.getMedicamento().getPresentacion() + " "
@@ -698,6 +697,133 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			return new Blob("error.txt", "text/plain", result);
 		}
 	}
+
+	// @MemberOrder(name = "Historia Clinica", sequence = "10.5")
+	// @ActionLayout(named = "Exportar Mi Historia Clinica")
+	// public Blob downloadAll3() throws JRException, IOException {
+	//
+	// final Paciente paciente = newTransientInstance(Paciente.class);
+	// paciente.setUsuariovinculado(container.getUser().getName());
+	//
+	// HistoriaClinicaDataSource datasource = new HistoriaClinicaDataSource();
+	//
+	// AdicionalesPaciente a = listarAdicionales(paciente);
+	// ReporteHistoriaClinica general = new ReporteHistoriaClinica();
+	//
+	// general.setPaciente(a.getPaciente().getApellido() + " "
+	// + a.getPaciente().getNombre());
+	// general.setEstadoCivil(a.getEstadoCivil().toString());
+	// general.setObraSocial(a.getPaciente().getObraSocial().getNombre());
+	// general.setEducacion(a.getEducacion().getNombre());
+	// general.setTrabajo(pasarASiONo(a.getTrabajo()));
+	// general.setDni(a.getPaciente().getDocumento());
+	// SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");
+	// general.setFechanac(df.format(a.getPaciente().getFechaNacimiento()
+	// .toDate()));
+	// general.setNumCarnet(a.getPaciente().getNumerodeCarnet());
+	//
+	// AntecedentesPersonales b = listarPersonales(paciente);
+	// general.setTabaquismo1(pasarASiONo(b.getTabaquismo()));
+	// general.setEdadqueempezo(b.getDesdequeEdad().toString());
+	// general.setCantidaddeCigarrillos(b.getCantidadCigarrillos());
+	// general.setAlchool(pasarASiONo(b.getAlcohol()));
+	// general.setCriticas(pasarASiONo(b.getCriticasporTomar()));
+	// general.setTomaporlaMañana(pasarASiONo(b.getTomaporlaMañana()));
+	// general.setDrogas(pasarASiONo(b.getDrogas()));
+	// general.setTipoDrogas(b.getTipoDroga());
+	// general.setActividad(pasarASiONo(b.getActividadFisica()));
+	// general.setTipoActividad(b.getTipoActividad());
+	// general.setHta(pasarASiONo(b.getHTA()));
+	// general.setDiabetes(pasarASiONo(b.getDiabetes()));
+	// general.setCoronaria(pasarASiONo(b.getEnfermedadCoronaria()));
+	// general.setAcv(pasarASiONo(b.getACV()));
+	// general.setEpoc(pasarASiONo(b.getEPOC()));
+	// general.setAlergias(pasarASiONo(b.getAlergia()));
+	// general.setReumatica(pasarASiONo(b.getEnfermedadReumatica()));
+	// general.setOncologicas(pasarASiONo(b.getEnfermedadOncologica()));
+	// general.setTbc(pasarASiONo(b.getTBc()));
+	// general.setHiv(pasarASiONo(b.getVIH()));
+	// general.setChagas(pasarASiONo(b.getChagas()));
+	// general.setIts(pasarASiONo(b.getITS()));
+	// general.setNeurologicas(pasarASiONo(b.getNeurologicos()));
+	// general.setTransfuciones(pasarASiONo(b.getTranfuciones()));
+	//
+	// AntecedentesFamiliares c = listarFamiliares(paciente);
+	//
+	// general.setHta1(pasarASiONo(c.getHta()));
+	// general.setCardiopatias(pasarASiONo(c.getCardiopatias()));
+	// general.setDiabetes1(pasarASiONo(c.getDiabetes()));
+	// general.setAcv1(pasarASiONo(c.getACV()));
+	// general.setCancerdeColon(pasarASiONo(c.getCadeColon()));
+	// general.setCancerdePulmon(pasarASiONo(c.getCadePulmon()));
+	// general.setCancerdeMama(pasarASiONo(c.getCadeMama()));
+	// general.setConsumodeDrogas(pasarASiONo(c.getConsumoDrogas()));
+	// general.setAbusodeAlchool(pasarASiONo(c.getAbusoAlcohol()));
+	// general.setDepresion(pasarASiONo(c.getDepresion()));
+	//
+	// ExamenFisico d = listarExamen(paciente);
+	// general.setPiel(d.getPiel());
+	// general.setUtilizalentes(d.getLentes().toString());
+	// general.setAgudezaVisual(d.getAgudezaVisual());
+	// general.setOidos(d.getOidos());
+	// general.setDentadura(d.getDentadura());
+	// general.setPulmones(d.getPulmones());
+	// general.setCorazon(d.getCorazon());
+	// general.setAbdomen(d.getAbdomen());
+	// general.setGenitales(d.getGenitales());
+	// general.setMamas(d.getMamas());
+	// general.setAltura(d.getTalla());
+	// general.setPeso(d.getPeso());
+	// general.setTemperaturaCorporal(d.getTemperatura());
+	// general.setFrecuenciaCardiaca(d.getFrecuenciaCardiaca());
+	// general.setFrecuenciaRespiratoria(d.getFrecuenciaRespiratoria());
+	// general.setTensionArterial(d.getTensionArterial());
+	// general.setEstadoGeneral(d.getEstadoGeneral());
+	// datasource.addParticipante(general);
+	//
+	// File file = new File("HistoriaClinica.jrxml");
+	// FileInputStream input = null;
+	// try {
+	// input = new FileInputStream(file);
+	//
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// }
+	// JasperDesign jd = JRXmlLoader.load(input);
+	// JasperReport reporte = JasperCompileManager.compileReport(jd);
+	// JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+	// datasource);
+	// JasperExportManager.exportReportToPdfFile(jasperPrint,
+	// "/tmp/salida.pdf");
+	// File archivo = new File("/tmp/salida.pdf");
+	//
+	// byte[] fileContent = new byte[(int) archivo.length()];
+	//
+	// if (!(archivo.exists())) {
+	// try {
+	// archivo.createNewFile();
+	// } catch (IOException e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
+	// try {
+	// FileInputStream fileInputStream = new FileInputStream(archivo);
+	//
+	// fileInputStream.read(fileContent);
+	// fileInputStream.close();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// try {
+	// return new Blob(paciente.getApellido() + " - "
+	// + paciente.getNombre() + " Historia Clinica" + ".pdf",
+	// "application/pdf", fileContent);
+	// } catch (Exception e) {
+	// byte[] result = new String("error en crear archivo").getBytes();
+	// return new Blob("error.txt", "text/plain", result);
+	// }
+	// }
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

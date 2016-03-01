@@ -25,10 +25,11 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import dom.paciente.Paciente;
+
 @javax.jdo.annotations.Queries({
 
-	@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
-			+ " FROM dom.historiaclinica.AntecedentesPersonales WHERE paciente == :paciente ")})
+@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
+		+ " FROM dom.historiaclinica.AntecedentesPersonales WHERE paciente == :paciente ") })
 @PersistenceCapable
 public class AntecedentesPersonales {
 
@@ -85,7 +86,7 @@ public class AntecedentesPersonales {
 	private String desdequeedad;
 
 	@MemberOrder(sequence = "2")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getDesdequeEdad() {
 		return desdequeedad;
 	}
@@ -99,7 +100,7 @@ public class AntecedentesPersonales {
 	private String cantidadCigarrillos;
 
 	@MemberOrder(sequence = "3")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getCantidadCigarrillos() {
 		return cantidadCigarrillos;
 	}
@@ -174,7 +175,7 @@ public class AntecedentesPersonales {
 	private String tipoDroga;
 
 	@MemberOrder(sequence = "8")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getTipoDroga() {
 		return tipoDroga;
 	}
@@ -204,7 +205,7 @@ public class AntecedentesPersonales {
 	private String tipoActivida;
 
 	@MemberOrder(sequence = "10")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public String getTipoActividad() {
 		return tipoActivida;
 	}

@@ -207,7 +207,7 @@ public class Paciente extends Persona implements Locatable {
 	private ObraSocial obraSocial;
 
 	@MemberOrder(sequence = "14")
-	@Column(allowsNull = "true")
+	@Column(allowsNull = "false")
 	public ObraSocial getObraSocial() {
 		return obraSocial;
 	}
