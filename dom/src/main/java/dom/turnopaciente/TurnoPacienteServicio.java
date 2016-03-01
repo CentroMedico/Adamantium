@@ -158,12 +158,8 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 	}
 
 	public String cancelarTurno(
-	// @ParameterLayout(named = "Paciente") final Paciente paciente,
+			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Turno Paciente") final TurnoPaciente turnoPaciente) {
-
-		Paciente paciente = container.firstMatch(QueryDefault.create(
-				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
-				container.getUser().getName()));
 
 		turnoPaciente.cancelarTurno();
 		turnoPaciente.setEstado2("Cancelado");
@@ -173,8 +169,32 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 		return "Turno Cancelado";
 	}
 
-	// public List<TurnoPaciente> choices1CancelarTurno(final Paciente paciente)
-	// {
+	public List<TurnoPaciente> choices1CancelarTurno(final Paciente paciente) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerParaCancelarPorPaciente", "paciente", paciente));
+	}
+
+	// public String cancelarMiTurno(
+	// // @ParameterLayout(named = "Paciente") final Paciente paciente,
+	// @ParameterLayout(named = "Turno Paciente") final TurnoPaciente
+	// turnoPaciente) {
+	//
+	// Paciente paciente = container.firstMatch(QueryDefault.create(
+	// Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+	// container.getUser().getName()));
+	//
+	// turnoPaciente.cancelarTurno();
+	// turnoPaciente.setEstado2("Cancelado");
+	// turnoPaciente.getHorarioTurno().setEstado("Cancelado");
+	// EnviarEmailCancelado(paciente, turnoPaciente);
+	// container.flush();
+	// return "Turno Cancelado";
+	// }
+	//
+	// public List<TurnoPaciente> choices1CancelarMiTurno() {
+	// Paciente paciente = container.firstMatch(QueryDefault.create(
+	// Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+	// container.getUser().getName()));
 	// return container.allMatches(QueryDefault.create(TurnoPaciente.class,
 	// "traerParaCancelarPorPaciente", "paciente", paciente));
 	// }

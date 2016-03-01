@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Adamantium
+s Copyright 2015 Adamantium
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -698,132 +698,283 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 		}
 	}
 
-	// @MemberOrder(name = "Historia Clinica", sequence = "10.5")
-	// @ActionLayout(named = "Exportar Mi Historia Clinica")
-	// public Blob downloadAll3() throws JRException, IOException {
+	@MemberOrder(name = "Historia Clinica", sequence = "10.5")
+	@ActionLayout(named = "Exportar Mi Historia Clinica")
+	public Blob downloadAll3() throws JRException, IOException {
+
+		Paciente paciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+				container.getUser().getName()));
+		HistoriaClinicaDataSource datasource = new HistoriaClinicaDataSource();
+
+		AdicionalesPaciente a = listarAdicionales(paciente);
+		ReporteHistoriaClinica general = new ReporteHistoriaClinica();
+
+		general.setPaciente(a.getPaciente().getApellido() + " "
+				+ a.getPaciente().getNombre());
+		general.setEstadoCivil(a.getEstadoCivil().toString());
+		general.setObraSocial(a.getPaciente().getObraSocial().getNombre());
+		general.setEducacion(a.getEducacion().getNombre());
+		general.setTrabajo(pasarASiONo(a.getTrabajo()));
+		general.setDni(a.getPaciente().getDocumento());
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");
+		general.setFechanac(df.format(a.getPaciente().getFechaNacimiento()
+				.toDate()));
+		general.setNumCarnet(a.getPaciente().getNumerodeCarnet());
+
+		AntecedentesPersonales b = listarPersonales(paciente);
+		general.setTabaquismo1(pasarASiONo(b.getTabaquismo()));
+		general.setEdadqueempezo(b.getDesdequeEdad().toString());
+		general.setCantidaddeCigarrillos(b.getCantidadCigarrillos());
+		general.setAlchool(pasarASiONo(b.getAlcohol()));
+		general.setCriticas(pasarASiONo(b.getCriticasporTomar()));
+		general.setTomaporlaMañana(pasarASiONo(b.getTomaporlaMañana()));
+		general.setDrogas(pasarASiONo(b.getDrogas()));
+		general.setTipoDrogas(b.getTipoDroga());
+		general.setActividad(pasarASiONo(b.getActividadFisica()));
+		general.setTipoActividad(b.getTipoActividad());
+		general.setHta(pasarASiONo(b.getHTA()));
+		general.setDiabetes(pasarASiONo(b.getDiabetes()));
+		general.setCoronaria(pasarASiONo(b.getEnfermedadCoronaria()));
+		general.setAcv(pasarASiONo(b.getACV()));
+		general.setEpoc(pasarASiONo(b.getEPOC()));
+		general.setAlergias(pasarASiONo(b.getAlergia()));
+		general.setReumatica(pasarASiONo(b.getEnfermedadReumatica()));
+		general.setOncologicas(pasarASiONo(b.getEnfermedadOncologica()));
+		general.setTbc(pasarASiONo(b.getTBc()));
+		general.setHiv(pasarASiONo(b.getVIH()));
+		general.setChagas(pasarASiONo(b.getChagas()));
+		general.setIts(pasarASiONo(b.getITS()));
+		general.setNeurologicas(pasarASiONo(b.getNeurologicos()));
+		general.setTransfuciones(pasarASiONo(b.getTranfuciones()));
+
+		AntecedentesFamiliares c = listarFamiliares(paciente);
+
+		general.setHta1(pasarASiONo(c.getHta()));
+		general.setCardiopatias(pasarASiONo(c.getCardiopatias()));
+		general.setDiabetes1(pasarASiONo(c.getDiabetes()));
+		general.setAcv1(pasarASiONo(c.getACV()));
+		general.setCancerdeColon(pasarASiONo(c.getCadeColon()));
+		general.setCancerdePulmon(pasarASiONo(c.getCadePulmon()));
+		general.setCancerdeMama(pasarASiONo(c.getCadeMama()));
+		general.setConsumodeDrogas(pasarASiONo(c.getConsumoDrogas()));
+		general.setAbusodeAlchool(pasarASiONo(c.getAbusoAlcohol()));
+		general.setDepresion(pasarASiONo(c.getDepresion()));
+
+		ExamenFisico d = listarExamen(paciente);
+		general.setPiel(d.getPiel());
+		general.setUtilizalentes(d.getLentes().toString());
+		general.setAgudezaVisual(d.getAgudezaVisual());
+		general.setOidos(d.getOidos());
+		general.setDentadura(d.getDentadura());
+		general.setPulmones(d.getPulmones());
+		general.setCorazon(d.getCorazon());
+		general.setAbdomen(d.getAbdomen());
+		general.setGenitales(d.getGenitales());
+		general.setMamas(d.getMamas());
+		general.setAltura(d.getTalla());
+		general.setPeso(d.getPeso());
+		general.setTemperaturaCorporal(d.getTemperatura());
+		general.setFrecuenciaCardiaca(d.getFrecuenciaCardiaca());
+		general.setFrecuenciaRespiratoria(d.getFrecuenciaRespiratoria());
+		general.setTensionArterial(d.getTensionArterial());
+		general.setEstadoGeneral(d.getEstadoGeneral());
+		datasource.addParticipante(general);
+
+		File file = new File("HistoriaClinica.jrxml");
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		JasperDesign jd = JRXmlLoader.load(input);
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
+		File archivo = new File("/tmp/salida.pdf");
+
+		byte[] fileContent = new byte[(int) archivo.length()];
+
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + " Historia Clinica" + ".pdf",
+					"application/pdf", fileContent);
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+	}
+
+	@MemberOrder(name = "Historia Clinica", sequence = "10.6")
+	@ActionLayout(named = "Exportar Mis Indicaciones Medicas")
+	public Blob downloadAll4(
+	// final Paciente paciente,
+			IndicacionesMedicas indicacion) throws JRException, IOException {
+		Paciente paciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+				container.getUser().getName()));
+		IndicacionesDataSource datasource = new IndicacionesDataSource();
+		for (IndicacionesMedicas a : listaindicaciones(paciente)) {
+			ReporteIndicaciones indicaciones = new ReporteIndicaciones();
+			indicaciones.setPaciente(a.getPaciente().getApellido() + " "
+					+ a.getPaciente().getNombre());
+			indicaciones.setMedicamento(a.getMedicamento().getProducto());
+			indicaciones.setComotomarlo(a.getComotomarlo());
+			indicaciones.setDoctor(a.getDoctor().getApellido() + " "
+					+ a.getDoctor().getNombre());
+			datasource.addParticipante(indicaciones);
+		}
+		File file = new File("Indicaciones.jrxml");
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		JasperDesign jd = JRXmlLoader.load(input);
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
+		File archivo = new File("/tmp/salida.pdf");
+		byte[] fileContent = new byte[(int) archivo.length()];
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + ".pdf", "application/pdf",
+					fileContent);
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+
+	}
+
+	// public List<Paciente> choices0DownloadAll4(final Paciente paciente) {
 	//
-	// final Paciente paciente = newTransientInstance(Paciente.class);
-	// paciente.setUsuariovinculado(container.getUser().getName());
-	//
-	// HistoriaClinicaDataSource datasource = new HistoriaClinicaDataSource();
-	//
-	// AdicionalesPaciente a = listarAdicionales(paciente);
-	// ReporteHistoriaClinica general = new ReporteHistoriaClinica();
-	//
-	// general.setPaciente(a.getPaciente().getApellido() + " "
-	// + a.getPaciente().getNombre());
-	// general.setEstadoCivil(a.getEstadoCivil().toString());
-	// general.setObraSocial(a.getPaciente().getObraSocial().getNombre());
-	// general.setEducacion(a.getEducacion().getNombre());
-	// general.setTrabajo(pasarASiONo(a.getTrabajo()));
-	// general.setDni(a.getPaciente().getDocumento());
-	// SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");
-	// general.setFechanac(df.format(a.getPaciente().getFechaNacimiento()
-	// .toDate()));
-	// general.setNumCarnet(a.getPaciente().getNumerodeCarnet());
-	//
-	// AntecedentesPersonales b = listarPersonales(paciente);
-	// general.setTabaquismo1(pasarASiONo(b.getTabaquismo()));
-	// general.setEdadqueempezo(b.getDesdequeEdad().toString());
-	// general.setCantidaddeCigarrillos(b.getCantidadCigarrillos());
-	// general.setAlchool(pasarASiONo(b.getAlcohol()));
-	// general.setCriticas(pasarASiONo(b.getCriticasporTomar()));
-	// general.setTomaporlaMañana(pasarASiONo(b.getTomaporlaMañana()));
-	// general.setDrogas(pasarASiONo(b.getDrogas()));
-	// general.setTipoDrogas(b.getTipoDroga());
-	// general.setActividad(pasarASiONo(b.getActividadFisica()));
-	// general.setTipoActividad(b.getTipoActividad());
-	// general.setHta(pasarASiONo(b.getHTA()));
-	// general.setDiabetes(pasarASiONo(b.getDiabetes()));
-	// general.setCoronaria(pasarASiONo(b.getEnfermedadCoronaria()));
-	// general.setAcv(pasarASiONo(b.getACV()));
-	// general.setEpoc(pasarASiONo(b.getEPOC()));
-	// general.setAlergias(pasarASiONo(b.getAlergia()));
-	// general.setReumatica(pasarASiONo(b.getEnfermedadReumatica()));
-	// general.setOncologicas(pasarASiONo(b.getEnfermedadOncologica()));
-	// general.setTbc(pasarASiONo(b.getTBc()));
-	// general.setHiv(pasarASiONo(b.getVIH()));
-	// general.setChagas(pasarASiONo(b.getChagas()));
-	// general.setIts(pasarASiONo(b.getITS()));
-	// general.setNeurologicas(pasarASiONo(b.getNeurologicos()));
-	// general.setTransfuciones(pasarASiONo(b.getTranfuciones()));
-	//
-	// AntecedentesFamiliares c = listarFamiliares(paciente);
-	//
-	// general.setHta1(pasarASiONo(c.getHta()));
-	// general.setCardiopatias(pasarASiONo(c.getCardiopatias()));
-	// general.setDiabetes1(pasarASiONo(c.getDiabetes()));
-	// general.setAcv1(pasarASiONo(c.getACV()));
-	// general.setCancerdeColon(pasarASiONo(c.getCadeColon()));
-	// general.setCancerdePulmon(pasarASiONo(c.getCadePulmon()));
-	// general.setCancerdeMama(pasarASiONo(c.getCadeMama()));
-	// general.setConsumodeDrogas(pasarASiONo(c.getConsumoDrogas()));
-	// general.setAbusodeAlchool(pasarASiONo(c.getAbusoAlcohol()));
-	// general.setDepresion(pasarASiONo(c.getDepresion()));
-	//
-	// ExamenFisico d = listarExamen(paciente);
-	// general.setPiel(d.getPiel());
-	// general.setUtilizalentes(d.getLentes().toString());
-	// general.setAgudezaVisual(d.getAgudezaVisual());
-	// general.setOidos(d.getOidos());
-	// general.setDentadura(d.getDentadura());
-	// general.setPulmones(d.getPulmones());
-	// general.setCorazon(d.getCorazon());
-	// general.setAbdomen(d.getAbdomen());
-	// general.setGenitales(d.getGenitales());
-	// general.setMamas(d.getMamas());
-	// general.setAltura(d.getTalla());
-	// general.setPeso(d.getPeso());
-	// general.setTemperaturaCorporal(d.getTemperatura());
-	// general.setFrecuenciaCardiaca(d.getFrecuenciaCardiaca());
-	// general.setFrecuenciaRespiratoria(d.getFrecuenciaRespiratoria());
-	// general.setTensionArterial(d.getTensionArterial());
-	// general.setEstadoGeneral(d.getEstadoGeneral());
-	// datasource.addParticipante(general);
-	//
-	// File file = new File("HistoriaClinica.jrxml");
-	// FileInputStream input = null;
-	// try {
-	// input = new FileInputStream(file);
-	//
-	// } catch (Exception e) {
-	// System.out.println(e.getMessage());
+	// return allMatches(QueryDefault.create(Paciente.class,
+	// "traerPacientesActivos"));
 	// }
-	// JasperDesign jd = JRXmlLoader.load(input);
-	// JasperReport reporte = JasperCompileManager.compileReport(jd);
-	// JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
-	// datasource);
-	// JasperExportManager.exportReportToPdfFile(jasperPrint,
-	// "/tmp/salida.pdf");
-	// File archivo = new File("/tmp/salida.pdf");
+
+	// public List<IndicacionesMedicas> choices1DownloadAll4(
+	// final Paciente paciente) {
 	//
-	// byte[] fileContent = new byte[(int) archivo.length()];
-	//
-	// if (!(archivo.exists())) {
-	// try {
-	// archivo.createNewFile();
-	// } catch (IOException e) {
-	//
-	// e.printStackTrace();
+	// return allMatches(QueryDefault.create(IndicacionesMedicas.class,
+	// "traerPorPaciente", "paciente", paciente));
 	// }
-	// }
-	// try {
-	// FileInputStream fileInputStream = new FileInputStream(archivo);
-	//
-	// fileInputStream.read(fileContent);
-	// fileInputStream.close();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// try {
-	// return new Blob(paciente.getApellido() + " - "
-	// + paciente.getNombre() + " Historia Clinica" + ".pdf",
-	// "application/pdf", fileContent);
-	// } catch (Exception e) {
-	// byte[] result = new String("error en crear archivo").getBytes();
-	// return new Blob("error.txt", "text/plain", result);
-	// }
-	// }
+
+	@MemberOrder(name = "Historia Clinica", sequence = "10.7")
+	@ActionLayout(named = "Exportar Mis Recetas")
+	public Blob downloadAll5(final Paciente paciente, final Receta rec)
+			throws JRException, IOException {
+		RecetaDataSource datasource = new RecetaDataSource();
+
+		for (Receta a : listareceta(paciente)) {
+			ReporteReceta receta = new ReporteReceta();
+			receta.setPaciente(a.getPaciente().getApellido() + " "
+					+ a.getPaciente().getNombre());
+
+			receta.setObraSocial(a.getObraSocial().getNombre());
+
+			receta.setMedicamento(a.getMedicamento().getProducto() + " "
+					+ a.getMedicamento().getPresentacion() + " "
+					+ a.getMedicamento().getTamaño() + " "
+					+ a.getMedicamento().getLaboratorio());
+
+			datasource.addParticipante(receta);
+		}
+		File file = new File("Receta.jrxml");
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		JasperDesign jd = JRXmlLoader.load(input);
+		JasperReport reporte = JasperCompileManager.compileReport(jd);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null,
+				datasource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint,
+				"/tmp/salida.pdf");
+		File archivo = new File("/tmp/salida.pdf");
+
+		byte[] fileContent = new byte[(int) archivo.length()];
+
+		if (!(archivo.exists())) {
+			try {
+				archivo.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileInputStream fileInputStream = new FileInputStream(archivo);
+
+			fileInputStream.read(fileContent);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			return new Blob(paciente.getApellido() + " - "
+					+ paciente.getNombre() + " Receta" + ".pdf",
+					"application/pdf", fileContent);
+		} catch (Exception e) {
+			byte[] result = new String("error en crear archivo").getBytes();
+			return new Blob("error.txt", "text/plain", result);
+		}
+	}
+
+	public List<Paciente> choices0DownloadAll5(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Paciente.class,
+				"traerPacientesActivos"));
+	}
+
+	public List<Receta> choices1DownloadAll5(final Paciente paciente) {
+
+		return allMatches(QueryDefault.create(Receta.class,
+				"traerRecetaPorPaciente", "paciente", paciente));
+	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
