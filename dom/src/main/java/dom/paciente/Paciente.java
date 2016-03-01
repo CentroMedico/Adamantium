@@ -21,7 +21,6 @@ import java.util.List;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Join;
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Sequence;
@@ -328,16 +327,6 @@ public class Paciente extends Persona implements Locatable {
 
 	public void setLocation(Location location) {
 		this.location = location;
-	}
-
-	private List<Paciente> listaPaciente = new ArrayList<Paciente>();
-
-	@MemberOrder(sequence = "16")
-	@CollectionLayout(render = RenderType.EAGERLY)
-	@NotPersistent
-	public List<Paciente> getListaDireccion() {
-		this.listaPaciente.add(this);
-		return this.listaPaciente;
 	}
 
 	@javax.inject.Inject

@@ -28,8 +28,11 @@ import dom.paciente.Paciente;
 
 @javax.jdo.annotations.Queries({
 
-@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
-		+ " FROM dom.historiaclinica.AntecedentesPersonales WHERE paciente == :paciente ") })
+		@javax.jdo.annotations.Query(name = "traerAdicionalesPorPaciente", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.historiaclinica.AntecedentesPersonales WHERE paciente == :paciente "),
+		@javax.jdo.annotations.Query(name = "buscarRepetidos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.historiaclinica.AntecedentesPersonales "
+				+ " WHERE paciente ==:paciente") })
 @PersistenceCapable
 public class AntecedentesPersonales {
 

@@ -27,8 +27,11 @@ import dom.paciente.Paciente;
 
 @javax.jdo.annotations.Queries({
 
-@javax.jdo.annotations.Query(name = "traerExamenPorPaciente", language = "JDOQL", value = "SELECT "
-		+ " FROM dom.historiaclinica.ExamenFisico WHERE paciente == :paciente ") })
+		@javax.jdo.annotations.Query(name = "traerExamenPorPaciente", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.historiaclinica.ExamenFisico WHERE paciente == :paciente "),
+		@javax.jdo.annotations.Query(name = "buscarRepetidos", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.historiaclinica.ExamenFisico "
+				+ " WHERE paciente ==:paciente") })
 @PersistenceCapable
 public class ExamenFisico {
 	/**

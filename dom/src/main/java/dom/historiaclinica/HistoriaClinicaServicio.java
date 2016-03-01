@@ -92,6 +92,26 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
+	public String validateCrearAdicionalesPaciente(final Paciente paciente,
+			final EstadoCivilEnum estadoCivil, final boolean trabajo,
+			final boolean obraSocial, final EducacionEnum educacion) {
+
+		final AdicionalesPaciente adicionales = container
+				.firstMatch(QueryDefault.create(AdicionalesPaciente.class,
+						"buscarRepetidos", "paciente", paciente));
+
+		if (adicionales != null) {
+			if (adicionales.getPaciente().equals(paciente)) {
+				return "El paciente " + adicionales.getPaciente().getApellido()
+						+ " " + adicionales.getPaciente().getNombre()
+						+ " ya posee sus Adicionales cargados.";
+			}
+		}
+
+		return "";
+
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "2.1")
 	public List<AdicionalesPaciente> listarAdicionalesPaciente() {
 		return container.allInstances(AdicionalesPaciente.class);
@@ -162,6 +182,36 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
+	public String validateCrearAntecedentesPersonales(final Paciente paciente,
+			final boolean tabaquismo, final String edad, final String cantidad,
+			final boolean alcohol, final boolean criticas,
+			final boolean tomapormañana, final boolean drogas,
+			final String tipodogras, final boolean actividad,
+			final String tipoactividad, final boolean hta,
+			final boolean diabetes, final boolean coronaria, final boolean acv,
+			final boolean epoc, final boolean alergias,
+			final boolean reumatica, final boolean oncologica,
+			final boolean tbc, final boolean hiv, final boolean chagas,
+			final boolean its, final boolean neurologicas,
+			final boolean tranfuciones) {
+
+		final AntecedentesPersonales antecedentesP = container
+				.firstMatch(QueryDefault.create(AntecedentesPersonales.class,
+						"buscarRepetidos", "paciente", paciente));
+
+		if (antecedentesP != null) {
+			if (antecedentesP.getPaciente().equals(paciente)) {
+				return "El paciente "
+						+ antecedentesP.getPaciente().getApellido() + " "
+						+ antecedentesP.getPaciente().getNombre()
+						+ " ya posee sus Antecedentes Personales cargados.";
+			}
+		}
+
+		return "";
+
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "2.2")
 	public List<AntecedentesPersonales> listarAntecedentesPersonales() {
 		return container.allInstances(AntecedentesPersonales.class);
@@ -209,6 +259,30 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 		return allMatches(QueryDefault.create(Paciente.class,
 				"traerPacientesActivos"));
+	}
+
+	public String validateCrearAntecedentesFamiliares(final Paciente paciente,
+			final boolean hta, final boolean cardiopatias,
+			final boolean diabetes, final boolean acv,
+			final boolean caddeColon, final boolean cadePulmon,
+			final boolean cadeMama, final boolean consumoDrogas,
+			final boolean abusoAlcohol, final boolean depresion) {
+
+		final AntecedentesFamiliares antecedentesF = container
+				.firstMatch(QueryDefault.create(AntecedentesFamiliares.class,
+						"buscarRepetidos", "paciente", paciente));
+
+		if (antecedentesF != null) {
+			if (antecedentesF.getPaciente().equals(paciente)) {
+				return "El paciente "
+						+ antecedentesF.getPaciente().getApellido() + " "
+						+ antecedentesF.getPaciente().getNombre()
+						+ " ya posee sus Antecedentes Familiares cargados.";
+			}
+		}
+
+		return "";
+
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "2.3")
@@ -266,6 +340,32 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 
 		return allMatches(QueryDefault.create(Paciente.class,
 				"traerPacientesActivos"));
+	}
+
+	public String validateCrearExamenFisico(final Paciente paciente,
+			final String piel, final String lentes, final String agudezaVisual,
+			final String oidos, final String dentadura, final String pulmones,
+			final String corazon, final String abdomen, final String genitales,
+			final String mamas, final String talla, final String peso,
+			final String temperatura, final String frecuenciaCardiaca,
+			final String frecuenciaRespiratoria, final String tensionArterial,
+			final String estadoGeneral) {
+
+		final ExamenFisico examenFisico = container.firstMatch(QueryDefault
+				.create(ExamenFisico.class, "buscarRepetidos", "paciente",
+						paciente));
+
+		if (examenFisico != null) {
+			if (examenFisico.getPaciente().equals(paciente)) {
+				return "El paciente "
+						+ examenFisico.getPaciente().getApellido() + " "
+						+ examenFisico.getPaciente().getNombre()
+						+ " ya posee su Examen Fisico cargado.";
+			}
+		}
+
+		return "";
+
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "2.4")
