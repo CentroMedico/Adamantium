@@ -222,10 +222,11 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 
 	@MemberOrder(name = "Paciente", sequence = "5.3")
 	public List<TurnoPaciente> listarMisTurnos() {
-		// return container.allInstances(TurnoPaciente.class);
+		Paciente paciente = container.firstMatch(QueryDefault.create(
+				Paciente.class, "traerPacientePorUsuario", "usuariovinculado",
+				container.getUser().getName()));
 		return allMatches(QueryDefault.create(TurnoPaciente.class,
-				"traerTurnosPacientePorUsuario", "usuariovinculado", container
-						.getUser().getName()));
+				"traerPorPaciente", "paciente", paciente));
 	}
 
 	@ActionLayout(hidden = Where.EVERYWHERE)
