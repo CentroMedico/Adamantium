@@ -49,8 +49,6 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.value.Blob;
 
 import dom.doctor.Doctor;
-import dom.historiaclinica.IndicacionesMedicas;
-import dom.paciente.Paciente;
 import dom.reportes.AgendaDataSource;
 import dom.reportes.ReporteAgenda;
 import dom.turnopaciente.TurnoPaciente;

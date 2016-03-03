@@ -331,6 +331,11 @@ public class DueñoServicio extends AbstractFactoryAndRepository {
 
 	}
 
+	public Dueño verMisDatos() {
+		return firstMatch(QueryDefault.create(Dueño.class, "traerDueño",
+				"usuariovinculado", container.getUser().getName()));
+	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 }

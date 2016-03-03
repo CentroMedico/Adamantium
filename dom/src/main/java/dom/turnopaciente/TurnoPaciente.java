@@ -60,10 +60,13 @@ public class TurnoPaciente {
 	SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yy HH:mm");
 
 	public TranslatableString title() {
-		return TranslatableString.tr("{nombre}", "nombre", "Turno de: "
-				+ getPaciente().getApellido() + ", "
-				+ getPaciente().getNombre() + getDoctor().getApellido()
-				+ ". Horario: " + fecha.format(getHorarioTurno().getDia()));
+		return TranslatableString.tr(
+				"{nombre}",
+				"nombre",
+				"Turno de: " + getPaciente().getApellido() + ", "
+						+ getPaciente().getNombre() + ". Doctor: "
+						+ getDoctor().getApellido() + ". Horario: "
+						+ fecha.format(getHorarioTurno().getDia()) + ".");
 	}
 
 	public TurnoPaciente() {

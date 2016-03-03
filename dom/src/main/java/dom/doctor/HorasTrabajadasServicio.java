@@ -28,6 +28,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.agendadoctor.AgendaDoctor;
 import dom.paciente.Paciente;
 import dom.turnopaciente.TurnoPaciente;
 
@@ -130,6 +131,13 @@ public class HorasTrabajadasServicio extends AbstractFactoryAndRepository {
 		Doctor doctor = container.firstMatch(QueryDefault.create(Doctor.class,
 				"traerDoctorPorUsuario", "usuariovinculado", container
 						.getUser().getName()));
+		return allMatches(QueryDefault.create(HorasTrabajadas.class,
+				"traerPorDoctor", "doctor", doctor));
+	}
+
+	@MemberOrder(name = "Doctor", sequence = "4.3")
+	public List<HorasTrabajadas> listarHorasTrabajadasPorDoctor(
+			final Doctor doctor) {
 		return allMatches(QueryDefault.create(HorasTrabajadas.class,
 				"traerPorDoctor", "doctor", doctor));
 	}

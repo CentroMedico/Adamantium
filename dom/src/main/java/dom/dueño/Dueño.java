@@ -16,16 +16,11 @@
  */
 package dom.dueño;
 
-import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 
 import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.joda.time.DateTime;
 
-import dom.estado.EstadoEnum;
-import dom.historiaclinica.Receta;
 import dom.persona.Persona;
 
 /**
@@ -50,7 +45,9 @@ import dom.persona.Persona;
 				+ " && nombre.indexOf(:parametro) >= 0 || apellido.indexOf(:parametro) == 0 "
 				+ " && apellido.indexOf(:parametro) >= 0 "),
 		@javax.jdo.annotations.Query(name = "buscarDuplicados", language = "JDOQL", value = "SELECT "
-				+ "FROM dom.dueño.Dueño " + " WHERE documento ==:documento") })
+				+ "FROM dom.dueño.Dueño " + " WHERE documento ==:documento"),
+		@javax.jdo.annotations.Query(name = "traerDueño", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.dueño.Dueño WHERE usuariovinculado == :usuariovinculado"), })
 @DomainObject(autoCompleteRepository = DueñoServicio.class, autoCompleteAction = "buscarDueño")
 @PersistenceCapable
 public class Dueño extends Persona {
