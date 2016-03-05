@@ -52,7 +52,9 @@ import dom.turnopaciente.grafico.EstadoTurnoEnum;
 		@javax.jdo.annotations.Query(name = "traerParaCancelarPorPaciente", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.turnopaciente.TurnoPaciente WHERE estado2 != 'Cancelado' && estado2 != 'Disponible' &&  paciente== :paciente"),
 		@javax.jdo.annotations.Query(name = "traerTurnosPacientePorUsuario", language = "JDOQL", value = "SELECT "
-				+ " FROM dom.turnopaciente.TurnoPaciente WHERE usuariovinculado == :usuariovinculado") })
+				+ " FROM dom.turnopaciente.TurnoPaciente WHERE usuariovinculado == :usuariovinculado"),
+		@javax.jdo.annotations.Query(name = "traerPorDoctor", language = "JDOQL", value = "SELECT "
+				+ " FROM dom.turnopaciente.TurnoPaciente WHERE doctor == :doctor") })
 @DomainObject(autoCompleteRepository = TurnoPacienteServicio.class, autoCompleteAction = "buscarTurno")
 @PersistenceCapable
 public class TurnoPaciente {

@@ -229,6 +229,15 @@ public class TurnoPacienteServicio extends AbstractFactoryAndRepository {
 				"traerPorPaciente", "paciente", paciente));
 	}
 
+	@MemberOrder(name = "Paciente", sequence = "5.4")
+	public List<TurnoPaciente> listarTurnosDoctor() {
+		Doctor doctor = container.firstMatch(QueryDefault.create(Doctor.class,
+				"traerDoctorPorUsuario", "usuariovinculado", container
+						.getUser().getName()));
+		return allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerPorDoctor", "doctor", doctor));
+	}
+
 	@ActionLayout(hidden = Where.EVERYWHERE)
 	public void EnviarEmail(Paciente paciente, TurnoPaciente turno) {
 		if (paciente.getCorreo().contains("@")) {
