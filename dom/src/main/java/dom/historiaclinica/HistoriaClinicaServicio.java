@@ -377,15 +377,17 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public Receta crearReceta(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			@ParameterLayout(named = "Obra Social") final ObraSocial obraSocial,
+			// @ParameterLayout(named = "Obra Social") final ObraSocial
+			// obraSocial,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
-			@ParameterLayout(named = "Doctor") final Doctor doctor,
-			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
+			@ParameterLayout(named = "Turno") final TurnoPaciente turno
+	// ,@ParameterLayout(named = "Doctor") final Doctor doctor
+	) {
 		final Receta receta = newTransientInstance(Receta.class);
 		receta.setPaciente(paciente);
-		receta.setObraSocial(obraSocial);
+		receta.setObraSocial(paciente.getObraSocial());
 		receta.setMedicamento(medicamento);
-		receta.setDoctor(doctor);
+		receta.setDoctor(turno.getDoctor());
 		receta.setTurno(turno);
 		container.persistIfNotAlready(receta);
 		return receta;
@@ -398,20 +400,18 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
-	public List<Doctor> choices3CrearReceta(final Paciente paciente,
-			final ObraSocial obraSocial, final Vademecum medicamento) {
-
-		return container.allMatches(QueryDefault.create(Doctor.class,
-				"traerActivos"));
-
-	}
-
-	public List<TurnoPaciente> choices4CrearReceta(final Paciente paciente,
-			final ObraSocial obraSocial, final Vademecum medicamento,
-			final Doctor doctor) {
+	public List<TurnoPaciente> choices2CrearReceta(final Paciente paciente,
+			final Vademecum medicamento) {
 		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
 				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
+
+	// public List<Doctor> choices3CrearReceta(final Paciente paciente,
+	// final Vademecum medicamento, final TurnoPaciente turno) {
+	//
+	// return container.allMatches(QueryDefault.create(Doctor.class,
+	// "traerActivos"));
+	// }
 
 	@MemberOrder(name = "Historia Clinica", sequence = "2.5")
 	public List<Receta> listarReceta() {
