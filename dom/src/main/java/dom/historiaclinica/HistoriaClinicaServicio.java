@@ -43,7 +43,6 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.Blob;
 
 import dom.doctor.Doctor;
-import dom.obrasocial.ObraSocial;
 import dom.paciente.Paciente;
 import dom.reportes.HistoriaClinicaDataSource;
 import dom.reportes.IndicacionesDataSource;
@@ -377,12 +376,8 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 	@ActionLayout(cssClass = "boton")
 	public Receta crearReceta(
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
-			// @ParameterLayout(named = "Obra Social") final ObraSocial
-			// obraSocial,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
-			@ParameterLayout(named = "Turno") final TurnoPaciente turno
-	// ,@ParameterLayout(named = "Doctor") final Doctor doctor
-	) {
+			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		final Receta receta = newTransientInstance(Receta.class);
 		receta.setPaciente(paciente);
 		receta.setObraSocial(paciente.getObraSocial());
@@ -406,13 +401,6 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
-	// public List<Doctor> choices3CrearReceta(final Paciente paciente,
-	// final Vademecum medicamento, final TurnoPaciente turno) {
-	//
-	// return container.allMatches(QueryDefault.create(Doctor.class,
-	// "traerActivos"));
-	// }
-
 	@MemberOrder(name = "Historia Clinica", sequence = "2.5")
 	public List<Receta> listarReceta() {
 		return container.allInstances(Receta.class);
@@ -424,14 +412,13 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 			@ParameterLayout(named = "Paciente") final Paciente paciente,
 			@ParameterLayout(named = "Medicamento") final Vademecum medicamento,
 			@ParameterLayout(named = "Como Tomarlo", multiLine = 5) final String comoTomarlo,
-			@ParameterLayout(named = "Doctor") final Doctor doctor,
 			@ParameterLayout(named = "Turno") final TurnoPaciente turno) {
 		final IndicacionesMedicas indicaciones = newTransientInstance(IndicacionesMedicas.class);
 
 		indicaciones.setPaciente(paciente);
 		indicaciones.setMedicamento(medicamento);
 		indicaciones.setComotomarlo(comoTomarlo);
-		indicaciones.setDoctor(doctor);
+		indicaciones.setDoctor(turno.getDoctor());
 		indicaciones.setTurno(turno);
 		container.persistIfNotAlready(indicaciones);
 		return indicaciones;
@@ -445,25 +432,16 @@ public class HistoriaClinicaServicio extends AbstractFactoryAndRepository {
 				"traerPacientesActivos"));
 	}
 
+	public List<TurnoPaciente> choices3CrearIndicacionesMedicas(
+			final Paciente paciente, final Vademecum medicamento,
+			final String comoTomarlo) {
+		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
+				"traerAtendidosPorPaciente", "paciente", paciente));
+	}
+
 	@MemberOrder(name = "Historia Clinica", sequence = "2.6")
 	public List<IndicacionesMedicas> listarIndicacionesMedicas() {
 		return container.allInstances(IndicacionesMedicas.class);
-	}
-
-	public List<Doctor> choices3CrearIndicacionesMedicas(
-			final Paciente paciente, final Vademecum medicamento,
-			final String comoTomarlo) {
-
-		return container.allMatches(QueryDefault.create(Doctor.class,
-				"traerActivos"));
-
-	}
-
-	public List<TurnoPaciente> choices4CrearIndicacionesMedicas(
-			final Paciente paciente, final Vademecum medicamento,
-			final String comoTomarlo, final Doctor doctor) {
-		return container.allMatches(QueryDefault.create(TurnoPaciente.class,
-				"traerAtendidosPorPaciente", "paciente", paciente));
 	}
 
 	@MemberOrder(name = "Historia Clinica", sequence = "2.7")
